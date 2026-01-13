@@ -881,10 +881,15 @@ export const BookReader: React.FC = () => {
           size="small"
           sx={{
             color: antiqueColors.gold,
-            ml: 1,
+            ml: 2,
+            border: `1px solid ${antiqueColors.gold}`,
+            borderRadius: 1,
+            p: 0.75,
             '&:hover': {
-              bgcolor: `${antiqueColors.gold}20`,
+              bgcolor: `${antiqueColors.gold}30`,
+              transform: 'scale(1.1)',
             },
+            transition: 'all 0.2s',
           }}
         >
           <Share sx={{ fontSize: 18 }} />
