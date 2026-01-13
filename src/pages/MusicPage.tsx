@@ -265,12 +265,13 @@ export const MusicPage: React.FC = () => {
           }
         } else {
           // Non-playing spheres gravitate towards center
+          // Pull stronger when search is active (fewer spheres visible)
           const dx = centerX - (x + size / 2);
           const dy = centerY - (y + size / 2);
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist > 50) {
-            const pullStrength = 0.02;
+            const pullStrength = searchQuery.trim() ? 0.15 : 0.02;
             vx += (dx / dist) * pullStrength;
             vy += (dy / dist) * pullStrength;
           }
@@ -379,7 +380,7 @@ export const MusicPage: React.FC = () => {
     });
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [dimensions, draggedId, currentSong, isPlaying, arrangeByAlbum, getAlbumClusterPositions]);
+  }, [dimensions, draggedId, currentSong, isPlaying, arrangeByAlbum, getAlbumClusterPositions, searchQuery]);
 
   useEffect(() => {
     if (spheres.length > 0 && dimensions.width > 0) {
