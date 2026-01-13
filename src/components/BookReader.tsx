@@ -715,53 +715,28 @@ export const BookReader: React.FC = () => {
           `,
           pointerEvents: 'none',
         },
-        // Subtle Kraken/Cthulhu tentacle background
+        // Kraken/Cthulhu tentacle background
         '&::after': {
           content: '""',
           position: 'absolute',
           inset: 0,
           zIndex: 1,
           pointerEvents: 'none',
-          background: `
-            /* Bottom left tentacle cluster */
-            radial-gradient(ellipse 350px 700px at -5% 105%, rgba(80,50,30,0.5) 0%, transparent 60%),
-            radial-gradient(ellipse 100px 500px at 3% 98%, rgba(60,35,20,0.6) 0%, transparent 70%),
-            radial-gradient(ellipse 80px 450px at 10% 92%, rgba(70,45,25,0.5) 0%, transparent 65%),
-            radial-gradient(ellipse 120px 550px at -3% 85%, rgba(50,30,15,0.6) 0%, transparent 60%),
-            radial-gradient(ellipse 60px 400px at 15% 95%, rgba(65,40,22,0.4) 0%, transparent 70%),
-            radial-gradient(ellipse 70px 380px at 8% 78%, rgba(55,35,18,0.35) 0%, transparent 75%),
-
-            /* Bottom right tentacle cluster */
-            radial-gradient(ellipse 320px 650px at 105% 105%, rgba(80,50,30,0.5) 0%, transparent 60%),
-            radial-gradient(ellipse 90px 480px at 97% 95%, rgba(60,35,20,0.6) 0%, transparent 70%),
-            radial-gradient(ellipse 75px 420px at 90% 98%, rgba(70,45,25,0.5) 0%, transparent 65%),
-            radial-gradient(ellipse 110px 520px at 103% 80%, rgba(50,30,15,0.6) 0%, transparent 60%),
-            radial-gradient(ellipse 55px 380px at 85% 92%, rgba(65,40,22,0.4) 0%, transparent 70%),
-            radial-gradient(ellipse 65px 350px at 92% 75%, rgba(55,35,18,0.35) 0%, transparent 75%),
-
-            /* Top corners - subtle reaching tentacles */
-            radial-gradient(ellipse 250px 500px at -5% -5%, rgba(40,25,12,0.4) 0%, transparent 55%),
-            radial-gradient(ellipse 220px 450px at 105% -5%, rgba(40,25,12,0.4) 0%, transparent 55%),
-            radial-gradient(ellipse 60px 350px at 5% 15%, rgba(50,32,18,0.3) 0%, transparent 70%),
-            radial-gradient(ellipse 55px 320px at 95% 12%, rgba(50,32,18,0.3) 0%, transparent 70%),
-
-            /* Side tentacles reaching inward */
-            radial-gradient(ellipse 50px 300px at 2% 50%, rgba(55,35,20,0.25) 0%, transparent 80%),
-            radial-gradient(ellipse 45px 280px at 98% 45%, rgba(55,35,20,0.25) 0%, transparent 80%),
-
-            /* Deep ocean abyss glow */
-            radial-gradient(ellipse 120% 50% at 50% 110%, rgba(15,10,5,0.6) 0%, transparent 60%)
-          `,
-          animation: 'tentacleBreath 15s ease-in-out infinite',
+          backgroundImage: 'url(/tentacles-bg.svg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.35,
+          animation: 'tentacleBreath 20s ease-in-out infinite',
         },
         '@keyframes tentacleBreath': {
           '0%, 100%': {
-            opacity: 0.85,
-            transform: 'scale(1)',
+            opacity: 0.3,
+            transform: 'scale(1) translateY(0)',
           },
           '50%': {
-            opacity: 1,
-            transform: 'scale(1.03)',
+            opacity: 0.45,
+            transform: 'scale(1.02) translateY(-8px)',
           },
         },
       }}
