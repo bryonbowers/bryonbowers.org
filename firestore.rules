@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read access to public music data
+    match /songs/{songId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.email == 'bryon.bowers@gmail.com';
+    }
+    
+    match /albums/{albumId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.email == 'bryon.bowers@gmail.com';
+    }
+    
+    match /poems/{poemId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.email == 'bryon.bowers@gmail.com';
+    }
+    
+    // Contact messages - allow creation by anyone, read/write by admin
+    match /messages/{messageId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null && request.auth.token.email == 'bryon.bowers@gmail.com';
+    }
+    
+    // Site settings - admin only
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.email == 'bryon.bowers@gmail.com';
+    }
+  }
+}
