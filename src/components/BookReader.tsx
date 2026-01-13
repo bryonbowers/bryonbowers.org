@@ -715,6 +715,51 @@ export const BookReader: React.FC = () => {
           `,
           pointerEvents: 'none',
         },
+        // Subtle Kraken/Cthulhu tentacle background
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          inset: 0,
+          opacity: 0.08,
+          pointerEvents: 'none',
+          background: `
+            /* Bottom left tentacle cluster */
+            radial-gradient(ellipse 300px 600px at 0% 100%, rgba(139,90,43,0.6) 0%, transparent 70%),
+            radial-gradient(ellipse 80px 400px at 5% 95%, rgba(101,67,33,0.5) 0%, transparent 80%),
+            radial-gradient(ellipse 60px 350px at 12% 88%, rgba(139,90,43,0.4) 0%, transparent 75%),
+            radial-gradient(ellipse 100px 450px at -2% 80%, rgba(80,50,20,0.5) 0%, transparent 70%),
+            radial-gradient(ellipse 50px 300px at 18% 92%, rgba(120,80,40,0.3) 0%, transparent 80%),
+
+            /* Bottom right tentacle cluster */
+            radial-gradient(ellipse 280px 550px at 100% 100%, rgba(139,90,43,0.6) 0%, transparent 70%),
+            radial-gradient(ellipse 70px 380px at 95% 90%, rgba(101,67,33,0.5) 0%, transparent 80%),
+            radial-gradient(ellipse 55px 320px at 88% 95%, rgba(139,90,43,0.4) 0%, transparent 75%),
+            radial-gradient(ellipse 90px 420px at 102% 75%, rgba(80,50,20,0.5) 0%, transparent 70%),
+            radial-gradient(ellipse 45px 280px at 82% 88%, rgba(120,80,40,0.3) 0%, transparent 80%),
+
+            /* Top corners - subtle reaching tentacles */
+            radial-gradient(ellipse 200px 400px at 0% 0%, rgba(60,40,20,0.4) 0%, transparent 60%),
+            radial-gradient(ellipse 180px 350px at 100% 0%, rgba(60,40,20,0.4) 0%, transparent 60%),
+
+            /* Curved tentacle suggestions */
+            radial-gradient(ellipse 40px 250px at 8% 70%, rgba(100,70,35,0.3) 0%, transparent 85%),
+            radial-gradient(ellipse 35px 220px at 92% 65%, rgba(100,70,35,0.3) 0%, transparent 85%),
+
+            /* Deep ocean mist */
+            radial-gradient(ellipse 100% 60% at 50% 100%, rgba(20,15,10,0.4) 0%, transparent 50%)
+          `,
+          animation: 'tentacleBreath 12s ease-in-out infinite',
+        },
+        '@keyframes tentacleBreath': {
+          '0%, 100%': {
+            opacity: 0.06,
+            transform: 'scale(1) translateY(0)',
+          },
+          '50%': {
+            opacity: 0.1,
+            transform: 'scale(1.02) translateY(-5px)',
+          },
+        },
       }}
     >
       {/* Page Content */}
