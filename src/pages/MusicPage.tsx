@@ -406,22 +406,42 @@ export const MusicPage: React.FC = () => {
     }
   };
 
-  const handleShareSong = async (e: React.MouseEvent, songId: string) => {
+  const handleShareSong = async (e: React.MouseEvent, song: typeof songsData[0]) => {
     e.stopPropagation();
     e.preventDefault();
-    const url = `${window.location.origin}/song/${songId}`;
+    const url = `${window.location.origin}/song/${song.id}`;
+    const shareData = {
+      title: `${song.title} - Bryon Bowers`,
+      text: `Listen to "${song.title}" by Bryon Bowers - The Dead Fish Poet`,
+      url: url,
+    };
+
     try {
-      await navigator.clipboard.writeText(url);
-      setShowShareToast(true);
+      // Try native Web Share API first (works on mobile and some desktop browsers)
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback to clipboard
+        await navigator.clipboard.writeText(url);
+        setShowShareToast(true);
+      }
     } catch (err) {
-      // Fallback for browsers that don't support clipboard API
-      const textArea = document.createElement('textarea');
-      textArea.value = url;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      setShowShareToast(true);
+      // If share was cancelled or failed, try clipboard
+      if ((err as Error).name !== 'AbortError') {
+        try {
+          await navigator.clipboard.writeText(url);
+          setShowShareToast(true);
+        } catch {
+          // Final fallback using textarea
+          const textArea = document.createElement('textarea');
+          textArea.value = url;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          setShowShareToast(true);
+        }
+      }
     }
   };
 
@@ -758,7 +778,7 @@ export const MusicPage: React.FC = () => {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <IconButton
-                          onClick={(e) => handleShareSong(e, sphere.song.id)}
+                          onClick={(e) => handleShareSong(e, sphere.song)}
                           size="small"
                           sx={{
                             color: 'rgba(255,255,255,0.8)',

@@ -579,18 +579,38 @@ export const BookReader: React.FC = () => {
   const handleSharePoem = async () => {
     const currentPoem = poemSongPairings[currentPage];
     const url = `${window.location.origin}/poem/${currentPoem.id}`;
+    const shareData = {
+      title: `${currentPoem.poemTitle} - Bryon Bowers`,
+      text: `Read "${currentPoem.poemTitle}" paired with "${currentPoem.songTitle}" by Bryon Bowers - The Dead Fish Poet`,
+      url: url,
+    };
+
     try {
-      await navigator.clipboard.writeText(url);
-      setShowShareToast(true);
+      // Try native Web Share API first (works on mobile and some desktop browsers)
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback to clipboard
+        await navigator.clipboard.writeText(url);
+        setShowShareToast(true);
+      }
     } catch (err) {
-      // Fallback for browsers that don't support clipboard API
-      const textArea = document.createElement('textarea');
-      textArea.value = url;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      setShowShareToast(true);
+      // If share was cancelled or failed, try clipboard
+      if ((err as Error).name !== 'AbortError') {
+        try {
+          await navigator.clipboard.writeText(url);
+          setShowShareToast(true);
+        } catch {
+          // Final fallback using textarea
+          const textArea = document.createElement('textarea');
+          textArea.value = url;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          setShowShareToast(true);
+        }
+      }
     }
   };
 
