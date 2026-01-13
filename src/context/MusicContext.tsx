@@ -27,12 +27,15 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolumeState] = useState(1);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
+  const pendingPlayRef = useRef(false);
 
 
   const playSong = (song: Song) => {
     if (currentSong?.id === song.id) {
       togglePlay();
     } else {
+      pendingPlayRef.current = true;
       setCurrentSong(song);
       setIsPlaying(true);
     }
@@ -46,6 +49,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (!currentSong || allSongs.length === 0) return;
     const currentIndex = allSongs.findIndex(s => s.id === currentSong.id);
     const nextIndex = (currentIndex + 1) % allSongs.length;
+    pendingPlayRef.current = true;
     setCurrentSong(allSongs[nextIndex]);
     setIsPlaying(true);
   };
@@ -54,6 +58,7 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     if (!currentSong || allSongs.length === 0) return;
     const currentIndex = allSongs.findIndex(s => s.id === currentSong.id);
     const prevIndex = (currentIndex - 1 + allSongs.length) % allSongs.length;
+    pendingPlayRef.current = true;
     setCurrentSong(allSongs[prevIndex]);
     setIsPlaying(true);
   };
@@ -72,6 +77,30 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  // Safe play function that handles the play promise properly
+  const safePlay = async (audio: HTMLAudioElement) => {
+    try {
+      // Wait for any pending play promise to resolve/reject
+      if (playPromiseRef.current) {
+        try {
+          await playPromiseRef.current;
+        } catch {
+          // Ignore errors from previous play attempt
+        }
+      }
+
+      playPromiseRef.current = audio.play();
+      await playPromiseRef.current;
+      playPromiseRef.current = null;
+    } catch (err) {
+      playPromiseRef.current = null;
+      // Only log if it's not an AbortError (user changed song)
+      if ((err as Error).name !== 'AbortError') {
+        console.error("Playback failed:", err);
+      }
+    }
+  };
+
   // Audio Event Listeners
   useEffect(() => {
     const audio = audioRef.current;
@@ -81,28 +110,41 @@ export const MusicProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const updateDuration = () => setDuration(audio.duration);
     const onEnded = () => nextSong();
 
+    // When audio is ready to play after loading new source
+    const onCanPlay = () => {
+      if (pendingPlayRef.current && isPlaying) {
+        pendingPlayRef.current = false;
+        safePlay(audio);
+      }
+    };
+
     audio.addEventListener('timeupdate', updateTime);
     audio.addEventListener('loadedmetadata', updateDuration);
     audio.addEventListener('ended', onEnded);
+    audio.addEventListener('canplay', onCanPlay);
 
     return () => {
       audio.removeEventListener('timeupdate', updateTime);
       audio.removeEventListener('loadedmetadata', updateDuration);
       audio.removeEventListener('ended', onEnded);
+      audio.removeEventListener('canplay', onCanPlay);
     };
-  }, [currentSong]);
+  }, [currentSong, isPlaying]);
 
-  // Handle Play/Pause side effects
+  // Handle Play/Pause side effects (only for toggle, not song changes)
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
+    // Skip if we're waiting for a new song to load
+    if (pendingPlayRef.current) return;
+
     if (isPlaying) {
-      audio.play().catch(e => console.error("Playback failed:", e));
+      safePlay(audio);
     } else {
       audio.pause();
     }
-  }, [isPlaying, currentSong]);
+  }, [isPlaying]);
 
   return (
     <MusicContext.Provider value={{
