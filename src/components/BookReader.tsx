@@ -576,12 +576,22 @@ export const BookReader: React.FC = () => {
     }
   }, [currentPage, goToPage]);
 
-  const handleSharePoem = () => {
+  const handleSharePoem = async () => {
     const currentPoem = poemSongPairings[currentPage];
     const url = `${window.location.origin}/poem/${currentPoem.id}`;
-    navigator.clipboard.writeText(url).then(() => {
+    try {
+      await navigator.clipboard.writeText(url);
       setShowShareToast(true);
-    });
+    } catch (err) {
+      // Fallback for browsers that don't support clipboard API
+      const textArea = document.createElement('textarea');
+      textArea.value = url;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setShowShareToast(true);
+    }
   };
 
   // Keyboard navigation

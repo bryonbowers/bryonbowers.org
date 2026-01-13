@@ -406,12 +406,23 @@ export const MusicPage: React.FC = () => {
     }
   };
 
-  const handleShareSong = (e: React.MouseEvent, songId: string) => {
+  const handleShareSong = async (e: React.MouseEvent, songId: string) => {
     e.stopPropagation();
+    e.preventDefault();
     const url = `${window.location.origin}/song/${songId}`;
-    navigator.clipboard.writeText(url).then(() => {
+    try {
+      await navigator.clipboard.writeText(url);
       setShowShareToast(true);
-    });
+    } catch (err) {
+      // Fallback for browsers that don't support clipboard API
+      const textArea = document.createElement('textarea');
+      textArea.value = url;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setShowShareToast(true);
+    }
   };
 
   // Drag handlers
