@@ -750,9 +750,26 @@ export const MusicPage: React.FC = () => {
                           left: '50%',
                           transform: 'translateX(-50%)',
                           whiteSpace: 'nowrap',
-                          pointerEvents: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 0.5,
+                          pointerEvents: 'auto',
                         }}
+                        onClick={(e) => e.stopPropagation()}
                       >
+                        <IconButton
+                          onClick={(e) => handleShareSong(e, sphere.song.id)}
+                          size="small"
+                          sx={{
+                            color: 'rgba(255,255,255,0.8)',
+                            bgcolor: 'rgba(0,0,0,0.5)',
+                            p: 0.3,
+                            '&:hover': { bgcolor: 'rgba(255,255,255,0.2)', transform: 'scale(1.1)' },
+                            transition: 'all 0.2s',
+                          }}
+                        >
+                          <Share sx={{ fontSize: 14 }} />
+                        </IconButton>
                         <Typography
                           sx={{
                             color: 'white',
@@ -800,20 +817,6 @@ export const MusicPage: React.FC = () => {
                         </Typography>
                         {/* Streaming links */}
                         <Box sx={{ display: 'flex', gap: 1 }}>
-                        {/* Share */}
-                        <IconButton
-                          onClick={(e) => handleShareSong(e, sphere.song.id)}
-                          size="small"
-                          sx={{
-                            color: 'rgba(255,255,255,0.8)',
-                            bgcolor: 'rgba(0,0,0,0.6)',
-                            p: 0.5,
-                            '&:hover': { bgcolor: 'rgba(255,255,255,0.2)', transform: 'scale(1.1)' },
-                            transition: 'all 0.2s',
-                          }}
-                        >
-                          <Share sx={{ fontSize: 18 }} />
-                        </IconButton>
                         {/* Spotify */}
                         <IconButton
                           component="a"
