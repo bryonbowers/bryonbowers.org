@@ -181,20 +181,23 @@ export const MusicPage: React.FC = () => {
     const allAlbums = [...new Set(songsData.map(s => normalizeAlbum(s.albumTitle)))];
     const positions: Record<string, { x: number; y: number }> = {};
     const centerX = dimensions.width / 2;
-    const centerY = dimensions.height / 2;
+    const footerHeight = 120; // Account for player footer
+    const usableHeight = dimensions.height - footerHeight;
+    const centerY = usableHeight / 2;
 
     // Singles go to center
     positions['Singles'] = { x: centerX, y: centerY };
 
-    // Other albums arranged in a circle around center
+    // Other albums arranged in an ellipse - wider horizontally
     const otherAlbums = allAlbums.filter(a => a !== 'Singles');
-    const radius = Math.min(dimensions.width, dimensions.height) * 0.32;
+    const radiusX = dimensions.width * 0.38; // Wider horizontal spread
+    const radiusY = usableHeight * 0.32; // Tighter vertical to stay above footer
 
     otherAlbums.forEach((album, index) => {
       const angle = (index / otherAlbums.length) * Math.PI * 2 - Math.PI / 2;
       positions[album] = {
-        x: centerX + Math.cos(angle) * radius,
-        y: centerY + Math.sin(angle) * radius,
+        x: centerX + Math.cos(angle) * radiusX,
+        y: centerY + Math.sin(angle) * radiusY,
       };
     });
 
@@ -209,7 +212,8 @@ export const MusicPage: React.FC = () => {
     // Detect new song starting to play
     if (currentPlayingId && currentPlayingId !== prevId) {
       const centerX = dimensions.width / 2;
-      const centerY = dimensions.height / 2;
+      const footerHeight = 120;
+      const centerY = (dimensions.height - footerHeight) / 2;
       const size = isMobile ? SPHERE_SIZE_MOBILE : SPHERE_SIZE;
 
       setSpheres(prev => prev.map(sphere => {
@@ -266,9 +270,11 @@ export const MusicPage: React.FC = () => {
   // Animation loop - spheres gravitate towards center, playing sphere floats away and repels others
   const animate = useCallback(() => {
     const centerX = dimensions.width / 2;
-    const centerY = dimensions.height / 2;
+    const footerHeight = 120;
+    const usableHeight = dimensions.height - footerHeight;
+    const centerY = usableHeight / 2;
 
-    // Target position for playing sphere (exact center)
+    // Target position for playing sphere (exact center of usable area)
     const playingTargetX = centerX;
     const playingTargetY = centerY;
     const repelRadius = 300; // How far the playing sphere repels others
@@ -357,11 +363,12 @@ export const MusicPage: React.FC = () => {
         x += vx;
         y += vy;
 
-        // Bounce off walls
+        // Bounce off walls (with bottom margin for footer player)
+        const bottomMargin = 120; // Keep spheres above the footer
         if (x <= 0) { vx = Math.abs(vx) * 0.8; x = 0; }
         if (x >= dimensions.width - size) { vx = -Math.abs(vx) * 0.8; x = dimensions.width - size; }
         if (y <= 0) { vy = Math.abs(vy) * 0.8; y = 0; }
-        if (y >= dimensions.height - size) { vy = -Math.abs(vy) * 0.8; y = dimensions.height - size; }
+        if (y >= dimensions.height - size - bottomMargin) { vy = -Math.abs(vy) * 0.8; y = dimensions.height - size - bottomMargin; }
 
         // Friction
         vx *= 0.97;
