@@ -648,5 +648,18 @@
         "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw",
         "instagramUrl": "https://www.instagram.com/elonsakdsh/",
         "twitterUrl": "https://twitter.com/elonsakdsh"
+    },
+    {
+        "id": "51",
+        "title": "Roses, Lollipops and Flip Flops",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Single",
+        "audioUrl": "/music/Roses_Lollipops_and_flipflops.wav",
+        "coverImageUrl": "/albumcovers/flipflops, lollipops, roses.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw",
+        "instagramUrl": "https://www.instagram.com/elonsakdsh/",
+        "twitterUrl": "https://twitter.com/elonsakdsh"
     }
 ]
