@@ -661,5 +661,49 @@
         "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw",
         "instagramUrl": "https://www.instagram.com/elonsakdsh/",
         "twitterUrl": "https://twitter.com/elonsakdsh"
+    },
+    {
+        "id": "52",
+        "title": "Snake Oil",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Snake Oil",
+        "audioUrl": "/music/Snake_Oil.wav",
+        "coverImageUrl": "/albumcovers/snake oil.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "53",
+        "title": "Hobgoblin's Delight",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Snake Oil",
+        "audioUrl": "/music/Hobgoblins_Delight.wav",
+        "coverImageUrl": "/albumcovers/snake oil.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "54",
+        "title": "Echoes of the Night",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Snake Oil",
+        "audioUrl": "/music/Echoes_of_the_Night.wav",
+        "coverImageUrl": "/albumcovers/snake oil.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "55",
+        "title": "RIP Decency",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Snake Oil",
+        "audioUrl": "/music/RIP_Decency.wav",
+        "coverImageUrl": "/albumcovers/snake oil.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
     }
 ]
