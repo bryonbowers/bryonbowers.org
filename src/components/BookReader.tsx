@@ -228,11 +228,11 @@ const BookPage: React.FC<BookPageProps> = ({ pairing, isActive, pageNumber }) =>
                   component="p"
                   sx={{
                     fontFamily: '"IM Fell English", "Palatino", "Georgia", serif',
-                    fontSize: { xs: '0.7rem', md: '0.8rem' },
-                    lineHeight: 1.6,
+                    fontSize: { xs: '0.95rem', md: '1.1rem' },
+                    lineHeight: 1.7,
                     color: antiqueColors.inkFaded,
                     fontWeight: 400,
-                    mb: line.trim() === '' ? 1 : 0.15,
+                    mb: line.trim() === '' ? 1.5 : 0.25,
                     letterSpacing: '0.02em',
                   }}
                 >
@@ -714,30 +714,6 @@ export const BookReader: React.FC = () => {
             )
           `,
           pointerEvents: 'none',
-        },
-        // Kraken/Cthulhu tentacle background
-        '&::after': {
-          content: '""',
-          position: 'absolute',
-          inset: 0,
-          zIndex: 1,
-          pointerEvents: 'none',
-          backgroundImage: 'url(/tentacles-bg.svg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          opacity: 0.35,
-          animation: 'tentacleBreath 20s ease-in-out infinite',
-        },
-        '@keyframes tentacleBreath': {
-          '0%, 100%': {
-            opacity: 0.3,
-            transform: 'scale(1) translateY(0)',
-          },
-          '50%': {
-            opacity: 0.45,
-            transform: 'scale(1.02) translateY(-8px)',
-          },
         },
       }}
     >
