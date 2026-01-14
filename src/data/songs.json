@@ -705,5 +705,104 @@
         "duration": 200,
         "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
         "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "56",
+        "title": "Vampires By the Pool",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Broken Lady",
+        "audioUrl": "/music/Vampires_By_the_Pool.wav",
+        "coverImageUrl": "/albumcovers/be kind rewind.png",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "57",
+        "title": "Broken Lady",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Broken Lady",
+        "audioUrl": "/music/Broken_Lady.wav",
+        "coverImageUrl": "/albumcovers/be kind rewind.png",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "58",
+        "title": "Be Kind Rewind",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Broken Lady",
+        "audioUrl": "/music/Be_Kind_Rewind.wav",
+        "coverImageUrl": "/albumcovers/be kind rewind.png",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "59",
+        "title": "Black Boots or Brown",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Summer Lovin'",
+        "audioUrl": "/music/Black_Boots_or_Brown.wav",
+        "coverImageUrl": "/albumcovers/summer_lovin_spotify.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "60",
+        "title": "Don't Cut Down the Old Pine Tree",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Summer Lovin'",
+        "audioUrl": "/music/Dont_cut_down_the_Old_Pine_Tree.wav",
+        "coverImageUrl": "/albumcovers/summer_lovin_spotify.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "61",
+        "title": "Fighting with Daisy Dukes",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Summer Lovin'",
+        "audioUrl": "/music/Fighting_with_Daisy_Dukes.wav",
+        "coverImageUrl": "/albumcovers/summer_lovin_spotify.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "62",
+        "title": "Hurricane a Comin'",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Summer Lovin'",
+        "audioUrl": "/music/Hurricane_a_comin.wav",
+        "coverImageUrl": "/albumcovers/summer_lovin_spotify.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "63",
+        "title": "Lafayette Square",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Summer Lovin'",
+        "audioUrl": "/music/Lafayette_Square.wav",
+        "coverImageUrl": "/albumcovers/summer_lovin_spotify.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "64",
+        "title": "Suzy Lord of the Flies",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Summer Lovin'",
+        "audioUrl": "/music/Suzy_Lord_of_the_Flies.wav",
+        "coverImageUrl": "/albumcovers/summer_lovin_spotify.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
     }
 ]
