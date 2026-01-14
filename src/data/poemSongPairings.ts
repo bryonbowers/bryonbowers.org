@@ -1415,5 +1415,566 @@ You gotta Hug em and kiss em
 and make the time last…`,
     mood: 'reflective',
     theme: 'Childhood, fatherhood, cherishing time'
+  },
+  {
+    id: '44',
+    songId: '44',
+    songTitle: 'Destroyer of Silence',
+    poemTitle: 'Destroyer of Silence',
+    poemExcerpt: 'How can one person be so many to me...',
+    poemContent: `Riding in the car
+After a long bike ride…
+Radio off
+Silence circles us
+Questions bounce around in my head
+I can't keep them in…
+So I shattered your
+Peaceful silence
+Me the Inquisitor
+You Socrates
+Looking for his hemlock
+In the glove box
+
+How can one person Be…
+So many to me?...
+Socrates to my questions
+Devil's Advocate to my stances
+You were my Uncle Dad Big Brother…
+And my Best Friend Too…
+I was the Destroyer
+Of your Silence
+Static to your Radio
+Giant Lizard…
+To your Chipmunk
+
+To every entrenched
+Stance of mine
+You were a nonchalant
+Devil's advocate
+Your Patience waning as we drove
+You played beauty on the cd player
+You gave me Ani, Ellis, Bruce,
+and Primitive Radio Gods
+I found your old cassettes
+Journey, Eagles, and Styx
+Hotel California was my lullaby
+
+How can one person Be…
+So many to me?...
+Socrates to my questions
+Devil's Advocate to my stances
+You were my Uncle Dad Big Brother…
+And my Best Friend Too…
+I was the Destroyer
+Of your Silence
+Static to your Radio
+Giant Lizard…
+To your Chipmunk
+
+Every box from the Attic
+A sedimentary layer
+Of your childhood
+I was an archeologist
+stumbling on Beautiful
+drawings of Robots
+and Dark haired beauties
+SciFi and Fantasy Books
+were treasures left behind
+for my consumption
+Took your toy Millennium Falcon
+On a trip to another galaxy
+with Alf and Captain planet
+
+How can one person Be…
+So many to me?...
+Socrates to my questions
+Devil's Advocate to my stances
+You were my Uncle Dad Big Brother…
+And my Best Friend Too…
+I was the Destroyer
+Of your Silence
+Static to your Radio
+Giant Lizard…
+To your Chipmunk`,
+    mood: 'reflective',
+    theme: 'Family, mentorship, brotherhood'
+  },
+  {
+    id: '45',
+    songId: '45',
+    songTitle: 'Love on the Phoneline',
+    poemTitle: 'Love on the Phoneline',
+    poemExcerpt: 'We fell in love on the phone line, I knew your heart was all mine...',
+    poemContent: `A hockey game
+A fountain
+The 4th of July
+And the rest of our lives
+
+She came in from California
+On a cold November night
+
+The hockey game was crowded
+All the fans were acolytes
+
+Your voice came in a whisper
+The only thing I heard
+
+Hot dogs and nachos fall to the floor
+I can't think anymore
+
+Our eyes locked as we were leaving
+Hardly know you but I need you
+
+I thought it be forward to ask you for your email
+So I asked my uncle to ask your brother
+
+You went back to California
+I really missed you
+
+1am chats on yahoo messenger
+On a dialup connection
+
+We talked about everything
+We talked about nothing
+
+I logged in everyday
+To see what you would say
+
+We fell in love on the phone line
+I knew your heart was all mine
+
+I was a wild horse roaming,
+She was a flower just blooming.
+
+Tamed to a lover's nest
+We all know the rest
+
+Now its 1am diaper changes
+Exhausted midday exchanges
+
+Family cuddles on the bed
+The dog's butt is by my head
+
+Kids are growing up too fast
+If I can only make it last
+
+Time is not your friend
+Just try to hold his hand
+As long as you can
+Cause one day
+He'll be falling in love on the phone line
+Losing his heart to his Valentine
+
+We got married in India
+on a Humid December Day
+We got married again in Texas
+on a Cold Hill Country Night
+Then we did it again…
+On the San Francisco Bay…
+With a baby on the way…
+The Town hall lady
+Said "where are your vows?"
+Said "we've done this twice before
+Many years ago"
+We gotta catch the ride
+to Embarcadero…
+
+Then years later…
+On a busy afternoon
+Utility company called…
+4th time married on the Phone…
+
+She said "Do you young man?
+Give this lovely young woman
+Access to your…
+Utility account?"
+I said
+"Yes, I do
+With all of my heart
+As long as she turns off the lights…
+When she leaves a room…"
+Then she said:
+"Do you young lady?
+Take Responsibility?
+For paying for all of this guy's
+Electricity?"
+Then my love said..
+"Yes, I do…
+I do love you..
+But when my feet get cold…
+Don't leave me out to dry..
+Get under the covers…
+Kick that dog off the bed…
+And keep my feet warm…
+
+The other voice on the phone said
+"I now pronounce you legally bound
+By the power
+Of your
+Electric Line"
+Expect a Bill in the mail…
+
+They say 3rd Time's a charm
+I say 4th is even better!
+I say let's buy a farm
+far away from the world
+Let's get some chickens
+Some horses and sheep
+And some peaches we'll keep
+Next time the phone rings
+Let it go to voicemail…`,
+    mood: 'romantic',
+    theme: 'Love, marriage, family life'
+  },
+  {
+    id: '46',
+    songId: '46',
+    songTitle: 'Wolves at Play',
+    poemTitle: 'Wolf Commander',
+    poemExcerpt: 'Pack of wolves circling round you, got your scent and your red lips too...',
+    poemContent: `a gaggle of boys
+you were just one girl
+smoking cigarettes
+our minds in a whirl…
+your back against the wall
+you were looking' lean
+hair slicked back
+your lip stick mean…
+had us strutting' about…
+with our Collars up..
+Vying for your attention
+Bulls in a play pin…
+
+Pack of wolves
+circling round you
+got your scent
+and your red lips too
+peacocks a dancing
+strutting' for you…
+Commander hips
+my body bowed to you…
+
+your every move
+is their command
+whatever you want
+in the palm of your hand…
+Flowers jewels
+you rule their land
+Legs flowing' down
+Red dress on…
+Take your time
+And answer your phone…
+
+Pack of wolves
+circling round you
+got your scent
+and your red lips too
+peacocks a dancing
+strutting' for you…
+Commander hips
+my body bowed to you…
+
+You got your pick
+One, More,
+Or none at all
+All lined up
+They're ready to fall..
+Lift your axe
+bring it on down
+Heads gonna roll
+that gurgle sound
+Leashes attached
+to your big red lips
+drag them along
+throw em a bone
+then take em home…
+
+Pack of wolves
+circling round you
+got your scent
+and your red lips too
+peacocks a dancing
+strutting' for you…
+commander hips
+my body bowed to you…
+
+Forest all around
+Water gonna fall…
+Dark clouds rolling in…
+Scoreboard and all
+Tents all around
+You took my hand…
+I bowed to you
+queen of my land…
+You Left….
+Then you came back to me…
+In the night
+like a shadow
+from the sea
+gave you tribute
+then I gave it again…
+you released the hound in me……
+…
+Then I released the wolf in you…`,
+    mood: 'passionate',
+    theme: 'Desire, attraction, courtship'
+  },
+  {
+    id: '47',
+    songId: '47',
+    songTitle: "The Devil's Due",
+    poemTitle: "The Devil's Due",
+    poemExcerpt: 'Life is a series of stories we tell ourselves...',
+    poemContent: `She jumped up
+I said no
+
+She got down
+and chewed my toe
+
+Dancing on the trampoline
+fighting a demon she's never seen
+
+the kids giggle and shout
+this is what it's all about...
+
+shadows of leaves dance on the water
+sending ripples to the slaughter
+
+Summer passes way too quickly
+Ice cream drips down really sticky
+
+Where are you napkins
+Where did you go
+I'm lost without you
+I need you so
+
+Sundown sparks a toothbrush tantrum,
+Fears of drills and masks to ransom.
+Tales of needles, numbing dread,
+Dance like shadows round their bed.
+
+Life is a series of stories we tell ourselves
+Made of Fragile eggs and Christmas elves
+Live life well knowing much of what you do disappears along with you
+Down the stairs we go,
+The devil's due only you know`,
+    mood: 'reflective',
+    theme: 'Parenting, fleeting moments, mortality'
+  },
+  {
+    id: '48',
+    songId: '48',
+    songTitle: 'Little One on the Wind',
+    poemTitle: 'Never Knew You',
+    poemExcerpt: 'Flying with eagles, soaring on the minds of those who love you...',
+    poemContent: `Never knew you
+But I know the love around you
+Your Dad… Dirt of Texas Ready…
+Your Mom… Hands Steady
+Her Heart Ready for you
+A hurt in her Heart
+My words can't heal
+
+Never knew you
+But I know the love around you
+Flying with eagles
+Soaring on the minds of those..
+who love you
+
+Fall asleep little one
+Close your eyes
+Listen to the sky
+Birds chirping
+Trees swaying in the wind
+Football game lights and cheers
+At your brothers' games
+In the distance
+Country roads to travel
+Drag races on gravel at 2am
+
+Never knew you
+But I know the love around you
+Flying with eagles
+Soaring on the minds of those..
+who love you
+
+You visit them every now and then
+randomly on the radio…
+"Let it be" softly playing…
+You saying hello while we all drive
+to tuck you in to sleep
+
+Never knew you
+But I know the love around you
+Flying with eagles
+Soaring on the minds of those..
+who love you
+
+Peaceful in your sleep
+Happiness where you are
+Their Hearts combined with yours
+Mingled in the wind
+She comes to say hello
+You pop out of your slumber
+She carries you with her
+Everywhere they go`,
+    mood: 'melancholic',
+    theme: 'Loss, remembrance, love'
+  },
+  {
+    id: '49',
+    songId: '49',
+    songTitle: 'Electric Company Matrimony',
+    poemTitle: 'We Got Married on the Phone',
+    poemExcerpt: 'I now pronounce you legally bound by the power of your Electric Line...',
+    poemContent: `We got married in India
+on a Humid December Day
+We got married again in Texas
+on a Cold Hill Country Night
+Then we did it again…
+On the San Francisco Bay…
+With a baby on the way…
+The Town hall lady
+Said "where are your vows?"
+Said "we've done this twice before
+Many years ago"
+We gotta catch the ride
+to Embarcadero…
+
+Then years later…
+On a busy afternoon
+Utility company called…
+4th time married on the Phone…
+
+She said "Do you young man?
+Give this lovely young woman
+Access to your…
+Utility account?"
+I said
+"Yes, I do
+With all of my heart
+As long as she turns off the lights…
+When she leaves a room…"
+Then she said:
+"Do you young lady?
+Take Responsibility?
+For paying for all of this guy's
+Electricity?"
+Then my love said..
+"Yes, I do…
+I do love you..
+But when my feet get cold…
+Don't leave me out to dry..
+Get under the covers…
+Kick that dog off the bed…
+And keep my feet warm…
+
+The other voice on the phone said
+"I now pronounce you legally bound
+By the power
+Of your
+Electric Line"
+Expect a Bill in the mail…
+
+They say 3rd Time's a charm
+I say 4th is even better!
+I say let's buy a farm
+far away from the world
+Let's get some chickens
+Some horses and sheep
+And some peaches we'll keep
+Next time the phone rings
+Let it go to voicemail…`,
+    mood: 'romantic',
+    theme: 'Marriage, commitment, humor'
+  },
+  {
+    id: '50',
+    songId: '50',
+    songTitle: 'This One',
+    poemTitle: 'This One',
+    poemExcerpt: 'The absence of this one hurts...',
+    poemContent: `water drips into the crevasses of the mind
+as ants crawl onto my brain,
+nibbling little chunks of grey matter.
+ready to carry it back to the nest.
+the sadness over her absence keeps me company
+like an angry child wanting to go out and play
+on a rainy day.
+thunder roars somewhere nearby,
+giving me the illusion of something bigger than myself.
+
+She is laying on the bed…
+Iodine soaked toes…
+There are thoughts in her head…
+nobody knows…
+People standing 'around her
+Sobbing their goodbyes…
+Snot dripping from their nose
+Tears from their eyes
+Treasure your pain
+
+The absence of this one.....
+The absence of this one hurts....
+It hurts in the pit of my stomach
+It hurts at the bottom of my throat.
+
+this one.
+this one nurtured me;
+this one looked after me;
+this one spoke to me like I mattered in a world of occasionally chaotic routine;
+this one lived life in intervals of her children; all her children;
+this one watched basil grow and tea leaves dry.
+while her heart grew only to die
+
+The grayness of her hair...
+so gray it was blue;
+was frosting on top of a legacy of the era of her youth
+the era of perms, station wagons, disco, and roller skating.
+She gave so much of herself;
+the pain of a diminishing heart caused anger
+anger that manifested as jabs to those she loved
+to those with a lack of absence to make the heart grow fonder.
+
+her husband, the guardian of all that is quiet,
+sat in the shadow of blindness....
+with a patience that would rival a 1000 year old turtle
+a turtle the size of a pyramid.
+
+As she lay dying on the hospital bed;
+her heart kept beating only by an impromptu pace maker
+clinging to her heart like a tick
+her children and children's children stand around her
+holding her hand
+
+her still healthy brain; trapped in a body gone bad;
+fires synapses of 82 years lived
+what thoughts she has
+nobody knows
+
+her iodine soaked feet poke out of the sheet
+tears and snot of those standing fall to the hospital floor
+
+I try not to cry
+but there is no controlling it
+i can't stop the pain
+the loss, the loss of my mom
+not of blood, but of life
+
+we have to let this one go
+I have to let this one go
+alone in my thoughts
+no more talking
+she's sleeping now
+
+no....
+she is no more
+only in our thoughts,
+our memories
+
+the absence of this one hurts....
+some pain can never go away.`,
+    mood: 'melancholic',
+    theme: 'Loss, grief, family'
   }
 ];
