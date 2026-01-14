@@ -58,6 +58,9 @@ export const MusicPage: React.FC = () => {
   const dragPositions = useRef<{ x: number; y: number; time: number }[]>([]);
   const dragOffset = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
+  // Track previous playing song to detect playback changes
+  const prevPlayingSongId = useRef<string | null>(null);
+
   // Explosion effect when switching to arrange by album
   useEffect(() => {
     if (arrangeByAlbum && !prevArrangeByAlbum.current) {
@@ -198,6 +201,68 @@ export const MusicPage: React.FC = () => {
     return positions;
   }, [dimensions]);
 
+  // Force playing sphere to center when playback starts/changes
+  useEffect(() => {
+    const currentPlayingId = (currentSong && isPlaying) ? currentSong.id : null;
+    const prevId = prevPlayingSongId.current;
+
+    // Detect new song starting to play
+    if (currentPlayingId && currentPlayingId !== prevId) {
+      const centerX = dimensions.width / 2;
+      const centerY = dimensions.height / 2;
+      const size = isMobile ? SPHERE_SIZE_MOBILE : SPHERE_SIZE;
+
+      setSpheres(prev => prev.map(sphere => {
+        if (sphere.id === currentPlayingId) {
+          // Teleport playing sphere to center immediately
+          return {
+            ...sphere,
+            x: centerX - size / 2,
+            y: centerY - size / 2,
+            vx: 0,
+            vy: 0,
+          };
+        } else {
+          // Repel all other spheres away from center
+          const dx = (sphere.x + sphere.size / 2) - centerX;
+          const dy = (sphere.y + sphere.size / 2) - centerY;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+          const repelStrength = 12;
+
+          return {
+            ...sphere,
+            vx: (dx / dist) * repelStrength,
+            vy: (dy / dist) * repelStrength,
+          };
+        }
+      }));
+    }
+
+    // Return previous playing sphere to its album cluster when playback changes
+    if (prevId && prevId !== currentPlayingId && arrangeByAlbum) {
+      const albumPositions = getAlbumClusterPositions();
+      setSpheres(prev => prev.map(sphere => {
+        if (sphere.id === prevId) {
+          const albumPos = albumPositions[normalizeAlbum(sphere.song.albumTitle)];
+          if (albumPos) {
+            // Give it velocity towards its album cluster
+            const dx = albumPos.x - (sphere.x + sphere.size / 2);
+            const dy = albumPos.y - (sphere.y + sphere.size / 2);
+            const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+            return {
+              ...sphere,
+              vx: (dx / dist) * 8,
+              vy: (dy / dist) * 8,
+            };
+          }
+        }
+        return sphere;
+      }));
+    }
+
+    prevPlayingSongId.current = currentPlayingId;
+  }, [currentSong, isPlaying, dimensions, isMobile, arrangeByAlbum, getAlbumClusterPositions]);
+
   // Animation loop - spheres gravitate towards center, playing sphere floats away and repels others
   const animate = useCallback(() => {
     const centerX = dimensions.width / 2;
@@ -206,7 +271,7 @@ export const MusicPage: React.FC = () => {
     // Target position for playing sphere (exact center)
     const playingTargetX = centerX;
     const playingTargetY = centerY;
-    const repelRadius = 250; // How far the playing sphere repels others
+    const repelRadius = 300; // How far the playing sphere repels others
 
     // Get album cluster positions if in arrange by album mode
     const albumPositions = arrangeByAlbum ? getAlbumClusterPositions() : null;
@@ -238,18 +303,13 @@ export const MusicPage: React.FC = () => {
         const waveFreq = timeRef.current * 0.4 + waveOffsetX;
         vy += Math.sin(waveFreq) * waveAmplitude;
 
-        // Playing sphere ALWAYS pulls to center (priority over album clustering)
+        // Playing sphere is LOCKED to center - no physics, just snap to position
         if (isThisPlaying) {
-          const dx = playingTargetX - (x + size / 2);
-          const dy = playingTargetY - (y + size / 2);
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist > 5) {
-            // Strong pull to center - the closer, the stronger snap
-            const pullStrength = dist > 100 ? 0.4 : 0.6;
-            vx += (dx / dist) * pullStrength;
-            vy += (dy / dist) * pullStrength;
-          }
+          // Hard lock to center - override position directly
+          x = playingTargetX - size / 2;
+          y = playingTargetY - size / 2;
+          vx = 0;
+          vy = 0;
         } else if (arrangeByAlbum && albumPositions) {
           // Pull towards album cluster position
           const albumPos = albumPositions[normalizeAlbum(sphere.song.albumTitle)];
@@ -265,7 +325,7 @@ export const MusicPage: React.FC = () => {
             }
           }
         } else {
-          // Non-playing spheres gravitate towards center
+          // Non-playing spheres gravitate towards center (only in free float mode)
           // Pull stronger when search is active (fewer spheres visible)
           const dx = centerX - (x + size / 2);
           const dy = centerY - (y + size / 2);
@@ -276,21 +336,21 @@ export const MusicPage: React.FC = () => {
             vx += (dx / dist) * pullStrength;
             vy += (dy / dist) * pullStrength;
           }
+        }
 
-          // Repel from playing sphere
-          if (playingSphere) {
-            const psx = playingSphere.x + playingSphere.size / 2;
-            const psy = playingSphere.y + playingSphere.size / 2;
-            const rpx = (x + size / 2) - psx;
-            const rpy = (y + size / 2) - psy;
-            const repelDist = Math.sqrt(rpx * rpx + rpy * rpy);
+        // Repel ALL non-playing spheres from the playing sphere (applies in any mode)
+        if (!isThisPlaying && playingSphere) {
+          const psx = playingSphere.x + playingSphere.size / 2;
+          const psy = playingSphere.y + playingSphere.size / 2;
+          const rpx = (x + size / 2) - psx;
+          const rpy = (y + size / 2) - psy;
+          const repelDist = Math.sqrt(rpx * rpx + rpy * rpy);
 
-            if (repelDist < repelRadius && repelDist > 0) {
-              // Stronger repulsion closer to playing sphere
-              const repelStrength = (1 - repelDist / repelRadius) * 0.3;
-              vx += (rpx / repelDist) * repelStrength;
-              vy += (rpy / repelDist) * repelStrength;
-            }
+          if (repelDist < repelRadius && repelDist > 0) {
+            // Strong repulsion closer to playing sphere
+            const repelStrength = (1 - repelDist / repelRadius) * 0.8;
+            vx += (rpx / repelDist) * repelStrength;
+            vy += (rpy / repelDist) * repelStrength;
           }
         }
 
