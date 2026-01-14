@@ -33,8 +33,8 @@ interface Sphere {
   song: typeof songsData[0];
 }
 
-const SPHERE_SIZE = 100;
-const SPHERE_SIZE_MOBILE = 70;
+const SPHERE_SIZE = 75;
+const SPHERE_SIZE_MOBILE = 52;
 
 export const MusicPage: React.FC = () => {
   const { songId } = useParams<{ songId?: string }>();
