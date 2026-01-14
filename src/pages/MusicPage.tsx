@@ -238,7 +238,19 @@ export const MusicPage: React.FC = () => {
         const waveFreq = timeRef.current * 0.4 + waveOffsetX;
         vy += Math.sin(waveFreq) * waveAmplitude;
 
-        if (arrangeByAlbum && albumPositions) {
+        // Playing sphere ALWAYS pulls to center (priority over album clustering)
+        if (isThisPlaying) {
+          const dx = playingTargetX - (x + size / 2);
+          const dy = playingTargetY - (y + size / 2);
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist > 5) {
+            // Strong pull to center - the closer, the stronger snap
+            const pullStrength = dist > 100 ? 0.4 : 0.6;
+            vx += (dx / dist) * pullStrength;
+            vy += (dy / dist) * pullStrength;
+          }
+        } else if (arrangeByAlbum && albumPositions) {
           // Pull towards album cluster position
           const albumPos = albumPositions[normalizeAlbum(sphere.song.albumTitle)];
           if (albumPos) {
@@ -251,17 +263,6 @@ export const MusicPage: React.FC = () => {
               vx += (dx / dist) * pullStrength;
               vy += (dy / dist) * pullStrength;
             }
-          }
-        } else if (isThisPlaying) {
-          // Playing sphere floats up and to the right
-          const dx = playingTargetX - (x + size / 2);
-          const dy = playingTargetY - (y + size / 2);
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist > 20) {
-            const pullStrength = 0.12;
-            vx += (dx / dist) * pullStrength;
-            vy += (dy / dist) * pullStrength;
           }
         } else {
           // Non-playing spheres gravitate towards center
