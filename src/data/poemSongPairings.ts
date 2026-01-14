@@ -1330,5 +1330,90 @@ Come on bar tender
 One more round…`,
     mood: 'reflective',
     theme: 'Solitude, history, escapism'
+  },
+  {
+    id: '43',
+    songId: '43',
+    songTitle: 'The Dragon Game',
+    poemTitle: "You're Adverse to Haste",
+    poemExcerpt: "It's a beautiful day for a slow walk anywhere with you...",
+    poemContent: `Red scarf around your neck
+One fingerless glove on
+Adverse to haste
+Your destination is Unknown
+A dancer and a dreamer
+15 minutes late
+No breakfast
+On your plate
+just a cereal bar
+on the ride in dad's car
+
+It's a beautiful day
+for a slow walk
+Anywhere with you…
+Take their life slow
+Let your stress go…
+Because childhood passes by
+way too fast…
+You gotta Hug em and kiss em
+and make the time last…
+
+Ham and PBJ
+In your lunchbox
+Everyday
+You're a fish in water
+and a Butterfly on the land
+Guardian of the creatures
+Protector of your little brother
+Worried about everything
+More than you should be
+Everything's gonna be ok
+just enjoy your day
+
+It's a beautiful day
+for a slow walk
+Anywhere with you…
+Take their life slow
+Let your stress go…
+Because childhood passes by
+way too fast…
+You gotta Hug em and kiss em
+and make the time last…
+
+Swimming in the pool with dad
+Playing the Dragon Game
+Holding on for dear life
+Trying to keep feet on the other side
+Marco said to Polo
+Where did you go go?
+Time to get out
+Bed time comes
+Can't turn it off?
+I'll read a poem for you..
+The Sun fell out of the sky
+The moon began to cry
+It cried so hard
+A thunderstorm formed…
+Rain came down so hard
+and so long
+That a river formed
+And turned into this song
+And flowed all the way
+to your ears…
+sleep now
+get your rest
+let me take care of the rest…
+
+It's a beautiful day
+for a slow walk
+Anywhere with you…
+Take their life slow
+Let your stress go…
+Because childhood passes by
+way too fast…
+You gotta Hug em and kiss em
+and make the time last…`,
+    mood: 'reflective',
+    theme: 'Childhood, fatherhood, cherishing time'
   }
 ];
