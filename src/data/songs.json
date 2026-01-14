@@ -531,5 +531,18 @@
         "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw",
         "instagramUrl": "https://www.instagram.com/elonsakdsh/",
         "twitterUrl": "https://twitter.com/elonsakdsh"
+    },
+    {
+        "id": "42",
+        "title": "Deadpool Cupcakes",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "The Dragon Game",
+        "audioUrl": "/music/Deadpool_Cupcakes.wav",
+        "coverImageUrl": "/albumcovers/The Dragon Game Album Cover.png",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw",
+        "instagramUrl": "https://www.instagram.com/elonsakdsh/",
+        "twitterUrl": "https://twitter.com/elonsakdsh"
     }
 ]

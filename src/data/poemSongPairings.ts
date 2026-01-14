@@ -1254,5 +1254,81 @@ I did not win...
 so i sit waiting with joy knowing it is me she will destroy`,
     mood: 'passionate',
     theme: 'Love, anger, intimacy'
+  },
+  {
+    id: '42',
+    songId: '42',
+    songTitle: 'Deadpool Cupcakes',
+    poemTitle: 'Peach Cider Chalice',
+    poemExcerpt: 'Deadpool cupcakes, peach cider in my chalice...',
+    poemContent: `I got caught in the rain
+On a hot July day
+Bare Feet Burning
+Now they're floating away…
+Deadpool cupcakes
+Peach cider in my chalice
+I took more showers
+than Debbie does Dallas
+Come on bar tender
+One more round…
+
+I disappear from the world
+when it gets too much
+People drain me of my powers
+they like to talk and such
+I like a good book
+Solitude is my solace
+Like to dive deep down
+In the ancient past
+I could just lay down
+In the water and drown
+Sumerian Clay tablet
+Laying on the ground
+One of many
+Never found…
+
+I got caught in the rain
+On a hot July day
+Bare Feet Burning
+Now they're floating away…
+Deadpool cupcakes
+Peach cider in my chalice
+I took more showers
+than Debbie does Dallas
+Come on bar tender
+One more round…
+
+Mystery coalition
+Of Sea people attack
+Egypt fights back
+On those nile shores
+King rises up
+In 20 years he is gone…
+Bronze Age Collapse
+The weather's gone bad…
+Assyrian Empire
+Knowledge lost
+Buildings crumbling in the wind
+two factions battled it out
+But Nobody won in the end…
+Somebody's gonna rise up again…
+Civilization lost
+People fighting over power, food, and water
+Make that cost minuscule
+Then the people
+They can rule…
+
+I got caught in the rain
+On a hot July day
+Bare Feet Burning
+Now they're floating away…
+Deadpool cupcakes
+Peach cider in my chalice
+I took more showers
+than Debbie does Dallas
+Come on bar tender
+One more round…`,
+    mood: 'reflective',
+    theme: 'Solitude, history, escapism'
   }
 ];
