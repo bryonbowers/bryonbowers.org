@@ -1630,94 +1630,71 @@ Let it go to voicemail…`,
     id: '46',
     songId: '46',
     songTitle: 'Wolves at Play',
-    poemTitle: 'Wolf Commander',
-    poemExcerpt: 'Pack of wolves circling round you, got your scent and your red lips too...',
-    poemContent: `a gaggle of boys
-you were just one girl
-smoking cigarettes
-our minds in a whirl…
-your back against the wall
-you were looking' lean
-hair slicked back
-your lip stick mean…
-had us strutting' about…
-with our Collars up..
-Vying for your attention
-Bulls in a play pin…
+    poemTitle: 'Kissed You by the Fountain',
+    poemExcerpt: 'Two wolves at play on a winter day...',
+    poemContent: `I was a Wolf walking
+with you hand in hand
+You an innocent sheep
+In my hard wolf land…
+"Can I kiss you"
+Said the wolf to the sheep
+"No", said the sheep
+With a twinkle in her smile
+And a bo in her peep
+You were a wolf
+In sheep's clothing
+You kissed
+me by the fountain
+Outside world…
+Melting away..
+Just you and me…
+Two wolves…
+At play…
+On a winter day…
 
-Pack of wolves
-circling round you
-got your scent
-and your red lips too
-peacocks a dancing
-strutting' for you…
-Commander hips
-my body bowed to you…
+Sheep clothing On the Dorm Room Floor
+Two wolves Kissing
+Looking for more
+Love, then Love
+Then They Love some more…
+Now there's Two cubs playing
+On the Brick house Floor
 
-your every move
-is their command
-whatever you want
-in the palm of your hand…
-Flowers jewels
-you rule their land
-Legs flowing' down
-Red dress on…
-Take your time
-And answer your phone…
+I kissed you…
+By the fountain
+On the 4th of July
+I kissed you
+On the top of a hill
+Then we had a good thrill
+I kissed you
+Then I fell in love with you
 
-Pack of wolves
-circling round you
-got your scent
-and your red lips too
-peacocks a dancing
-strutting' for you…
-Commander hips
-my body bowed to you…
+Sheep clothing On the Dorm Room Floor
+Two wolves Kissing
+Looking for more
+Love, then Love
+Then They Love some more…
+Now there's Two cubs playing
+On the Brick house Floor
 
-You got your pick
-One, More,
-Or none at all
-All lined up
-They're ready to fall..
-Lift your axe
-bring it on down
-Heads gonna roll
-that gurgle sound
-Leashes attached
-to your big red lips
-drag them along
-throw em a bone
-then take em home…
+Two wolves had
+Two baby cubs
+Built a house
+made of bricks and love
+Hail and Stone rained down
+It huffed, and puffed,
+But it didn't blow
+The house down…
 
-Pack of wolves
-circling round you
-got your scent
-and your red lips too
-peacocks a dancing
-strutting' for you…
-commander hips
-my body bowed to you…
-
-Forest all around
-Water gonna fall…
-Dark clouds rolling in…
-Scoreboard and all
-Tents all around
-You took my hand…
-I bowed to you
-queen of my land…
-You Left….
-Then you came back to me…
-In the night
-like a shadow
-from the sea
-gave you tribute
-then I gave it again…
-you released the hound in me……
-…
-Then I released the wolf in you…`,
-    mood: 'passionate',
-    theme: 'Desire, attraction, courtship'
+Sheep clothing On the Dorm Room Floor
+Two wolves Kissing
+Looking for more
+Love, then Love
+Then They Love some more…
+Now there's Two cubs playing
+On the Brick house Floor`,
+    mood: 'romantic',
+    theme: 'Love, courtship, family'
   },
   {
     id: '47',
