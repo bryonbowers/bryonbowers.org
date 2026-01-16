@@ -1557,31 +1557,64 @@ export const MusicPage: React.FC = () => {
               const centerX = albumSpheres.reduce((sum, s) => sum + s.x + s.size / 2, 0) / albumSpheres.length;
               const centerY = albumSpheres.reduce((sum, s) => sum + s.y + s.size / 2, 0) / albumSpheres.length;
 
-              // Draw lines from center to each sphere
-              return albumSpheres.map(s => {
+              // Draw curvy whispy lines from center to each sphere
+              return albumSpheres.map((s, idx) => {
                 const sx = s.x + s.size / 2;
                 const sy = s.y + s.size / 2;
                 const dist = Math.sqrt((sx - centerX) ** 2 + (sy - centerY) ** 2);
 
+                // Calculate control point for bezier curve - offset perpendicular to the line
+                const midX = (centerX + sx) / 2;
+                const midY = (centerY + sy) / 2;
+                const dx = sx - centerX;
+                const dy = sy - centerY;
+                // Perpendicular offset for curve - alternates direction based on index
+                const curveAmount = 20 + (dist * 0.15);
+                const direction = idx % 2 === 0 ? 1 : -1;
+                const perpX = -dy / (dist || 1) * curveAmount * direction;
+                const perpY = dx / (dist || 1) * curveAmount * direction;
+                const ctrlX = midX + perpX;
+                const ctrlY = midY + perpY;
+
                 // String tension affects appearance
-                const tension = Math.min(dist / 120, 1);
-                const opacity = 0.4 + (1 - tension) * 0.4;
-                const strokeWidth = 1.5 + (1 - tension) * 1.5;
+                const tension = Math.min(dist / 150, 1);
+                const opacity = 0.25 + (1 - tension) * 0.35;
+
+                // Create path with quadratic bezier curve
+                const path = `M ${centerX} ${centerY} Q ${ctrlX} ${ctrlY} ${sx} ${sy}`;
 
                 return (
-                  <line
-                    key={`${albumName}-${s.id}`}
-                    x1={centerX}
-                    y1={centerY}
-                    x2={sx}
-                    y2={sy}
-                    stroke={`rgba(255, 255, 255, ${opacity})`}
-                    strokeWidth={strokeWidth}
-                    strokeLinecap="round"
-                    style={{
-                      filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.3))',
-                    }}
-                  />
+                  <g key={`${albumName}-${s.id}`}>
+                    {/* Glow layer */}
+                    <path
+                      d={path}
+                      fill="none"
+                      stroke={`rgba(255, 255, 255, ${opacity * 0.3})`}
+                      strokeWidth={6}
+                      strokeLinecap="round"
+                      style={{ filter: 'blur(4px)' }}
+                    />
+                    {/* Main whispy line */}
+                    <path
+                      d={path}
+                      fill="none"
+                      stroke={`rgba(255, 255, 255, ${opacity})`}
+                      strokeWidth={1.5}
+                      strokeLinecap="round"
+                      strokeDasharray="none"
+                      style={{
+                        filter: 'drop-shadow(0 0 2px rgba(255,255,255,0.4))',
+                      }}
+                    />
+                    {/* Thin highlight */}
+                    <path
+                      d={path}
+                      fill="none"
+                      stroke={`rgba(255, 255, 255, ${opacity * 0.8})`}
+                      strokeWidth={0.5}
+                      strokeLinecap="round"
+                    />
+                  </g>
                 );
               });
             });
