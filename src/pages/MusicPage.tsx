@@ -1512,16 +1512,23 @@ export const MusicPage: React.FC = () => {
               zIndex: 50,
               pointerEvents: 'auto',
               cursor: 'pointer',
-              animation: 'slowRotate 8s linear infinite',
-              '@keyframes slowRotate': {
-                '0%': { transform: 'rotate(0deg)' },
-                '100%': { transform: 'rotate(360deg)' },
-              },
               '&:hover': {
                 filter: 'brightness(1.2)',
               },
             }}
           >
+            {/* Inner rotating container */}
+            <Box
+              sx={{
+                position: 'absolute',
+                inset: 0,
+                animation: 'slowRotate 8s linear infinite',
+                '@keyframes slowRotate': {
+                  '0%': { transform: 'rotate(0deg)' },
+                  '100%': { transform: 'rotate(360deg)' },
+                },
+              }}
+            >
             <Box
               sx={{
                 position: 'absolute',
@@ -1594,6 +1601,7 @@ export const MusicPage: React.FC = () => {
                   }}
                 />
               </Box>
+            </Box>
             </Box>
           </MotionBox>
         )}
