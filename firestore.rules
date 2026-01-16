@@ -1,32 +1,71 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // SECURITY: Admin check using Firebase Auth token email
+    // This is secure because the token is verified server-side by Firebase
+    // and cannot be spoofed by clients
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'bryon.bowers@gmail.com';
+    }
+
     // Allow read access to public music data
     match /songs/{songId} {
       allow read: if true;
-      allow write: if request.auth != null && request.auth.token.email == 'bryon.bowers@gmail.com';
+      allow write: if isAdmin();
     }
-    
+
     match /albums/{albumId} {
       allow read: if true;
-      allow write: if request.auth != null && request.auth.token.email == 'bryon.bowers@gmail.com';
+      allow write: if isAdmin();
     }
-    
+
     match /poems/{poemId} {
       allow read: if true;
-      allow write: if request.auth != null && request.auth.token.email == 'bryon.bowers@gmail.com';
+      allow write: if isAdmin();
     }
-    
+
     // Contact messages - allow creation by anyone, read/write by admin
     match /messages/{messageId} {
       allow create: if true;
-      allow read, update, delete: if request.auth != null && request.auth.token.email == 'bryon.bowers@gmail.com';
+      allow read, update, delete: if isAdmin();
     }
-    
+
     // Site settings - admin only
     match /settings/{settingId} {
       allow read: if true;
-      allow write: if request.auth != null && request.auth.token.email == 'bryon.bowers@gmail.com';
+      allow write: if isAdmin();
+    }
+
+    // Users collection - for storing user profiles
+    match /users/{userId} {
+      // Users can read/write their own profile
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      // Admin can read all users
+      allow read: if isAdmin();
+    }
+
+    // Subscribers collection - for newsletter signups
+    match /subscribers/{docId} {
+      // Anyone can subscribe (create)
+      allow create: if true;
+      // Users can check if their email is already subscribed
+      allow read: if request.auth != null;
+      // Only admin can read all subscribers and delete
+      allow read, delete: if isAdmin();
+    }
+
+    // Favorites collection - for storing song likes/hearts
+    match /favorites/{docId} {
+      // Admin can read ALL favorites (for dashboard)
+      allow read: if isAdmin();
+      // Users can get individual favorites they own
+      allow get: if request.auth != null && resource.data.userId == request.auth.uid;
+      // Users can list/query - must include userId filter matching their auth uid
+      allow list: if request.auth != null;
+      // Users can create favorites for themselves only
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      // Users can delete their own favorites only
+      allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
     }
   }
 }

@@ -26,6 +26,9 @@ export const Footer: React.FC = () => {
                 borderTop: '1px solid rgba(255, 255, 255, 0.05)',
                 py: 6,
                 mt: 'auto',
+                mb: 'var(--player-height)', // Space for the fixed music player
+                position: 'relative',
+                zIndex: 1,
             }}
         >
             <Container maxWidth="lg">
@@ -95,16 +98,33 @@ export const Footer: React.FC = () => {
                     </Grid>
                 </Grid>
 
-                {/* Subscribe Section - Right aligned */}
+                {/* Copyright */}
+                <Box sx={{ mt: 4, pt: 3, borderTop: '1px solid rgba(255, 255, 255, 0.05)', textAlign: 'center' }}>
+                    <Typography variant="caption" color="text.secondary">
+                        &copy; {currentYear} Bryon Bowers. All rights reserved.
+                    </Typography>
+                    <Box sx={{ mt: 1 }}>
+                        <MuiLink
+                            href="mailto:bryon.bowers@gmail.com"
+                            sx={{
+                                color: 'text.secondary',
+                                textDecoration: 'none',
+                                fontSize: '0.75rem',
+                                '&:hover': { color: 'white' },
+                            }}
+                        >
+                            bryon.bowers@gmail.com
+                        </MuiLink>
+                    </Box>
+                </Box>
+
+                {/* Follow Section - Bottom right */}
                 <Box sx={{
                     mt: 3,
-                    pt: 3,
-                    borderTop: '1px solid rgba(255, 255, 255, 0.05)',
                     display: 'flex',
                     justifyContent: 'flex-end',
                     alignItems: 'center',
-                    gap: 2,
-                    flexWrap: 'wrap',
+                    gap: 1.5,
                 }}>
                     <Typography
                         variant="caption"
@@ -112,7 +132,6 @@ export const Footer: React.FC = () => {
                             color: 'text.secondary',
                             letterSpacing: '0.1em',
                             textTransform: 'uppercase',
-                            mr: 1,
                         }}
                     >
                         Follow:
@@ -169,26 +188,6 @@ export const Footer: React.FC = () => {
                             <path d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 00-1.877-.726 10.496 10.496 0 00-1.564-.15c-.04-.003-.083-.01-.124-.013H5.986c-.152.01-.303.017-.455.026-.747.043-1.49.123-2.193.401-1.336.53-2.3 1.452-2.865 2.78-.192.448-.292.925-.363 1.408-.056.392-.088.785-.1 1.18 0 .032-.007.062-.01.093v12.223c.01.14.017.283.027.424.05.815.154 1.624.497 2.373.65 1.42 1.738 2.353 3.234 2.801.42.127.856.187 1.293.228.555.053 1.11.06 1.667.06h11.03a12.5 12.5 0 001.57-.1c.822-.106 1.596-.35 2.296-.81a5.046 5.046 0 001.88-2.207c.186-.42.293-.87.37-1.324.113-.675.138-1.358.137-2.04-.002-3.8 0-7.595-.003-11.393zm-6.423 3.99v5.712c0 .417-.058.827-.244 1.206-.29.59-.76.962-1.388 1.14-.35.1-.706.157-1.07.173-.95.042-1.785-.384-2.16-1.213-.376-.83-.238-1.81.465-2.47.396-.37.874-.605 1.407-.716.323-.067.653-.12.98-.18.406-.073.77-.244.98-.632.096-.176.134-.374.134-.578V8.09c0-.237-.063-.453-.266-.6-.12-.088-.257-.12-.4-.098-.203.03-.404.07-.603.113-.747.158-1.493.32-2.24.477l-3.037.643-.016.004c-.294.063-.587.134-.838.316-.251.183-.4.444-.438.76-.012.1-.015.2-.015.3v7.592c0 .39-.047.778-.215 1.138-.278.6-.744.988-1.378 1.18-.34.104-.69.16-1.048.183-.952.06-1.82-.335-2.22-1.188-.4-.852-.243-1.876.507-2.53.39-.34.85-.567 1.355-.675.378-.082.76-.144 1.14-.216.36-.068.66-.2.873-.504.147-.21.19-.448.19-.696V6.942c0-.317.058-.622.237-.895.236-.363.58-.575.994-.67.334-.076.672-.133 1.008-.2l2.836-.6c.954-.202 1.91-.404 2.865-.605l1.78-.376c.163-.034.328-.063.494-.08.32-.035.596.087.788.338.107.14.17.3.193.47.013.095.017.19.017.287v4.503z"/>
                         </svg>
                     </IconButton>
-                </Box>
-
-                {/* Copyright */}
-                <Box sx={{ mt: 4, pt: 3, borderTop: '1px solid rgba(255, 255, 255, 0.05)', textAlign: 'center' }}>
-                    <Typography variant="caption" color="text.secondary">
-                        &copy; {currentYear} Bryon Bowers. All rights reserved.
-                    </Typography>
-                    <Box sx={{ mt: 1 }}>
-                        <MuiLink
-                            href="mailto:bryon.bowers@gmail.com"
-                            sx={{
-                                color: 'text.secondary',
-                                textDecoration: 'none',
-                                fontSize: '0.75rem',
-                                '&:hover': { color: 'white' },
-                            }}
-                        >
-                            bryon.bowers@gmail.com
-                        </MuiLink>
-                    </Box>
                 </Box>
             </Container>
         </Box>

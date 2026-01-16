@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, IconButton, Snackbar } from '@mui/material';
-import { PlayArrow, Pause, Share } from '@mui/icons-material';
+import { PlayArrow, Pause, Share, Album, Shuffle, Favorite, Search } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMusic } from '../context/MusicContext';
+import { useFavorites } from '../context/FavoritesContext';
 import songsData from '../data/songs.json';
 import { Song } from '../types';
+import { HeartButton } from '../components/HeartButton';
 
 // Spotify icon component
 const SpotifyIcon = () => (
@@ -46,13 +48,17 @@ const SPHERE_SIZE_MOBILE = 52;
 export const MusicPage: React.FC = () => {
   const { songId } = useParams<{ songId?: string }>();
   const { currentSong, isPlaying, playSong, togglePlay } = useMusic();
+  const { isFavorite } = useFavorites();
   const [spheres, setSpheres] = useState<Sphere[]>([]);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [poppingId, setPoppingId] = useState<string | null>(null);
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [arrangeByAlbum, setArrangeByAlbum] = useState(true);
+  const [arrangeByFavorites, setArrangeByFavorites] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchExpanded, setSearchExpanded] = useState(false);
   const [showShareToast, setShowShareToast] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const prevArrangeByAlbum = useRef(false);
   const hasAutoPlayed = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -327,14 +333,45 @@ export const MusicPage: React.FC = () => {
           // Pull towards album cluster position
           const albumPos = albumPositions[normalizeAlbum(sphere.song.albumTitle)];
           if (albumPos) {
-            const dx = albumPos.x - (x + size / 2);
-            const dy = albumPos.y - (y + size / 2);
-            const dist = Math.sqrt(dx * dx + dy * dy);
+            // Check if a single is currently playing
+            const playingSingleAtCenter = playingSphere && normalizeAlbum(playingSphere.song.albumTitle) === 'Singles';
+            const thisSphereIsSingle = normalizeAlbum(sphere.song.albumTitle) === 'Singles';
 
-            if (dist > 10) {
-              const pullStrength = 0.25;
+            // Don't pull singles to center if another single is playing (let repel work)
+            if (playingSingleAtCenter && thisSphereIsSingle) {
+              // Skip cluster attraction - repel force will push this single away
+            } else {
+              const dx = albumPos.x - (x + size / 2);
+              const dy = albumPos.y - (y + size / 2);
+              const dist = Math.sqrt(dx * dx + dy * dy);
+
+              if (dist > 10) {
+                const pullStrength = 0.25;
+                vx += (dx / dist) * pullStrength;
+                vy += (dy / dist) * pullStrength;
+              }
+            }
+          }
+        } else if (arrangeByFavorites) {
+          // In favorites mode: pull favorites to center, push non-favorites to edges
+          const dx = centerX - (x + size / 2);
+          const dy = centerY - (y + size / 2);
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const sphereIsFav = isFavorite(sphere.song.id);
+
+          if (sphereIsFav) {
+            // Favorites are strongly attracted to center
+            if (dist > 30) {
+              const pullStrength = 0.35;
               vx += (dx / dist) * pullStrength;
               vy += (dy / dist) * pullStrength;
+            }
+          } else {
+            // Non-favorites are pushed to edges
+            if (dist < 300) {
+              const pushStrength = 0.15;
+              vx -= (dx / dist) * pushStrength;
+              vy -= (dy / dist) * pushStrength;
             }
           }
         } else {
@@ -427,6 +464,34 @@ export const MusicPage: React.FC = () => {
             }
           }
 
+          // Favorites clustering logic
+          if (arrangeByFavorites && dist > 0) {
+            const s1IsFav = isFavorite(s1.song.id);
+            const s2IsFav = isFavorite(s2.song.id);
+            const bothFavorites = s1IsFav && s2IsFav;
+            const nx = dx / dist;
+            const ny = dy / dist;
+
+            if (bothFavorites && dist > minDist && dist < 250) {
+              // Favorites attract each other
+              const attractStrength = 0.2;
+              s1.vx += nx * attractStrength;
+              s1.vy += ny * attractStrength;
+              s2.vx -= nx * attractStrength;
+              s2.vy -= ny * attractStrength;
+            } else if (s1IsFav !== s2IsFav && dist < 200) {
+              // Favorites and non-favorites repel each other
+              const repelStrength = (1 - dist / 200) * 0.4;
+              if (s1IsFav) {
+                s2.vx += nx * repelStrength;
+                s2.vy += ny * repelStrength;
+              } else {
+                s1.vx -= nx * repelStrength;
+                s1.vy -= ny * repelStrength;
+              }
+            }
+          }
+
           if (dist < minDist && dist > 0) {
             const nx = dx / dist;
             const ny = dy / dist;
@@ -455,7 +520,7 @@ export const MusicPage: React.FC = () => {
     });
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [dimensions, draggedId, currentSong, isPlaying, arrangeByAlbum, getAlbumClusterPositions, searchQuery]);
+  }, [dimensions, draggedId, currentSong, isPlaying, arrangeByAlbum, arrangeByFavorites, isFavorite, getAlbumClusterPositions, searchQuery]);
 
   useEffect(() => {
     if (spheres.length > 0 && dimensions.width > 0) {
@@ -707,20 +772,26 @@ export const MusicPage: React.FC = () => {
             const isPopping = poppingId === sphere.id;
             const isDragged = draggedId === sphere.id;
 
-            // Check if sphere matches search query or is currently playing
+            // Check if sphere matches search query (only currently PLAYING song bypasses filter)
             const query = searchQuery.toLowerCase().trim();
             const matchesSearch = !query ||
               sphere.song.title.toLowerCase().includes(query) ||
               sphere.song.albumTitle.toLowerCase().includes(query) ||
-              isCurrent;
+              isCurrentPlaying;
+
+            // Check if sphere should be visible based on favorites filter
+            const matchesFavorites = !arrangeByFavorites || isFavorite(sphere.song.id) || isCurrentPlaying;
+
+            // Sphere is visible if it matches both search and favorites filters
+            const isVisible = matchesSearch && matchesFavorites;
 
             return (
               <MotionBox
                 key={sphere.id}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{
-                  scale: matchesSearch ? (isDragged ? 1.1 : isCurrentPlaying ? 1.25 : 1) : 0,
-                  opacity: matchesSearch ? 1 : 0,
+                  scale: isVisible ? (isDragged ? 1.1 : isCurrentPlaying ? 1.25 : 1) : 0,
+                  opacity: isVisible ? 1 : 0,
                   x: sphere.x,
                   y: sphere.y,
                 }}
@@ -742,7 +813,7 @@ export const MusicPage: React.FC = () => {
                   height: sphere.size,
                   cursor: isDragged ? 'grabbing' : 'grab',
                   zIndex: isDragged ? 500 : isPopping ? 200 : isCurrentPlaying ? 100 : isHovered ? 50 : 1,
-                  pointerEvents: matchesSearch ? 'auto' : 'none',
+                  pointerEvents: isVisible ? 'auto' : 'none',
                   userSelect: 'none',
                   touchAction: 'none',
                 }}
@@ -810,6 +881,45 @@ export const MusicPage: React.FC = () => {
                     }}
                   />
 
+                  {/* Favorite heart indicator */}
+                  {isFavorite(sphere.song.id) && (
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        top: '8%',
+                        right: '8%',
+                        width: sphere.size * 0.22,
+                        height: sphere.size * 0.22,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 10,
+                        animation: 'heartPulse 1.5s ease-in-out infinite',
+                        '@keyframes heartPulse': {
+                          '0%, 100%': {
+                            transform: 'scale(1)',
+                            filter: 'drop-shadow(0 0 3px rgba(255, 77, 109, 0.8))',
+                          },
+                          '50%': {
+                            transform: 'scale(1.15)',
+                            filter: 'drop-shadow(0 0 8px rgba(255, 77, 109, 1))',
+                          },
+                        },
+                      }}
+                    >
+                      <Box
+                        component="span"
+                        sx={{
+                          color: '#ff4d6d',
+                          fontSize: sphere.size * 0.18,
+                          textShadow: '0 0 6px rgba(255, 77, 109, 0.9), 0 0 12px rgba(255, 77, 109, 0.6)',
+                        }}
+                      >
+                        ♥
+                      </Box>
+                    </Box>
+                  )}
+
                   {/* Play/Pause overlay */}
                   <Box
                     sx={{
@@ -852,6 +962,12 @@ export const MusicPage: React.FC = () => {
                         }}
                         onClick={(e) => e.stopPropagation()}
                       >
+                        <HeartButton
+                          songId={sphere.song.id}
+                          songTitle={sphere.song.title}
+                          size="small"
+                          showTooltip={false}
+                        />
                         <IconButton
                           onClick={(e) => handleShareSong(e, sphere.song)}
                           size="small"
@@ -995,79 +1111,124 @@ export const MusicPage: React.FC = () => {
         </AnimatePresence>
       </Box>
 
-      {/* Search Input */}
+      {/* Search and arrange controls */}
       <Box
-        sx={{
-          position: 'absolute',
-          bottom: { xs: 140, md: 160 },
-          left: { xs: 10, md: 20 },
-          zIndex: 1000,
-        }}
-      >
-        <input
-          type="text"
-          placeholder="search songs..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            background: 'rgba(0,0,0,0.5)',
-            border: '1px solid rgba(255,255,255,0.3)',
-            borderRadius: '4px',
-            padding: '8px 12px',
-            color: 'white',
-            fontSize: '0.8rem',
-            fontFamily: 'Montserrat, sans-serif',
-            letterSpacing: '0.05em',
-            outline: 'none',
-            width: '140px',
-            transition: 'all 0.2s ease',
-          }}
-          onFocus={(e) => {
-            e.target.style.background = 'rgba(0,0,0,0.7)';
-            e.target.style.borderColor = 'rgba(255,255,255,0.5)';
-            e.target.style.width = '180px';
-          }}
-          onBlur={(e) => {
-            e.target.style.background = 'rgba(0,0,0,0.5)';
-            e.target.style.borderColor = 'rgba(255,255,255,0.3)';
-            if (!e.target.value) e.target.style.width = '140px';
-          }}
-        />
-      </Box>
-
-      {/* Arrange by Album button */}
-      <Box
-        onClick={() => setArrangeByAlbum(!arrangeByAlbum)}
         sx={{
           position: 'absolute',
           bottom: { xs: 100, md: 120 },
           left: { xs: 10, md: 20 },
-          px: 2,
-          py: 1,
-          bgcolor: arrangeByAlbum ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.5)',
-          border: '1px solid rgba(255,255,255,0.3)',
-          borderRadius: 1,
-          cursor: 'pointer',
-          transition: 'all 0.2s',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1,
           zIndex: 1000,
-          '&:hover': {
-            bgcolor: arrangeByAlbum ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.7)',
-            borderColor: 'rgba(255,255,255,0.5)',
-          },
         }}
       >
-        <Typography
+        {/* Search Icon/Input */}
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton
+            onClick={() => {
+              setSearchExpanded(!searchExpanded);
+              if (!searchExpanded) {
+                setTimeout(() => searchInputRef.current?.focus(), 100);
+              } else {
+                setSearchQuery('');
+              }
+            }}
+            title="Search songs"
+            sx={{
+              bgcolor: searchExpanded ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.5)',
+              border: '1px solid rgba(255,255,255,0.3)',
+              color: 'white',
+              width: 40,
+              height: 40,
+              transition: 'all 0.2s',
+              '&:hover': {
+                bgcolor: searchExpanded ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.7)',
+                borderColor: 'rgba(255,255,255,0.5)',
+                transform: 'scale(1.1)',
+              },
+            }}
+          >
+            <Search />
+          </IconButton>
+          {searchExpanded && (
+            <input
+              ref={searchInputRef}
+              type="text"
+              placeholder="search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onBlur={() => {
+                if (!searchQuery) {
+                  setSearchExpanded(false);
+                }
+              }}
+              style={{
+                background: 'rgba(0,0,0,0.5)',
+                border: '1px solid rgba(255,255,255,0.3)',
+                borderRadius: '4px',
+                padding: '8px 12px',
+                color: 'white',
+                fontSize: '0.8rem',
+                fontFamily: 'Montserrat, sans-serif',
+                letterSpacing: '0.05em',
+                outline: 'none',
+                width: '120px',
+                height: '40px',
+                boxSizing: 'border-box',
+                marginLeft: '8px',
+              }}
+            />
+          )}
+        </Box>
+
+        {/* Arrange by Album button */}
+        <IconButton
+          onClick={() => {
+            setArrangeByAlbum(!arrangeByAlbum);
+            if (!arrangeByAlbum) setArrangeByFavorites(false);
+          }}
+          title={arrangeByAlbum ? 'Free float' : 'Arrange by album'}
           sx={{
+            bgcolor: arrangeByAlbum ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.5)',
+            border: '1px solid rgba(255,255,255,0.3)',
             color: 'white',
-            fontSize: { xs: '0.7rem', md: '0.8rem' },
-            fontFamily: 'Montserrat',
-            letterSpacing: '0.05em',
-            textTransform: 'lowercase',
-            userSelect: 'none',
+            width: 40,
+            height: 40,
+            transition: 'all 0.2s',
+            '&:hover': {
+              bgcolor: arrangeByAlbum ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.7)',
+              borderColor: 'rgba(255,255,255,0.5)',
+              transform: 'scale(1.1)',
+            },
           }}
         >
-          {arrangeByAlbum ? 'free float' : 'arrange by album'}
-        </Typography>
+          {arrangeByAlbum ? <Shuffle /> : <Album />}
+        </IconButton>
+
+        {/* Arrange by Favorites button */}
+        <IconButton
+          onClick={() => {
+            setArrangeByFavorites(!arrangeByFavorites);
+            if (!arrangeByFavorites) setArrangeByAlbum(false);
+          }}
+          title={arrangeByFavorites ? 'Show all' : 'Show favorites'}
+          sx={{
+            bgcolor: arrangeByFavorites ? 'rgba(255,77,109,0.3)' : 'rgba(0,0,0,0.5)',
+            border: arrangeByFavorites ? '1px solid rgba(255,77,109,0.5)' : '1px solid rgba(255,255,255,0.3)',
+            color: arrangeByFavorites ? '#ff4d6d' : 'white',
+            width: 40,
+            height: 40,
+            transition: 'all 0.2s',
+            '&:hover': {
+              bgcolor: arrangeByFavorites ? 'rgba(255,77,109,0.4)' : 'rgba(0,0,0,0.7)',
+              borderColor: arrangeByFavorites ? 'rgba(255,77,109,0.7)' : 'rgba(255,255,255,0.5)',
+              transform: 'scale(1.1)',
+            },
+          }}
+        >
+          <Favorite />
+        </IconButton>
       </Box>
 
       {/* Share toast */}

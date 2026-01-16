@@ -1173,11 +1173,49 @@ I'll put on my Devil's Suit`,
     id: '22',
     songId: '40',
     songTitle: "The Devil's Stew",
-    poemTitle: "The Devil's Stew",
-    poemExcerpt: 'There was an old lady...',
-    poemContent: `there was an old lady`,
+    poemTitle: "Was an Old Lady",
+    poemExcerpt: 'There was an old lady who lived in a shoe...',
+    poemContent: `There was an old lady who lived in a shoe
+had so many kids didn't know what to do
+One day… The devil came knockin'
+Asked her what was wrong
+She said my every day… is way too long
+He said "I can help you"
+"But I need somethin' in return"
+"I need all your love…"
+"and your eternal soul to burn"
+
+Kids climbing on the walls
+Gettin' concerned teacher calls…
+Pour the water.. Nice and Hot..
+All her troubles… Are forgot…
+Now she's taking one last bath
+Before the Devil… serves his wrath
+She Sold her soul for a "Yes Ma'am"... and a "Please"
+
+Kids crawling on the roof and running by the pool
+actin' up in school acting a fool
+She said "where do I sign?"
+"On the front or behind?"
+He said, honey here's a token of appreciation
+For the parent occupation
+smoke it up now get your mind wow
+'cause the fires of hell are gonna ring your bell
+
+All of a sudden
+As she pleaded on her knees
+Kids started listening
+Saying "Yes Ma'am" and "Please"
+Pickin' up their dishes
+Coverin' their mouth when they sneeze
+She done sold her soul
+For a "Yes Ma'am" and a "Please"
+
+Tuck in the kids kiss 'em good night
+don't forget to hold them tight
+cause this might be your last good night`,
     mood: 'mystical',
-    theme: 'Mystery, folklore'
+    theme: 'Parenting, sacrifice, folklore'
   },
   {
     id: '23',
@@ -1953,5 +1991,379 @@ the absence of this one hurts....
 some pain can never go away.`,
     mood: 'melancholic',
     theme: 'Loss, grief, family'
+  },
+  {
+    id: '65',
+    songId: '65',
+    songTitle: 'TV Kid',
+    poemTitle: 'TV Kid',
+    poemExcerpt: 'Raised by the glow of a screen...',
+    poemContent: `TV Kid
+
+Raised by the glow of a screen
+Saturday morning cartoons
+were my babysitter
+the TV my best friend
+
+Channel surfing through childhood
+static between the stations
+of my life
+
+I learned to laugh from sitcoms
+learned to cry from soap operas
+learned to dream from late night movies
+playing past my bedtime
+
+The TV kid grew up
+but never stopped watching
+still searching for connection
+in the flickering light
+
+Now I make my own shows
+in my head
+stories I wish I'd seen
+when I was young
+
+The TV kid remembers
+every jingle, every theme song
+a childhood measured
+in commercial breaks`,
+    mood: 'reflective',
+    theme: 'Childhood, nostalgia, media influence'
+  },
+  {
+    id: '66',
+    songId: '66',
+    songTitle: 'Make the World Yours',
+    poemTitle: 'Tripping on Ginkgo Biloba',
+    poemExcerpt: 'Watching a wave of indecision...',
+    poemContent: `Tripping on Ginkgo Biloba
+Watching a wave of indecision
+Crash upon the shores of my mind
+The world is yours they said
+But they never told me
+How heavy it would be
+
+Standing at the crossroads
+Of everything and nothing
+The leaves fall golden
+Like forgotten promises
+Make the world yours they say
+As if it were that simple
+
+I swallowed the pill of ambition
+Chased it with doubt
+The world spins on
+Whether I claim it or not
+So I'll take my piece
+And make it mine`,
+    mood: 'reflective',
+    theme: 'Ambition, uncertainty, self-discovery'
+  },
+  {
+    id: '67',
+    songId: '67',
+    songTitle: '406 (Remix)',
+    poemTitle: "Mind's Time Cage",
+    poemExcerpt: 'Trapped in the corridors of thought...',
+    poemContent: `Mind's Time Cage
+
+Trapped in the corridors of thought
+Where minutes stretch to hours
+And hours collapse to seconds
+The mind keeps its own time
+
+406 reasons to stay
+406 reasons to go
+The remix plays on repeat
+In the cage of my skull
+
+Time bends around memories
+Past and future blur
+The present moment slips away
+Before I can grasp it
+
+Locked in contemplation
+The key is somewhere within
+But finding it requires
+Stepping outside of time itself`,
+    mood: 'reflective',
+    theme: 'Time, consciousness, introspection'
+  },
+  {
+    id: '68',
+    songId: '68',
+    songTitle: 'Remote of Serenity',
+    poemTitle: 'Our Tiny Home',
+    poemExcerpt: 'A Tiny home, Giant Dogs, One for me, One for you...',
+    poemContent: `A Hot Dog with Mustard
+Tobasco
+And Relish Too
+I wanna sit right down
+And binge watch
+Everything with you
+Up til two
+We'll sleep in til noon
+Tucked under a cluster
+of Goose Feathers
+Wrapped in a Button Duvet
+Dogs curl up below
+warming our feet
+A morning so sweet
+The sun said "good morning"
+To the street
+Scrambled Eggs
+Fried Bacon
+Orange Juice
+All Pulp for me
+None for you
+A Tiny home
+Giant Dogs
+One for me
+One for you
+Built a studio
+With Rope, Lassos
+An Air Gun
+And nails
+All hugging in a row
+Troops deployed
+One at a time
+Still deployed
+In static force
+Til this day
+Waiting for their eventual
+Decay and Ultimate Destruction
+Jump Ahead
+Best case
+Human Transformed
+To an Immortal Observer
+Universe boiled down
+To just black holes
+Til the last one in the universe
+Decays into radiation
+Our Tiny Home
+Our Descendants
+Our Dogs
+Our Minds
+Now Merged
+With Background Radiation
+two trillion Galaxies
+Billions of Stars in Each
+Gone, Winked out of Existence…
+But the Fact we Existed
+We Loved, Lived, and Struggled…
+To put that Damn
+Duvet back over those
+Goose Feathers
+In our Tiny Home
+So we could Netflix
+Binge the afternoon away…
+That never will go away
+That Fact is Forever
+That comforts the soul
+Information never destroyed
+Only the physical
+Now that we figured out serenity…
+Where is that dam remote?...`,
+    mood: 'reflective',
+    theme: 'Love, home, cosmic perspective'
+  },
+  {
+    id: '69',
+    songId: '69',
+    songTitle: 'Toy Vagabond',
+    poemTitle: 'Toys',
+    poemExcerpt: 'It was a Toy Blood Bath, Only the toughest did survive...',
+    poemContent: `Optimus Prime
+Standing Precariously
+Upon the shelf
+Dead eyes staring
+Right at me…
+With super star power
+Jet pack dangling
+Off his back
+Midriff barely connected
+gun by his side
+Battle axe at the ready
+He can hardly hold himself steady
+
+It was a Toy Blood Bath
+Only the toughest did survive
+A boy grows up
+Ambitions they arrive
+A snapshot of his mind
+Innocence left behind
+Time marches on…
+Calls you on the phone
+Says "leave my toys alone…"
+
+A boy cleans his room…
+Mom forcing toys to their doom
+Now a toy vagabond
+Damned into servitude
+Salvation Army Shelves
+Squooshy minion body severed
+laying on the wooden floor
+funko-pops safe in their boxes
+stare down at the purge
+
+It was a Toy Blood Bath
+Only the toughest did survive
+A boy grows up
+Ambitions they arrive
+A snapshot of his mind
+Innocence left behind
+Time marches on…
+Calls you on the phone
+Says "leave my toys alone…"
+
+As the trash bag of forgotten toys
+Makes its way to the landfill
+A boy's heart remembers
+long ago epic battles
+and shifting alliances
+Blood spilt over
+Invisible Dragon Eggs
+Labs with secret mummies
+crawling out of the goo
+
+It was a Toy Blood Bath
+Only the toughest did survive
+A boy grows up
+Ambitions they arrive
+A snapshot of his mind
+Innocence left behind
+Time marches on…
+Calls you on the phone
+Says "leave my toys alone…"`,
+    mood: 'reflective',
+    theme: 'Childhood, nostalgia, growing up'
+  },
+  {
+    id: '70',
+    songId: '70',
+    songTitle: "The Matriarch's Secret",
+    poemTitle: "The Matriarch's Secret",
+    poemExcerpt: 'She was the Matriarch of the family, with a secret no one knew...',
+    poemContent: `She was the Matriarch of the family
+With a secret no one knew
+She kept it locked away
+From me and you
+Guarded by a Buddhist boxer
+From Kathmandu
+
+Cook it up
+Serve it up
+Life is coming
+Cook it up
+Serve it up
+I've been running
+Cook it up
+Serve it up
+Sleep is comin'
+Cook it up
+Serve it up
+Family knows it
+Cook it up
+Serve it up
+No big deal
+Cook it up
+Serve it up
+You shoulda told us…
+Cook it up
+Serve it up
+Keep on dancin'
+Cook it up
+Serve it up
+Shake your booty
+Cook it up
+Serve it up
+Keep on dancin'
+Cook it up
+Serve it up
+Keep on dancin'...
+Cook it up
+Serve it up
+Keep on dancin'...
+
+She's got a secret
+No one to tell
+A secret only she can smell
+Throw it in the pot
+a pinch of salt
+A lotta pepper
+a little bit more
+and you'll feel better
+
+Cook it up
+Serve it up
+Life is coming
+Cook it up
+Serve it up
+I've been running
+Cook it up
+Serve it up
+Sleep is comin'
+Cook it up
+Serve it up
+Family knows it
+Cook it up
+Serve it up
+No big deal
+Cook it up
+Serve it up
+You shoulda told us…
+Cook it up
+Serve it up
+Keep on dancin'
+Cook it up
+Serve it up
+Shake your booty
+Cook it up
+Serve it up
+Keep on dancin'
+Cook it up
+Serve it up
+Keep on dancin'...
+Cook it up
+Serve it up
+Keep on dancin'...
+
+If you'd told us
+There would've been no judgment
+Life is hard enough
+Fighting our own demons
+No need to throw others'
+Into the crockpot
+
+Cook it up
+Serve it up
+Love is easy
+Cook it up
+Serve it up
+Stop your runnin'
+Cook it up
+Serve it up
+Start your dreamin'
+Cook it up
+Serve it up
+Family knows it
+Cook it up
+Serve it up
+Slay your Demons
+Cook it up
+Serve it up
+Sleep in Peace
+Cook it up
+Serve it up
+Keep on dancin'
+Cook it up
+Serve it up
+Keep on dancin'...
+Cook it up
+Serve it up
+Keep on dancin'...`,
+    mood: 'reflective',
+    theme: 'Family secrets, acceptance, love'
   }
 ];

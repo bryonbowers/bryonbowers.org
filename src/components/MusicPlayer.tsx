@@ -16,6 +16,7 @@ import {
   VolumeOff
 } from '@mui/icons-material';
 import { useMusic } from '../context/MusicContext';
+import { HeartButton } from './HeartButton';
 
 export const MusicPlayer: React.FC = () => {
   const {
@@ -84,7 +85,7 @@ export const MusicPlayer: React.FC = () => {
             }}
           />
         )}
-        <Box sx={{ overflow: 'hidden' }}>
+        <Box sx={{ overflow: 'hidden', mr: 1 }}>
           <Typography variant="subtitle1" noWrap sx={{ fontWeight: 600 }}>
             {currentSong.title}
           </Typography>
@@ -92,6 +93,11 @@ export const MusicPlayer: React.FC = () => {
             {currentSong.artistName}
           </Typography>
         </Box>
+        <HeartButton
+          songId={currentSong.id}
+          songTitle={currentSong.title}
+          size="small"
+        />
       </Box>
 
       {/* Controls & Progress */}

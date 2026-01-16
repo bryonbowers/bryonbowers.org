@@ -6,9 +6,10 @@ import { MainLayout } from './components/MainLayout';
 import { MusicPage } from './pages/MusicPage';
 import { PoemsPage } from './pages/PoemsPage';
 import { ContactPage } from './pages/ContactPage';
-import { AdminDashboard } from './components/AdminDashboard';
+import { AdminPage } from './pages/AdminPage';
 import { MusicProvider } from './context/MusicContext';
-// import { useAuth } from './hooks/useAuth'; // Preserving Auth if needed later
+import { AuthProvider } from './context/AuthContext';
+import { FavoritesProvider } from './context/FavoritesContext';
 
 const theme = createTheme({
   palette: {
@@ -54,20 +55,24 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <MusicProvider>
-        <Router>
-          <MainLayout>
-            <Routes>
-              <Route path="/" element={<MusicPage />} />
-              <Route path="/song/:songId" element={<MusicPage />} />
-              <Route path="/poems" element={<PoemsPage />} />
-              <Route path="/poem/:poemId" element={<PoemsPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/admin" element={<AdminDashboard />} />
-            </Routes>
-          </MainLayout>
-        </Router>
-      </MusicProvider>
+      <Router>
+        <AuthProvider>
+          <FavoritesProvider>
+            <MusicProvider>
+              <MainLayout>
+                <Routes>
+                  <Route path="/" element={<MusicPage />} />
+                  <Route path="/song/:songId" element={<MusicPage />} />
+                  <Route path="/poems" element={<PoemsPage />} />
+                  <Route path="/poem/:poemId" element={<PoemsPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/admin" element={<AdminPage />} />
+                </Routes>
+              </MainLayout>
+            </MusicProvider>
+          </FavoritesProvider>
+        </AuthProvider>
+      </Router>
     </ThemeProvider>
   );
 }

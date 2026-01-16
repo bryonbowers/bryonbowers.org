@@ -12,21 +12,71 @@ import {
 } from '@mui/material';
 import { Email, Instagram, Twitter, YouTube, Send, CheckCircle } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { collection, addDoc, query, where, getDocs, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase/config';
+import { useAuth } from '../context/AuthContext';
 
 const MotionBox = motion(Box);
 
 export const ContactPage: React.FC = () => {
+  const { user, isAuthenticated } = useAuth();
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error' | 'info'>('success');
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      // In production, this would submit to a backend/newsletter service
+
+    const subscribeEmail = isAuthenticated ? user?.email : email;
+
+    if (!subscribeEmail) {
+      setSnackbarMessage('Please enter a valid email address');
+      setSnackbarSeverity('error');
+      setShowSnackbar(true);
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // Check if already subscribed
+      const subscribersRef = collection(db, 'subscribers');
+      const q = query(subscribersRef, where('email', '==', subscribeEmail.toLowerCase()));
+      const existing = await getDocs(q);
+
+      if (!existing.empty) {
+        setSnackbarMessage('This email is already subscribed!');
+        setSnackbarSeverity('info');
+        setShowSnackbar(true);
+        setSubscribed(true);
+        setLoading(false);
+        return;
+      }
+
+      // Add new subscriber
+      await addDoc(subscribersRef, {
+        email: subscribeEmail.toLowerCase(),
+        displayName: isAuthenticated ? user?.displayName : null,
+        userId: isAuthenticated ? user?.uid : null,
+        subscribedAt: serverTimestamp(),
+        source: isAuthenticated ? 'logged_in' : 'anonymous',
+      });
+
       setSubscribed(true);
+      setSnackbarMessage('Thanks for subscribing! You\'ll hear from us soon.');
+      setSnackbarSeverity('success');
       setShowSnackbar(true);
       setEmail('');
+    } catch (error) {
+      console.error('Error subscribing:', error);
+      setSnackbarMessage('Something went wrong. Please try again.');
+      setSnackbarSeverity('error');
+      setShowSnackbar(true);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -135,33 +185,46 @@ export const ContactPage: React.FC = () => {
             maxWidth: 500,
             mx: 'auto',
             flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: 'center',
           }}
         >
-          <TextField
-            fullWidth
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: 0,
-                '& fieldset': {
-                  borderColor: 'rgba(255, 255, 255, 0.1)',
+          {isAuthenticated ? (
+            // Logged in - show their email as read-only
+            <Box sx={{ flex: 1, textAlign: 'center' }}>
+              <Typography variant="body1" color="text.secondary">
+                Subscribe as: <strong style={{ color: 'white' }}>{user?.email}</strong>
+              </Typography>
+            </Box>
+          ) : (
+            // Not logged in - show email input
+            <TextField
+              fullWidth
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={loading}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 0,
+                  '& fieldset': {
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: 'white',
+                  },
                 },
-                '&:hover fieldset': {
-                  borderColor: 'rgba(255, 255, 255, 0.2)',
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: 'white',
-                },
-              },
-            }}
-          />
+              }}
+            />
+          )}
           <Button
             type="submit"
             variant="outlined"
+            disabled={loading || subscribed}
             endIcon={subscribed ? <CheckCircle /> : <Send />}
             sx={{
               borderRadius: 0,
@@ -175,9 +238,13 @@ export const ContactPage: React.FC = () => {
                 borderColor: 'white',
                 bgcolor: 'rgba(255,255,255,0.1)',
               },
+              '&.Mui-disabled': {
+                borderColor: 'rgba(255,255,255,0.3)',
+                color: 'rgba(255,255,255,0.5)',
+              },
             }}
           >
-            {subscribed ? 'Subscribed' : 'Subscribe'}
+            {loading ? 'Subscribing...' : subscribed ? 'Subscribed' : 'Subscribe'}
           </Button>
         </Box>
       </MotionBox>
@@ -247,7 +314,7 @@ export const ContactPage: React.FC = () => {
       >
         <Alert
           onClose={() => setShowSnackbar(false)}
-          severity="success"
+          severity={snackbarSeverity}
           sx={{
             bgcolor: 'rgba(255,255,255,0.1)',
             color: 'white',
@@ -255,7 +322,7 @@ export const ContactPage: React.FC = () => {
             '& .MuiAlert-icon': { color: 'white' },
           }}
         >
-          Thanks for subscribing! You'll hear from us soon.
+          {snackbarMessage}
         </Alert>
       </Snackbar>
     </Container>
