@@ -687,20 +687,20 @@ export const MusicPage: React.FC = () => {
             const dist = Math.sqrt(dx * dx + dy * dy);
 
             if (dist > 10) {
-              const restLength = 60; // Ideal distance from center
+              const restLength = 80; // Ideal distance from center
               const displacement = dist - restLength;
-              const springStrength = 0.6;
+              const springStrength = 0.15; // Gentle pull
 
               const force = displacement * springStrength;
               const nx = dx / dist;
               const ny = dy / dist;
 
-              s.vx += nx * force * 0.3;
-              s.vy += ny * force * 0.3;
+              s.vx += nx * force * 0.1;
+              s.vy += ny * force * 0.1;
 
-              // Damping
-              s.vx *= 0.92;
-              s.vy *= 0.92;
+              // Light damping
+              s.vx *= 0.98;
+              s.vy *= 0.98;
             }
           });
         });
