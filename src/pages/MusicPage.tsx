@@ -709,6 +709,7 @@ export const MusicPage: React.FC = () => {
         bgcolor: '#0a0a0a',
         overflow: 'hidden',
         pb: 'var(--player-height)',
+        zIndex: 10,
       }}
     >
       {/* Title */}
