@@ -103,7 +103,7 @@ export const MusicPage: React.FC = () => {
       // Remove the sphere after animation completes
       setTimeout(() => {
         setShootingSphere(null);
-      }, 28000);
+      }, 45000);
     };
 
     // Initial delay before first shooting sphere (15-30 seconds)
@@ -510,7 +510,7 @@ export const MusicPage: React.FC = () => {
 
         // Shooting sphere collision - SLAM spheres out of the way
         if (shootingSphere && !isThisPlaying) {
-          const animationDuration = 25000; // 25 seconds to cross screen
+          const animationDuration = 40000; // 40 seconds to cross screen
           const elapsed = Date.now() - shootingSphere.startTime;
           const progress = Math.min(elapsed / animationDuration, 1);
 
@@ -1489,9 +1489,9 @@ export const MusicPage: React.FC = () => {
             animate={{ x: dimensions.width + 50, scale: 1, opacity: [0, 1, 1, 1, 0] }}
             exit={{ opacity: 0 }}
             transition={{
-              duration: 25,
+              duration: 40,
               ease: 'linear',
-              opacity: { duration: 25, times: [0, 0.01, 0.5, 0.99, 1] },
+              opacity: { duration: 40, times: [0, 0.01, 0.5, 0.99, 1] },
             }}
             onClick={() => {
               // Find the first song from this album and play it
