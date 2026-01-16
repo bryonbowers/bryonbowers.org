@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, IconButton, Snackbar } from '@mui/material';
-import { PlayArrow, Pause, Share, Album, Shuffle, Favorite, Search } from '@mui/icons-material';
+import { PlayArrow, Pause, Share, Album, Shuffle, Favorite, Search, Cyclone } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMusic } from '../context/MusicContext';
 import { useFavorites } from '../context/FavoritesContext';
@@ -60,8 +60,10 @@ export const MusicPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchExpanded, setSearchExpanded] = useState(false);
   const [showShareToast, setShowShareToast] = useState(false);
+  const [isWhirlpoolActive, setIsWhirlpoolActive] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const prevArrangeByAlbum = useRef(false);
+  const whirlpoolPrevArrangeByAlbum = useRef(false);
   const hasAutoPlayed = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number>();
@@ -643,6 +645,84 @@ export const MusicPage: React.FC = () => {
       }
     }
   };
+
+  // Whirlpool effect handler
+  const handleWhirlpool = useCallback(() => {
+    if (isWhirlpoolActive) return;
+
+    const centerX = dimensions.width / 2;
+    const footerHeight = 120;
+    const centerY = (dimensions.height - footerHeight) / 2;
+
+    // Remember current arrangeByAlbum state
+    whirlpoolPrevArrangeByAlbum.current = arrangeByAlbum;
+
+    // Turn off arrange by album during whirlpool
+    setArrangeByAlbum(false);
+    setArrangeByFavorites(false);
+    setIsWhirlpoolActive(true);
+
+    // Apply whirlpool rotational velocity to all spheres
+    setSpheres(prev => prev.map(sphere => {
+      const dx = (sphere.x + sphere.size / 2) - centerX;
+      const dy = (sphere.y + sphere.size / 2) - centerY;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+      // Calculate perpendicular (tangential) direction for rotation
+      const perpX = -dy / dist;
+      const perpY = dx / dist;
+
+      // Velocity increases with distance from center (like a real whirlpool)
+      const whirlStrength = 8 + (dist / 100) * 4;
+
+      // Also add some inward pull
+      const inwardStrength = 2;
+
+      return {
+        ...sphere,
+        vx: perpX * whirlStrength - (dx / dist) * inwardStrength,
+        vy: perpY * whirlStrength - (dy / dist) * inwardStrength,
+      };
+    }));
+
+    // Apply multiple waves of whirlpool force
+    let waveCount = 0;
+    const maxWaves = 8;
+    const waveInterval = setInterval(() => {
+      waveCount++;
+
+      setSpheres(prev => prev.map(sphere => {
+        const dx = (sphere.x + sphere.size / 2) - centerX;
+        const dy = (sphere.y + sphere.size / 2) - centerY;
+        const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+        const perpX = -dy / dist;
+        const perpY = dx / dist;
+
+        // Decrease strength over time
+        const decayFactor = 1 - (waveCount / maxWaves) * 0.7;
+        const whirlStrength = (5 + (dist / 150) * 3) * decayFactor;
+
+        return {
+          ...sphere,
+          vx: sphere.vx + perpX * whirlStrength,
+          vy: sphere.vy + perpY * whirlStrength,
+        };
+      }));
+
+      if (waveCount >= maxWaves) {
+        clearInterval(waveInterval);
+
+        // After whirlpool ends, restore arrangeByAlbum if it was on before
+        setTimeout(() => {
+          setIsWhirlpoolActive(false);
+          if (whirlpoolPrevArrangeByAlbum.current) {
+            setArrangeByAlbum(true);
+          }
+        }, 1500);
+      }
+    }, 200);
+  }, [isWhirlpoolActive, dimensions, arrangeByAlbum]);
 
   // Drag handlers
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent, sphereId: string) => {
@@ -1288,6 +1368,45 @@ export const MusicPage: React.FC = () => {
           }}
         >
           <Favorite />
+        </IconButton>
+      </Box>
+
+      {/* Whirlpool button - bottom right */}
+      <Box
+        sx={{
+          position: 'absolute',
+          bottom: { xs: 100, md: 120 },
+          right: { xs: 10, md: 20 },
+          zIndex: 1000,
+        }}
+      >
+        <IconButton
+          onClick={handleWhirlpool}
+          disabled={isWhirlpoolActive}
+          title="Mix it up!"
+          sx={{
+            bgcolor: isWhirlpoolActive ? 'rgba(100,200,255,0.3)' : 'rgba(0,0,0,0.5)',
+            border: isWhirlpoolActive ? '1px solid rgba(100,200,255,0.5)' : '1px solid rgba(255,255,255,0.3)',
+            color: isWhirlpoolActive ? '#64c8ff' : 'white',
+            width: 44,
+            height: 44,
+            transition: 'all 0.3s',
+            animation: isWhirlpoolActive ? 'spin 1s linear infinite' : 'none',
+            '@keyframes spin': {
+              '0%': { transform: 'rotate(0deg)' },
+              '100%': { transform: 'rotate(360deg)' },
+            },
+            '&:hover': {
+              bgcolor: isWhirlpoolActive ? 'rgba(100,200,255,0.4)' : 'rgba(0,0,0,0.7)',
+              borderColor: isWhirlpoolActive ? 'rgba(100,200,255,0.7)' : 'rgba(255,255,255,0.5)',
+              transform: isWhirlpoolActive ? undefined : 'scale(1.1)',
+            },
+            '&:disabled': {
+              color: '#64c8ff',
+            },
+          }}
+        >
+          <Cyclone />
         </IconButton>
       </Box>
 

@@ -85,12 +85,25 @@ export const MusicPlayer: React.FC = () => {
             }}
           />
         )}
-        <Box sx={{ overflow: 'hidden', mr: 1 }}>
-          <Typography variant="subtitle1" noWrap sx={{ fontWeight: 600 }}>
+        <Box sx={{ overflow: 'hidden', mr: 1, minWidth: 0 }}>
+          <Typography variant="subtitle1" noWrap sx={{ fontWeight: 600, lineHeight: 1.2 }}>
             {currentSong.title}
           </Typography>
-          <Typography variant="caption" noWrap sx={{ color: 'text.secondary' }}>
+          <Typography variant="caption" noWrap sx={{ color: 'text.secondary', lineHeight: 1.2, display: 'block' }}>
             {currentSong.artistName}
+          </Typography>
+          <Typography
+            variant="caption"
+            noWrap
+            sx={{
+              color: 'rgba(255,255,255,0.4)',
+              fontSize: '0.65rem',
+              fontStyle: 'italic',
+              lineHeight: 1.2,
+              display: { xs: 'none', sm: 'block' }
+            }}
+          >
+            {currentSong.albumTitle}
           </Typography>
         </Box>
         <HeartButton
