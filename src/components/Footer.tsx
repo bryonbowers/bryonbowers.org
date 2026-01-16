@@ -6,12 +6,6 @@ import { Link } from 'react-router-dom';
 export const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
 
-    const socialLinks = [
-        { icon: <Instagram />, url: 'https://instagram.com/elonsakdsh', label: 'Instagram' },
-        { icon: <Twitter />, url: 'https://twitter.com/elonsakdsh', label: 'Twitter' },
-        { icon: <YouTube />, url: 'https://youtube.com/@BryonBowersMindStream', label: 'YouTube' },
-    ];
-
     const navLinks = [
         { text: 'Music', path: '/' },
         { text: 'Poems', path: '/poems' },
@@ -74,28 +68,6 @@ export const Footer: React.FC = () => {
                         </Box>
                     </Grid>
 
-                    {/* Social Links */}
-                    <Grid item xs={12} md={4}>
-                        <Box sx={{ display: 'flex', justifyContent: { xs: 'flex-start', md: 'flex-end' }, gap: 1 }}>
-                            {socialLinks.map((social) => (
-                                <IconButton
-                                    key={social.label}
-                                    component="a"
-                                    href={social.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={social.label}
-                                    sx={{
-                                        color: 'text.secondary',
-                                        transition: 'color 0.3s',
-                                        '&:hover': { color: 'white' },
-                                    }}
-                                >
-                                    {social.icon}
-                                </IconButton>
-                            ))}
-                        </Box>
-                    </Grid>
                 </Grid>
 
                 {/* Copyright */}
@@ -136,6 +108,38 @@ export const Footer: React.FC = () => {
                     >
                         Follow:
                     </Typography>
+                    {/* Instagram */}
+                    <IconButton
+                        component="a"
+                        href="https://instagram.com/elonsakdsh"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        size="small"
+                        title="Follow on Instagram"
+                        sx={{
+                            color: '#E4405F',
+                            bgcolor: 'rgba(228, 64, 95, 0.1)',
+                            '&:hover': { bgcolor: 'rgba(228, 64, 95, 0.2)' },
+                        }}
+                    >
+                        <Instagram sx={{ fontSize: 20 }} />
+                    </IconButton>
+                    {/* Twitter/X */}
+                    <IconButton
+                        component="a"
+                        href="https://twitter.com/elonsakdsh"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        size="small"
+                        title="Follow on X"
+                        sx={{
+                            color: '#1DA1F2',
+                            bgcolor: 'rgba(29, 161, 242, 0.1)',
+                            '&:hover': { bgcolor: 'rgba(29, 161, 242, 0.2)' },
+                        }}
+                    >
+                        <Twitter sx={{ fontSize: 20 }} />
+                    </IconButton>
                     {/* Spotify */}
                     <IconButton
                         component="a"
