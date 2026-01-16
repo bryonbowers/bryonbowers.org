@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, IconButton, Snackbar } from '@mui/material';
-import { PlayArrow, Pause, Share, Album, Shuffle, Favorite, Search, Cyclone } from '@mui/icons-material';
+import { PlayArrow, Pause, Share, Album, Shuffle, Favorite, Search, Cyclone, RocketLaunch } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMusic } from '../context/MusicContext';
 import { useFavorites } from '../context/FavoritesContext';
@@ -82,30 +82,31 @@ export const MusicPage: React.FC = () => {
   // Track anchor spheres for each album cluster (the sphere others rotate around)
   const clusterAnchors = useRef<Record<string, string>>({});
 
-  // Random shooting sphere effect
+  // Trigger shooting sphere function
+  const triggerShootingSphere = useCallback(() => {
+    if (shootingSphere) return; // Don't trigger if one is already active
+
+    // Pick a random song for the shooting sphere
+    const randomSong = songsData[Math.floor(Math.random() * songsData.length)];
+    const footerHeight = 120;
+    const usableHeight = dimensions.height - footerHeight - 200; // Leave room for sphere size
+    const randomY = 100 + Math.random() * usableHeight;
+
+    setShootingSphere({
+      id: `shooting-${Date.now()}`,
+      y: randomY,
+      song: randomSong,
+      startTime: Date.now(),
+    });
+
+    // Remove the sphere after animation completes
+    setTimeout(() => {
+      setShootingSphere(null);
+    }, 32000);
+  }, [shootingSphere, dimensions.height]);
+
+  // Random shooting sphere effect - automatic triggers
   useEffect(() => {
-    const triggerShootingSphere = () => {
-      if (shootingSphere) return; // Don't trigger if one is already active
-
-      // Pick a random song for the shooting sphere
-      const randomSong = songsData[Math.floor(Math.random() * songsData.length)];
-      const footerHeight = 120;
-      const usableHeight = dimensions.height - footerHeight - 200; // Leave room for sphere size
-      const randomY = 100 + Math.random() * usableHeight;
-
-      setShootingSphere({
-        id: `shooting-${Date.now()}`,
-        y: randomY,
-        song: randomSong,
-        startTime: Date.now(),
-      });
-
-      // Remove the sphere after animation completes
-      setTimeout(() => {
-        setShootingSphere(null);
-      }, 22000);
-    };
-
     // Initial delay before first shooting sphere (15-30 seconds)
     const initialDelay = setTimeout(() => {
       triggerShootingSphere();
@@ -122,7 +123,7 @@ export const MusicPage: React.FC = () => {
       clearTimeout(initialDelay);
       clearInterval(interval);
     };
-  }, [dimensions.height, shootingSphere]);
+  }, [triggerShootingSphere]);
 
   // Explosion effect when switching to arrange by album
   useEffect(() => {
@@ -510,7 +511,7 @@ export const MusicPage: React.FC = () => {
 
         // Shooting sphere collision - SLAM spheres out of the way
         if (shootingSphere && !isThisPlaying) {
-          const animationDuration = 18000; // 18 seconds to cross screen
+          const animationDuration = 28000; // 28 seconds to cross screen
           const elapsed = Date.now() - shootingSphere.startTime;
           const progress = Math.min(elapsed / animationDuration, 1);
 
@@ -1489,9 +1490,9 @@ export const MusicPage: React.FC = () => {
             animate={{ x: dimensions.width + 50, scale: 1, opacity: [0, 1, 1, 1, 0] }}
             exit={{ opacity: 0 }}
             transition={{
-              duration: 18,
+              duration: 28,
               ease: 'linear',
-              opacity: { duration: 18, times: [0, 0.02, 0.5, 0.98, 1] },
+              opacity: { duration: 28, times: [0, 0.01, 0.5, 0.99, 1] },
             }}
             onClick={() => {
               // Find the first song from this album and play it
@@ -1607,15 +1608,49 @@ export const MusicPage: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Whirlpool button - bottom right */}
+      {/* Right side buttons */}
       <Box
         sx={{
           position: 'absolute',
           bottom: { xs: 100, md: 120 },
           right: { xs: 10, md: 20 },
           zIndex: 1000,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1,
         }}
       >
+        {/* Launch sphere button */}
+        <IconButton
+          onClick={triggerShootingSphere}
+          disabled={!!shootingSphere}
+          title="Launch surprise!"
+          sx={{
+            bgcolor: shootingSphere ? 'rgba(255,150,50,0.3)' : 'rgba(0,0,0,0.5)',
+            border: shootingSphere ? '1px solid rgba(255,150,50,0.5)' : '1px solid rgba(255,255,255,0.3)',
+            color: shootingSphere ? '#ff9632' : 'white',
+            width: 44,
+            height: 44,
+            transition: 'all 0.3s',
+            animation: shootingSphere ? 'rocketPulse 1s ease-in-out infinite' : 'none',
+            '@keyframes rocketPulse': {
+              '0%, 100%': { transform: 'translateX(0)', boxShadow: '0 0 10px rgba(255,150,50,0.5)' },
+              '50%': { transform: 'translateX(3px)', boxShadow: '0 0 20px rgba(255,150,50,0.8)' },
+            },
+            '&:hover': {
+              bgcolor: shootingSphere ? 'rgba(255,150,50,0.4)' : 'rgba(0,0,0,0.7)',
+              borderColor: shootingSphere ? 'rgba(255,150,50,0.7)' : 'rgba(255,255,255,0.5)',
+              transform: shootingSphere ? undefined : 'scale(1.1) rotate(-15deg)',
+            },
+            '&:disabled': {
+              color: '#ff9632',
+            },
+          }}
+        >
+          <RocketLaunch sx={{ transform: 'rotate(-45deg)' }} />
+        </IconButton>
+
+        {/* Whirlpool button */}
         <IconButton
           onClick={handleWhirlpool}
           disabled={isWhirlpoolActive}
