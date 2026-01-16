@@ -103,7 +103,7 @@ export const MusicPage: React.FC = () => {
       // Remove the sphere after animation completes
       setTimeout(() => {
         setShootingSphere(null);
-      }, 6000);
+      }, 12000);
     };
 
     // Initial delay before first shooting sphere (15-30 seconds)
@@ -508,19 +508,15 @@ export const MusicPage: React.FC = () => {
           }
         }
 
-        // Shooting sphere collision - push spheres out of the way
+        // Shooting sphere collision - SLAM spheres out of the way
         if (shootingSphere && !isThisPlaying) {
-          const animationDuration = 5000; // Same as CSS animation duration (slower)
+          const animationDuration = 10000; // 10 seconds to cross screen
           const elapsed = Date.now() - shootingSphere.startTime;
           const progress = Math.min(elapsed / animationDuration, 1);
 
-          // Calculate shooting sphere position (easeInOut curve)
-          const easeProgress = progress < 0.5
-            ? 2 * progress * progress
-            : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
+          // Calculate shooting sphere position (linear for consistent speed)
           const shootingSize = isMobile ? SPHERE_SIZE_MOBILE * 3 : SPHERE_SIZE * 3;
-          const shootingX = -250 + easeProgress * (dimensions.width + 300);
+          const shootingX = -250 + progress * (dimensions.width + 300);
           const shootingY = shootingSphere.y;
 
           // Check collision with shooting sphere
@@ -532,17 +528,22 @@ export const MusicPage: React.FC = () => {
           const dx = sphereCenterX - shootingCenterX;
           const dy = sphereCenterY - shootingCenterY;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const collisionDist = (shootingSize + size) / 2 + 30; // Extra buffer for dramatic effect
+          const collisionDist = (shootingSize + size) / 2 + 50; // Bigger collision zone
 
           if (dist < collisionDist && dist > 0) {
-            // Strong push away from shooting sphere
-            const pushStrength = ((collisionDist - dist) / collisionDist) * 18;
+            // MASSIVE push - really knock them out of the way
+            const overlap = collisionDist - dist;
+            const pushStrength = 35 + (overlap / collisionDist) * 25;
+
+            // Push in direction away from shooting sphere
             vx += (dx / dist) * pushStrength;
             vy += (dy / dist) * pushStrength;
 
-            // Add some chaos/spin
-            vx += (Math.random() - 0.5) * 5;
-            vy += (Math.random() - 0.5) * 5;
+            // Add forward momentum from the shooting sphere moving right
+            vx += 15;
+
+            // Add some vertical scatter
+            vy += (Math.random() - 0.5) * 20;
           }
         }
 
@@ -1488,9 +1489,9 @@ export const MusicPage: React.FC = () => {
             animate={{ x: dimensions.width + 50, scale: 1, opacity: [0, 1, 1, 1, 0] }}
             exit={{ opacity: 0 }}
             transition={{
-              duration: 5,
-              ease: 'easeInOut',
-              opacity: { duration: 5, times: [0, 0.05, 0.5, 0.95, 1] },
+              duration: 10,
+              ease: 'linear',
+              opacity: { duration: 10, times: [0, 0.03, 0.5, 0.97, 1] },
             }}
             onClick={() => {
               // Find the first song from this album and play it
@@ -1508,12 +1509,12 @@ export const MusicPage: React.FC = () => {
               position: 'absolute',
               width: isMobile ? SPHERE_SIZE_MOBILE * 3 : SPHERE_SIZE * 3,
               height: isMobile ? SPHERE_SIZE_MOBILE * 3 : SPHERE_SIZE * 3,
-              zIndex: 5,
+              zIndex: 50,
               pointerEvents: 'auto',
               cursor: 'pointer',
-              filter: 'blur(0.5px)',
               '&:hover': {
-                filter: 'blur(0px) brightness(1.2)',
+                filter: 'brightness(1.2)',
+                transform: 'scale(1.05)',
               },
             }}
           >
@@ -1523,9 +1524,8 @@ export const MusicPage: React.FC = () => {
                 inset: 0,
                 borderRadius: '50%',
                 overflow: 'hidden',
-                boxShadow: '0 0 40px 15px rgba(255,255,255,0.3), 0 0 80px 30px rgba(255,255,255,0.15)',
-                border: '3px solid rgba(255,255,255,0.2)',
-                opacity: 0.7,
+                boxShadow: '0 0 50px 20px rgba(255,255,255,0.5), 0 0 100px 40px rgba(255,255,255,0.25), inset 0 0 30px rgba(0,0,0,0.3)',
+                border: '4px solid rgba(255,255,255,0.6)',
               }}
             >
               <Box
@@ -1536,7 +1536,7 @@ export const MusicPage: React.FC = () => {
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
-                  filter: 'brightness(0.8) blur(0.5px)',
+                  filter: 'brightness(1.1) saturate(1.2)',
                 }}
               />
               {/* Bubble highlight */}
