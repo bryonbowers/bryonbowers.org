@@ -1559,29 +1559,40 @@ export const MusicPage: React.FC = () => {
 
               // Draw curvy whispy lines from center to each sphere
               return albumSpheres.map((s, idx) => {
-                const sx = s.x + s.size / 2;
-                const sy = s.y + s.size / 2;
-                const dist = Math.sqrt((sx - centerX) ** 2 + (sy - centerY) ** 2);
+                const sphereCenterX = s.x + s.size / 2;
+                const sphereCenterY = s.y + s.size / 2;
+                const dist = Math.sqrt((sphereCenterX - centerX) ** 2 + (sphereCenterY - centerY) ** 2);
+
+                if (dist < 5) return null; // Skip if too close
+
+                // Calculate direction from hub to sphere
+                const dx = sphereCenterX - centerX;
+                const dy = sphereCenterY - centerY;
+                const nx = dx / dist;
+                const ny = dy / dist;
+
+                // Endpoint at sphere edge (not center)
+                const sphereRadius = s.size / 2;
+                const endX = sphereCenterX - nx * sphereRadius;
+                const endY = sphereCenterY - ny * sphereRadius;
 
                 // Calculate control point for bezier curve - offset perpendicular to the line
-                const midX = (centerX + sx) / 2;
-                const midY = (centerY + sy) / 2;
-                const dx = sx - centerX;
-                const dy = sy - centerY;
+                const midX = (centerX + endX) / 2;
+                const midY = (centerY + endY) / 2;
                 // Perpendicular offset for curve - alternates direction based on index
-                const curveAmount = 20 + (dist * 0.15);
+                const curveAmount = 15 + (dist * 0.1);
                 const direction = idx % 2 === 0 ? 1 : -1;
-                const perpX = -dy / (dist || 1) * curveAmount * direction;
-                const perpY = dx / (dist || 1) * curveAmount * direction;
+                const perpX = -ny * curveAmount * direction;
+                const perpY = nx * curveAmount * direction;
                 const ctrlX = midX + perpX;
                 const ctrlY = midY + perpY;
 
                 // String tension affects appearance
                 const tension = Math.min(dist / 150, 1);
-                const opacity = 0.25 + (1 - tension) * 0.35;
+                const opacity = 0.3 + (1 - tension) * 0.4;
 
-                // Create path with quadratic bezier curve
-                const path = `M ${centerX} ${centerY} Q ${ctrlX} ${ctrlY} ${sx} ${sy}`;
+                // Create path with quadratic bezier curve - ends at sphere edge
+                const path = `M ${centerX} ${centerY} Q ${ctrlX} ${ctrlY} ${endX} ${endY}`;
 
                 return (
                   <g key={`${albumName}-${s.id}`}>
