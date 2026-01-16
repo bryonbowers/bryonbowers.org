@@ -870,5 +870,16 @@
         "duration": 200,
         "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
         "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "71",
+        "title": "Emma Jean's Last Ride",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Single",
+        "audioUrl": "/music/Emma_Jeans_Last_Ride.wav",
+        "coverImageUrl": "/albumcovers/emma_jeans_last_ride_spotify.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
     }
 ]
