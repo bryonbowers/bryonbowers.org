@@ -40,6 +40,8 @@ interface Sphere {
   vy: number;
   size: number;
   song: typeof songsData[0];
+  rotationDirection: number; // 1 for clockwise, -1 for counter-clockwise
+  orbitSpeed: number; // Random speed multiplier for variety
 }
 
 const SPHERE_SIZE = 75;
@@ -176,6 +178,8 @@ export const MusicPage: React.FC = () => {
         vy: (Math.random() - 0.5) * 0.5,
         size,
         song,
+        rotationDirection: Math.random() > 0.5 ? 1 : -1, // Random clockwise or counter-clockwise
+        orbitSpeed: 0.5 + Math.random() * 0.5, // Random speed between 0.5 and 1.0
       };
     });
 
@@ -349,6 +353,19 @@ export const MusicPage: React.FC = () => {
                 const pullStrength = 0.25;
                 vx += (dx / dist) * pullStrength;
                 vy += (dy / dist) * pullStrength;
+              }
+
+              // Orbital rotation when music is playing (only for outer spheres, not the playing one)
+              if (isPlaying && currentSong && dist > 20) {
+                // Calculate perpendicular force for orbital motion
+                // Perpendicular to the line from cluster center to sphere
+                const orbitStrength = 0.08 * sphere.orbitSpeed; // Slow but noticeable
+                const perpX = -dy / dist; // Perpendicular vector
+                const perpY = dx / dist;
+
+                // Apply rotational force based on sphere's random direction
+                vx += perpX * orbitStrength * sphere.rotationDirection;
+                vy += perpY * orbitStrength * sphere.rotationDirection;
               }
             }
           }
