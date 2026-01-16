@@ -61,6 +61,7 @@ export const MusicPage: React.FC = () => {
   const [searchExpanded, setSearchExpanded] = useState(false);
   const [showShareToast, setShowShareToast] = useState(false);
   const [isWhirlpoolActive, setIsWhirlpoolActive] = useState(false);
+  const [shootingSphere, setShootingSphere] = useState<{ id: string; y: number; song: typeof songsData[0] } | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const prevArrangeByAlbum = useRef(false);
   const whirlpoolPrevArrangeByAlbum = useRef(false);
@@ -80,6 +81,47 @@ export const MusicPage: React.FC = () => {
 
   // Track anchor spheres for each album cluster (the sphere others rotate around)
   const clusterAnchors = useRef<Record<string, string>>({});
+
+  // Random shooting sphere effect
+  useEffect(() => {
+    const triggerShootingSphere = () => {
+      if (shootingSphere) return; // Don't trigger if one is already active
+
+      // Pick a random song for the shooting sphere
+      const randomSong = songsData[Math.floor(Math.random() * songsData.length)];
+      const footerHeight = 120;
+      const usableHeight = dimensions.height - footerHeight - 200; // Leave room for sphere size
+      const randomY = 100 + Math.random() * usableHeight;
+
+      setShootingSphere({
+        id: `shooting-${Date.now()}`,
+        y: randomY,
+        song: randomSong,
+      });
+
+      // Remove the sphere after animation completes
+      setTimeout(() => {
+        setShootingSphere(null);
+      }, 3000);
+    };
+
+    // Initial delay before first shooting sphere (15-30 seconds)
+    const initialDelay = setTimeout(() => {
+      triggerShootingSphere();
+    }, 15000 + Math.random() * 15000);
+
+    // Set up interval for subsequent shooting spheres (20-45 seconds apart)
+    const interval = setInterval(() => {
+      if (Math.random() > 0.3) { // 70% chance each interval
+        triggerShootingSphere();
+      }
+    }, 20000 + Math.random() * 25000);
+
+    return () => {
+      clearTimeout(initialDelay);
+      clearInterval(interval);
+    };
+  }, [dimensions.height, shootingSphere]);
 
   // Explosion effect when switching to arrange by album
   useEffect(() => {
@@ -1397,6 +1439,67 @@ export const MusicPage: React.FC = () => {
           <Favorite />
         </IconButton>
       </Box>
+
+      {/* Shooting sphere - random large sphere crossing screen */}
+      <AnimatePresence>
+        {shootingSphere && (
+          <MotionBox
+            key={shootingSphere.id}
+            initial={{ x: -250, y: shootingSphere.y, scale: 0.5, opacity: 0 }}
+            animate={{ x: dimensions.width + 50, scale: 1, opacity: [0, 1, 1, 1, 0] }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: 2.5,
+              ease: 'easeInOut',
+              opacity: { duration: 2.5, times: [0, 0.1, 0.5, 0.9, 1] },
+            }}
+            sx={{
+              position: 'absolute',
+              width: isMobile ? SPHERE_SIZE_MOBILE * 3 : SPHERE_SIZE * 3,
+              height: isMobile ? SPHERE_SIZE_MOBILE * 3 : SPHERE_SIZE * 3,
+              zIndex: 5,
+              pointerEvents: 'none',
+              filter: 'blur(1px)',
+            }}
+          >
+            <Box
+              sx={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '50%',
+                overflow: 'hidden',
+                boxShadow: '0 0 40px 15px rgba(255,255,255,0.3), 0 0 80px 30px rgba(255,255,255,0.15)',
+                border: '3px solid rgba(255,255,255,0.2)',
+                opacity: 0.7,
+              }}
+            >
+              <Box
+                component="img"
+                src={shootingSphere.song.coverImageUrl}
+                alt=""
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  filter: 'brightness(0.8) blur(0.5px)',
+                }}
+              />
+              {/* Bubble highlight */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  inset: 0,
+                  borderRadius: '50%',
+                  background: `
+                    radial-gradient(ellipse 50% 30% at 30% 20%, rgba(255,255,255,0.4) 0%, transparent 70%),
+                    radial-gradient(ellipse 30% 20% at 25% 25%, rgba(255,255,255,0.5) 0%, transparent 50%)
+                  `,
+                }}
+              />
+            </Box>
+          </MotionBox>
+        )}
+      </AnimatePresence>
 
       {/* Whirlpool button - bottom right */}
       <Box
