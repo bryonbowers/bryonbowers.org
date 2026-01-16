@@ -76,6 +76,9 @@ export const MusicPage: React.FC = () => {
   // Track previous playing song to detect playback changes
   const prevPlayingSongId = useRef<string | null>(null);
 
+  // Track anchor spheres for each album cluster (the sphere others rotate around)
+  const clusterAnchors = useRef<Record<string, string>>({});
+
   // Explosion effect when switching to arrange by album
   useEffect(() => {
     if (arrangeByAlbum && !prevArrangeByAlbum.current) {
@@ -182,6 +185,25 @@ export const MusicPage: React.FC = () => {
         orbitSpeed: 0.5 + Math.random() * 0.5, // Random speed between 0.5 and 1.0
       };
     });
+
+    // Assign random anchor spheres for each album cluster
+    const albumGroups: Record<string, string[]> = {};
+    initialSpheres.forEach(sphere => {
+      const album = (() => {
+        const lower = sphere.song.albumTitle.toLowerCase();
+        if (lower === 'single' || lower === "the devil's suit" || lower === "the devil's stew") return 'Singles';
+        return sphere.song.albumTitle;
+      })();
+      if (!albumGroups[album]) albumGroups[album] = [];
+      albumGroups[album].push(sphere.id);
+    });
+
+    // Pick a random anchor for each album
+    const anchors: Record<string, string> = {};
+    Object.entries(albumGroups).forEach(([album, sphereIds]) => {
+      anchors[album] = sphereIds[Math.floor(Math.random() * sphereIds.length)];
+    });
+    clusterAnchors.current = anchors;
 
     setSpheres(initialSpheres);
   }, [dimensions, isMobile]);
@@ -355,17 +377,37 @@ export const MusicPage: React.FC = () => {
                 vy += (dy / dist) * pullStrength;
               }
 
-              // Orbital rotation when music is playing (only for outer spheres, not the playing one)
-              if (isPlaying && currentSong && dist > 20) {
-                // Calculate perpendicular force for orbital motion
-                // Perpendicular to the line from cluster center to sphere
-                const orbitStrength = 0.08 * sphere.orbitSpeed; // Slow but noticeable
-                const perpX = -dy / dist; // Perpendicular vector
-                const perpY = dx / dist;
+              // Orbital rotation when music is playing (only for non-anchor spheres)
+              const albumName = normalizeAlbum(sphere.song.albumTitle);
+              const anchorId = clusterAnchors.current[albumName];
+              const isAnchor = sphere.id === anchorId;
 
-                // Apply rotational force based on sphere's random direction
-                vx += perpX * orbitStrength * sphere.rotationDirection;
-                vy += perpY * orbitStrength * sphere.rotationDirection;
+              if (isPlaying && currentSong && !isAnchor) {
+                // Find the anchor sphere to rotate around
+                const anchorSphere = prevSpheres.find(s => s.id === anchorId);
+                if (anchorSphere) {
+                  const anchorX = anchorSphere.x + anchorSphere.size / 2;
+                  const anchorY = anchorSphere.y + anchorSphere.size / 2;
+                  const toAnchorX = anchorX - (x + size / 2);
+                  const toAnchorY = anchorY - (y + size / 2);
+                  const distToAnchor = Math.sqrt(toAnchorX * toAnchorX + toAnchorY * toAnchorY);
+
+                  if (distToAnchor > 15) {
+                    // Calculate perpendicular force for orbital motion around anchor
+                    const orbitStrength = 0.25 * sphere.orbitSpeed; // Faster and more noticeable
+                    const perpX = -toAnchorY / distToAnchor; // Perpendicular vector
+                    const perpY = toAnchorX / distToAnchor;
+
+                    // Apply rotational force based on sphere's random direction
+                    vx += perpX * orbitStrength * sphere.rotationDirection;
+                    vy += perpY * orbitStrength * sphere.rotationDirection;
+
+                    // Gentle pull towards anchor to maintain orbit
+                    const pullToAnchor = 0.03;
+                    vx += (toAnchorX / distToAnchor) * pullToAnchor;
+                    vy += (toAnchorY / distToAnchor) * pullToAnchor;
+                  }
+                }
               }
             }
           }
