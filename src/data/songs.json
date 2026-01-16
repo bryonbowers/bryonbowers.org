@@ -892,5 +892,16 @@
         "duration": 200,
         "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
         "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "73",
+        "title": "Mr Gobble's Final School Bus Show",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Single",
+        "audioUrl": "/music/Mr_Gobbles_Final_School_Bus_Show.wav",
+        "coverImageUrl": "/albumcovers/mr_gobbles_final_school_bus_show_spotify.jpg",
+        "duration": 200,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
     }
 ]
