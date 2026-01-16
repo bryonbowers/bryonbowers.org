@@ -662,7 +662,7 @@ export const MusicPage: React.FC = () => {
     setArrangeByFavorites(false);
     setIsWhirlpoolActive(true);
 
-    // Initial powerful burst - suck everything towards center then spin out
+    // Initial massive burst - violent spin
     setSpheres(prev => prev.map(sphere => {
       const dx = (sphere.x + sphere.size / 2) - centerX;
       const dy = (sphere.y + sphere.size / 2) - centerY;
@@ -672,11 +672,11 @@ export const MusicPage: React.FC = () => {
       const perpX = -dy / dist;
       const perpY = dx / dist;
 
-      // Strong initial whirlpool - velocity increases with distance
-      const whirlStrength = 15 + (dist / 80) * 8;
+      // Massive initial whirlpool force
+      const whirlStrength = 25 + (dist / 50) * 15;
 
-      // Strong inward pull to create vortex effect
-      const inwardStrength = 6;
+      // Pull everything towards center initially
+      const inwardStrength = 8;
 
       return {
         ...sphere,
@@ -685,9 +685,9 @@ export const MusicPage: React.FC = () => {
       };
     }));
 
-    // Apply multiple waves of whirlpool force with varying intensity
+    // Apply continuous powerful rotation - 5 full rotations worth
     let waveCount = 0;
-    const maxWaves = 20; // More waves for longer effect
+    const maxWaves = 50; // Many waves for ~5 rotations
     const waveInterval = setInterval(() => {
       waveCount++;
 
@@ -699,40 +699,44 @@ export const MusicPage: React.FC = () => {
         const perpX = -dy / dist;
         const perpY = dx / dist;
 
-        // Pulsing intensity - builds up then fades
-        const pulsePhase = Math.sin((waveCount / maxWaves) * Math.PI);
-        const baseStrength = 4 + pulsePhase * 6;
+        // Strong consistent rotation force throughout
+        const rotationStrength = 12 + (dist / 100) * 8;
 
-        // Occasional direction changes for chaos
-        const directionFlip = waveCount === 8 || waveCount === 14 ? -1 : 1;
+        // Add chaos - random bursts
+        const chaosBurst = Math.random() > 0.85 ? (Math.random() - 0.5) * 15 : 0;
 
-        // Distance-based strength - outer spheres spin faster
-        const whirlStrength = (baseStrength + (dist / 120) * 4) * directionFlip;
+        // Pulsing inward/outward to keep things mixed up
+        const breathPhase = Math.sin((waveCount / maxWaves) * Math.PI * 5);
+        const radialStrength = breathPhase * 5;
 
-        // Varying inward/outward pull - breathes in and out
-        const breathPhase = Math.sin((waveCount / maxWaves) * Math.PI * 3);
-        const radialStrength = breathPhase * 3;
+        // Add some randomness to completely disrupt positions
+        const randomX = (Math.random() - 0.5) * 3;
+        const randomY = (Math.random() - 0.5) * 3;
 
         return {
           ...sphere,
-          vx: sphere.vx + perpX * whirlStrength + (dx / dist) * radialStrength,
-          vy: sphere.vy + perpY * whirlStrength + (dy / dist) * radialStrength,
+          vx: sphere.vx + perpX * rotationStrength + (dx / dist) * radialStrength + randomX + chaosBurst,
+          vy: sphere.vy + perpY * rotationStrength + (dy / dist) * radialStrength + randomY + chaosBurst,
         };
       }));
 
       if (waveCount >= maxWaves) {
         clearInterval(waveInterval);
 
-        // Final explosive burst outward
+        // Final explosive scatter in all directions
         setSpheres(prev => prev.map(sphere => {
           const dx = (sphere.x + sphere.size / 2) - centerX;
           const dy = (sphere.y + sphere.size / 2) - centerY;
           const dist = Math.sqrt(dx * dx + dy * dy) || 1;
 
+          // Random explosive direction
+          const angle = Math.random() * Math.PI * 2;
+          const explosionStrength = 10 + Math.random() * 8;
+
           return {
             ...sphere,
-            vx: sphere.vx + (dx / dist) * 8,
-            vy: sphere.vy + (dy / dist) * 8,
+            vx: sphere.vx + Math.cos(angle) * explosionStrength + (dx / dist) * 5,
+            vy: sphere.vy + Math.sin(angle) * explosionStrength + (dy / dist) * 5,
           };
         }));
 
@@ -742,9 +746,9 @@ export const MusicPage: React.FC = () => {
           if (whirlpoolPrevArrangeByAlbum.current) {
             setArrangeByAlbum(true);
           }
-        }, 2000);
+        }, 2500);
       }
-    }, 150); // Faster waves for more dynamic feel
+    }, 80); // Fast interval for smooth powerful rotation
   }, [isWhirlpoolActive, dimensions, arrangeByAlbum]);
 
   // Drag handlers
