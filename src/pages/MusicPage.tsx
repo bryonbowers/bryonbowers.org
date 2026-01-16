@@ -1492,13 +1492,29 @@ export const MusicPage: React.FC = () => {
               ease: 'easeInOut',
               opacity: { duration: 5, times: [0, 0.05, 0.5, 0.95, 1] },
             }}
+            onClick={() => {
+              // Find the first song from this album and play it
+              const albumSongs = songsData.filter(s =>
+                s.albumTitle.toLowerCase() === shootingSphere.song.albumTitle.toLowerCase()
+              );
+              if (albumSongs.length > 0) {
+                const firstSong = albumSongs[0];
+                setPoppingId(firstSong.id);
+                setTimeout(() => setPoppingId(null), 600);
+                playSong(firstSong as unknown as Song);
+              }
+            }}
             sx={{
               position: 'absolute',
               width: isMobile ? SPHERE_SIZE_MOBILE * 3 : SPHERE_SIZE * 3,
               height: isMobile ? SPHERE_SIZE_MOBILE * 3 : SPHERE_SIZE * 3,
               zIndex: 5,
-              pointerEvents: 'none',
-              filter: 'blur(1px)',
+              pointerEvents: 'auto',
+              cursor: 'pointer',
+              filter: 'blur(0.5px)',
+              '&:hover': {
+                filter: 'blur(0px) brightness(1.2)',
+              },
             }}
           >
             <Box
@@ -1535,6 +1551,32 @@ export const MusicPage: React.FC = () => {
                   `,
                 }}
               />
+              {/* Album name label */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  bottom: '15%',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  textAlign: 'center',
+                  pointerEvents: 'none',
+                }}
+              >
+                <Typography
+                  sx={{
+                    color: 'white',
+                    fontSize: isMobile ? '0.6rem' : '0.8rem',
+                    fontFamily: 'Cinzel',
+                    fontWeight: 700,
+                    letterSpacing: '0.1em',
+                    textShadow: '0 2px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)',
+                    whiteSpace: 'nowrap',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {shootingSphere.song.albumTitle}
+                </Typography>
+              </Box>
             </Box>
           </MotionBox>
         )}
