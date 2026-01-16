@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, IconButton, Snackbar } from '@mui/material';
-import { PlayArrow, Pause, Share, Album, Shuffle, Favorite, Search, Cyclone, RocketLaunch } from '@mui/icons-material';
+import { PlayArrow, Pause, Share, Album, Shuffle, Favorite, Search, Cyclone, RocketLaunch, Hub } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMusic } from '../context/MusicContext';
 import { useFavorites } from '../context/FavoritesContext';
@@ -62,6 +62,7 @@ export const MusicPage: React.FC = () => {
   const [showShareToast, setShowShareToast] = useState(false);
   const [isWhirlpoolActive, setIsWhirlpoolActive] = useState(false);
   const [shootingSphere, setShootingSphere] = useState<{ id: string; y: number; song: typeof songsData[0]; startTime: number } | null>(null);
+  const [elasticStrings, setElasticStrings] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const prevArrangeByAlbum = useRef(false);
   const whirlpoolPrevArrangeByAlbum = useRef(false);
@@ -608,6 +609,30 @@ export const MusicPage: React.FC = () => {
             }
           }
 
+          // Elastic strings - strong spring force between same album spheres
+          if (elasticStrings && sameAlbum && dist > 0) {
+            const nx = dx / dist;
+            const ny = dy / dist;
+            const restLength = 80; // Ideal distance between connected spheres
+            const displacement = dist - restLength;
+            const springStrength = 0.8; // Strong spring constant
+
+            // Spring force: F = k * displacement
+            const force = displacement * springStrength;
+
+            s1.vx += nx * force * 0.5;
+            s1.vy += ny * force * 0.5;
+            s2.vx -= nx * force * 0.5;
+            s2.vy -= ny * force * 0.5;
+
+            // Add damping to prevent oscillation
+            const dampingFactor = 0.85;
+            s1.vx *= dampingFactor;
+            s1.vy *= dampingFactor;
+            s2.vx *= dampingFactor;
+            s2.vy *= dampingFactor;
+          }
+
           // Favorites clustering logic
           if (arrangeByFavorites && dist > 0) {
             const s1IsFav = isFavorite(s1.song.id);
@@ -664,7 +689,7 @@ export const MusicPage: React.FC = () => {
     });
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [dimensions, draggedId, currentSong, isPlaying, arrangeByAlbum, arrangeByFavorites, isFavorite, getAlbumClusterPositions, searchQuery, shootingSphere, isMobile]);
+  }, [dimensions, draggedId, currentSong, isPlaying, arrangeByAlbum, arrangeByFavorites, isFavorite, getAlbumClusterPositions, searchQuery, shootingSphere, isMobile, elasticStrings]);
 
   useEffect(() => {
     if (spheres.length > 0 && dimensions.width > 0) {
@@ -1481,6 +1506,58 @@ export const MusicPage: React.FC = () => {
         </IconButton>
       </Box>
 
+      {/* Elastic strings visualization */}
+      {elasticStrings && (
+        <svg
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+        >
+          {spheres.flatMap((s1, i) =>
+            spheres.slice(i + 1).map((s2) => {
+              const sameAlbum = normalizeAlbum(s1.song.albumTitle) === normalizeAlbum(s2.song.albumTitle);
+              if (!sameAlbum) return null;
+
+              const x1 = s1.x + s1.size / 2;
+              const y1 = s1.y + s1.size / 2;
+              const x2 = s2.x + s2.size / 2;
+              const y2 = s2.y + s2.size / 2;
+              const dist = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+
+              // Only draw if within reasonable distance
+              if (dist > 400) return null;
+
+              // String tension affects appearance
+              const tension = Math.min(dist / 150, 1);
+              const opacity = 0.3 + (1 - tension) * 0.4;
+              const strokeWidth = 1 + (1 - tension) * 2;
+
+              return (
+                <line
+                  key={`${s1.id}-${s2.id}`}
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
+                  stroke={`rgba(255, 255, 255, ${opacity})`}
+                  strokeWidth={strokeWidth}
+                  strokeLinecap="round"
+                  style={{
+                    filter: 'drop-shadow(0 0 3px rgba(255,255,255,0.3))',
+                  }}
+                />
+              );
+            })
+          )}
+        </svg>
+      )}
+
       {/* Shooting sphere - random large sphere crossing screen */}
       <AnimatePresence>
         {shootingSphere && (
@@ -1620,6 +1697,32 @@ export const MusicPage: React.FC = () => {
           gap: 1,
         }}
       >
+        {/* Elastic strings button */}
+        <IconButton
+          onClick={() => setElasticStrings(!elasticStrings)}
+          title={elasticStrings ? "Remove strings" : "Connect albums"}
+          sx={{
+            bgcolor: elasticStrings ? 'rgba(150,255,150,0.3)' : 'rgba(0,0,0,0.5)',
+            border: elasticStrings ? '1px solid rgba(150,255,150,0.5)' : '1px solid rgba(255,255,255,0.3)',
+            color: elasticStrings ? '#96ff96' : 'white',
+            width: 44,
+            height: 44,
+            transition: 'all 0.3s',
+            animation: elasticStrings ? 'stringPulse 2s ease-in-out infinite' : 'none',
+            '@keyframes stringPulse': {
+              '0%, 100%': { boxShadow: '0 0 10px rgba(150,255,150,0.4)' },
+              '50%': { boxShadow: '0 0 20px rgba(150,255,150,0.7)' },
+            },
+            '&:hover': {
+              bgcolor: elasticStrings ? 'rgba(150,255,150,0.4)' : 'rgba(0,0,0,0.7)',
+              borderColor: elasticStrings ? 'rgba(150,255,150,0.7)' : 'rgba(255,255,255,0.5)',
+              transform: 'scale(1.1)',
+            },
+          }}
+        >
+          <Hub />
+        </IconButton>
+
         {/* Launch sphere button */}
         <IconButton
           onClick={triggerShootingSphere}
