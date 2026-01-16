@@ -2513,5 +2513,62 @@ Our last onstage kiss
 And our last back stage glance`,
     mood: 'romantic',
     theme: 'Young love, nostalgia, regret'
+  },
+  {
+    id: '76',
+    songId: '76',
+    songTitle: "Felix's Strolling Demons",
+    poemTitle: "Felix's Skeletons",
+    poemExcerpt: 'Lights are on but nobody\'s home, they were all gone a long time ago...',
+    poemContent: `[Chorus]
+Lights are on
+But nobody's home
+they were all gone
+a long time ago
+Time is an evil sweet mistress
+Bringing you love and death
+she's stealing' a piece of you
+With every breath
+
+Like hot sauce on a summer day
+Or ice cream on a cold winter night
+Sometimes your mind's at bay
+Sometimes it never feels quite right
+
+[Chorus]
+
+Cold wind on an April morning
+Birds singing' wake up babies
+World's outside
+It's Waiting for you
+The Universe doesn't
+Know what to do
+If it doesn't
+Include me with you
+
+[Chorus]
+
+I've been working' everyday
+Waiting for that free time to come to me
+Pretty sure everybody's running as fast
+Feel like I should be
+Having' a blast
+But the old man
+In the back of my brain
+Is making some days
+Look like rain
+
+[Chorus]
+
+Pitter Patter of feet
+On the east texas street
+Skeleton demons pushing baby buggies
+Winking as they go by
+Pink Floyd playing on the radio
+Beer in his hand before he goes
+
+[Chorus]`,
+    mood: 'reflective',
+    theme: 'Time, mortality, everyday life'
   }
 ];

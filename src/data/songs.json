@@ -925,5 +925,16 @@
         "duration": 234,
         "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
         "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "76",
+        "title": "Felix's Strolling Demons",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Single",
+        "audioUrl": "/music/Felixs_Strolling_Demons.wav",
+        "coverImageUrl": "/albumcovers/felixs_strolling_demons_spotify.jpg",
+        "duration": 219,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
     }
 ]
