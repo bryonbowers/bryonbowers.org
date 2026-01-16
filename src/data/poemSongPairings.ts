@@ -2648,5 +2648,44 @@ It's a wonder we survived!
 [Chorus]`,
     mood: 'intense',
     theme: 'Childhood adventure, brotherhood, danger'
+  },
+  {
+    id: '78',
+    songId: '78',
+    songTitle: 'Clown King Empire at Dawn',
+    poemTitle: 'Clown King Empire at Dawn',
+    poemExcerpt: "Clown king's Sellin' cars on the White house lawn, Empire's crawlin' out the body of Democracy at dawn...",
+    poemContent: `[Chorus]
+Clown king's Sellin' cars
+On the White house lawn
+Empire's crawlin' out the body
+Of Democracy at dawn
+Don't shit in a bag
+And tell me it's chocolate ice cream
+'cause facts are facts
+And America bows to no king
+
+Ridin' the chaos Train
+with a worm crawling in his brain
+Givin' Putin a Handy
+While the World eats your shit word candy
+
+[Chorus]
+
+He's pissin' off the mounties
+For no good reason
+He's got a Tariff and a straw man
+For every country and every season
+
+[Chorus]
+
+Democracy attacked from every angle
+Every institution, he's trying to strangle
+a new plane crash every day
+cause no one's watching at the F.A.A.
+
+[Chorus]`,
+    mood: 'intense',
+    theme: 'Political satire, democracy, resistance'
   }
 ];

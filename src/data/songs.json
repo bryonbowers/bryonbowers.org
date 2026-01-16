@@ -947,5 +947,16 @@
         "duration": 205,
         "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
         "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "78",
+        "title": "Clown King Empire at Dawn",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Single",
+        "audioUrl": "/music/Clown_King_Empire_at_Dawn.wav",
+        "coverImageUrl": "/albumcovers/clown_king_empire_at_dawn_spotify.jpg",
+        "duration": 231,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
     }
 ]
