@@ -67,5 +67,13 @@ service cloud.firestore {
       // Users can delete their own favorites only
       allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
     }
+
+    // Poem submissions - for user-submitted poems
+    match /poemSubmissions/{docId} {
+      // Anyone can submit a poem
+      allow create: if true;
+      // Only admin can read, update, delete submissions
+      allow read, update, delete: if isAdmin();
+    }
   }
 }

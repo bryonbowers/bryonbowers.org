@@ -100,7 +100,10 @@ const BookPage: React.FC<BookPageProps> = ({ pairing, isActive, pageNumber }) =>
       <Box
         sx={{
           position: 'absolute',
-          inset: { xs: 8, md: 20 },
+          top: { xs: 8, md: 20 },
+          left: { xs: 8, md: 20 },
+          right: { xs: 8, md: 20 },
+          bottom: { xs: 'calc(var(--player-height) + 60px)', md: 'calc(var(--player-height) + 50px)' },
           bgcolor: antiqueColors.leather,
           borderRadius: 2,
           boxShadow: `
@@ -698,7 +701,6 @@ export const BookReader: React.FC = () => {
           linear-gradient(180deg, #1a1209 0%, #2d1f12 50%, #1a1209 100%)
         `,
         overflow: 'hidden',
-        pb: 'var(--player-height)',
         // Wood grain texture
         '&::before': {
           content: '""',
@@ -814,13 +816,13 @@ export const BookReader: React.FC = () => {
       <Box
         sx={{
           position: 'absolute',
-          bottom: { xs: 100, md: 25 },
+          bottom: { xs: 'calc(var(--player-height) + 20px)', md: 'calc(var(--player-height) + 15px)' },
           left: '50%',
           transform: 'translateX(-50%)',
           display: 'flex',
           alignItems: 'center',
           gap: 2,
-          zIndex: 10,
+          zIndex: 100,
           bgcolor: antiqueColors.leatherDark,
           px: 3,
           py: 1,
@@ -904,7 +906,7 @@ export const BookReader: React.FC = () => {
           transition={{ delay: 1 }}
           sx={{
             position: 'absolute',
-            bottom: 150,
+            bottom: 'calc(var(--player-height) + 70px)',
             left: '50%',
             transform: 'translateX(-50%)',
             display: 'flex',
@@ -916,6 +918,7 @@ export const BookReader: React.FC = () => {
             py: 1,
             borderRadius: 1,
             border: `1px solid ${antiqueColors.gold}30`,
+            zIndex: 100,
           }}
         >
           <ChevronLeft sx={{ fontSize: 14 }} />

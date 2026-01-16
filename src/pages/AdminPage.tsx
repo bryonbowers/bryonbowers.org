@@ -24,9 +24,14 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Tooltip,
+  Snackbar,
+  Select,
+  MenuItem,
+  FormControl,
 } from '@mui/material';
-import { ExpandMore, ExpandLess, Email as EmailIcon, Search as SearchIcon, Send as SendIcon } from '@mui/icons-material';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { ExpandMore, ExpandLess, Email as EmailIcon, Search as SearchIcon, Send as SendIcon, ContentCopy as CopyIcon } from '@mui/icons-material';
+import { collection, getDocs, query, orderBy, doc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase/config';
 import { useAuth } from '../context/AuthContext';
@@ -55,6 +60,16 @@ interface Subscriber {
   source: string;
 }
 
+interface PoemSubmission {
+  id: string;
+  title: string;
+  content: string;
+  userName: string;
+  userEmail: string | null;
+  submittedAt: Date | null;
+  status: string;
+}
+
 export const AdminPage: React.FC = () => {
   const { isAdmin, loading: authLoading, user } = useAuth();
   const navigate = useNavigate();
@@ -65,6 +80,8 @@ export const AdminPage: React.FC = () => {
   const [orderDirection, setOrderDirection] = useState<'asc' | 'desc'>('desc');
   const [usersExpanded, setUsersExpanded] = useState(false);
   const [subscribersExpanded, setSubscribersExpanded] = useState(false);
+  const [poemSubmissions, setPoemSubmissions] = useState<PoemSubmission[]>([]);
+  const [poemSubmissionsExpanded, setPoemSubmissionsExpanded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [userSearch, setUserSearch] = useState('');
   const [subscriberSearch, setSubscriberSearch] = useState('');
@@ -72,6 +89,42 @@ export const AdminPage: React.FC = () => {
   const [emailSubject, setEmailSubject] = useState('News from Bryon Bowers');
   const [emailBody, setEmailBody] = useState('');
   const [emailRecipients, setEmailRecipients] = useState<string[]>([]);
+  const [copySnackbarOpen, setCopySnackbarOpen] = useState(false);
+
+  // Copy poem content to clipboard
+  const handleCopyPoem = async (content: string, title: string) => {
+    const textToCopy = `${title}\n\n${content}`;
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+      setCopySnackbarOpen(true);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  // Poem status options
+  const poemStatusOptions = [
+    { value: 'pending', label: 'Pending', color: '#FFC107' },
+    { value: 'making song', label: 'Making Song', color: '#2196F3' },
+    { value: 'song created', label: 'Song Created', color: '#9C27B0' },
+    { value: 'published to site', label: 'Published to Site', color: '#4CAF50' },
+  ];
+
+  // Update poem submission status
+  const handleStatusChange = async (submissionId: string, newStatus: string) => {
+    try {
+      const docRef = doc(db, 'poemSubmissions', submissionId);
+      await updateDoc(docRef, { status: newStatus });
+      // Update local state
+      setPoemSubmissions(prev =>
+        prev.map(sub =>
+          sub.id === submissionId ? { ...sub, status: newStatus } : sub
+        )
+      );
+    } catch (err) {
+      console.error('Failed to update status:', err);
+    }
+  };
 
   // Debug: Log admin status
   useEffect(() => {
@@ -135,6 +188,25 @@ export const AdminPage: React.FC = () => {
         });
         setSubscribers(subscribersList);
         console.log('Fetched subscribers:', subscribersList.length);
+
+        // Fetch poem submissions
+        const poemSubmissionsSnapshot = await getDocs(
+          query(collection(db, 'poemSubmissions'), orderBy('submittedAt', 'desc'))
+        );
+        const poemSubmissionsList: PoemSubmission[] = poemSubmissionsSnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            title: data.title || 'Untitled',
+            content: data.content || '',
+            userName: data.userName || 'Anonymous',
+            userEmail: data.userEmail || null,
+            submittedAt: data.submittedAt?.toDate() || null,
+            status: data.status || 'pending',
+          };
+        });
+        setPoemSubmissions(poemSubmissionsList);
+        console.log('Fetched poem submissions:', poemSubmissionsList.length);
 
         // Fetch all favorites
         const favoritesSnapshot = await getDocs(
@@ -371,6 +443,34 @@ export const AdminPage: React.FC = () => {
           <Typography variant="body2" color="text.secondary">
             Songs with Favorites
           </Typography>
+        </Paper>
+
+        <Paper
+          onClick={() => setPoemSubmissionsExpanded(!poemSubmissionsExpanded)}
+          sx={{
+            p: 3,
+            bgcolor: 'rgba(255, 255, 255, 0.05)',
+            flex: '1 1 150px',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            '&:hover': {
+              bgcolor: 'rgba(255, 255, 255, 0.1)',
+            },
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box>
+              <Typography variant="h3" sx={{ fontWeight: 700, color: '#DDA0DD' }}>
+                {poemSubmissions.length}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Poem Submissions
+              </Typography>
+            </Box>
+            <IconButton size="small" sx={{ color: '#DDA0DD' }}>
+              {poemSubmissionsExpanded ? <ExpandLess /> : <ExpandMore />}
+            </IconButton>
+          </Box>
         </Paper>
       </Box>
 
@@ -644,6 +744,148 @@ export const AdminPage: React.FC = () => {
         </Box>
       </Collapse>
 
+      {/* Poem Submissions Section (Collapsible) */}
+      <Collapse in={poemSubmissionsExpanded}>
+        <Box sx={{ mb: 4 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+            <Typography variant="h6">
+              Poem Submissions
+            </Typography>
+          </Box>
+          <TableContainer
+            component={Paper}
+            sx={{ bgcolor: 'rgba(255, 255, 255, 0.02)', mb: 4 }}
+          >
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                    Title
+                  </TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                    Content Preview
+                  </TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                    Submitted By
+                  </TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                    Email
+                  </TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                    Date
+                  </TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                    Status
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {poemSubmissions.map((submission) => (
+                  <TableRow
+                    key={submission.id}
+                    sx={{
+                      '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.03)' },
+                    }}
+                  >
+                    <TableCell>
+                      <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                        {submission.title}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: 'text.secondary',
+                            maxWidth: 250,
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
+                          title={submission.content}
+                        >
+                          {submission.content.substring(0, 100)}{submission.content.length > 100 ? '...' : ''}
+                        </Typography>
+                        <Tooltip title="Copy poem to clipboard">
+                          <IconButton
+                            size="small"
+                            onClick={() => handleCopyPoem(submission.content, submission.title)}
+                            sx={{
+                              color: '#DDA0DD',
+                              '&:hover': { bgcolor: 'rgba(221, 160, 221, 0.1)' },
+                            }}
+                          >
+                            <CopyIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2">
+                        {submission.userName}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                        {submission.userEmail || '—'}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.8rem' }}>
+                        {formatDate(submission.submittedAt)}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <FormControl size="small" sx={{ minWidth: 140 }}>
+                        <Select
+                          value={submission.status}
+                          onChange={(e) => handleStatusChange(submission.id, e.target.value)}
+                          sx={{
+                            fontSize: '0.8rem',
+                            bgcolor: 'rgba(255, 255, 255, 0.05)',
+                            '& .MuiSelect-select': {
+                              py: 0.5,
+                              color: poemStatusOptions.find(o => o.value === submission.status)?.color || '#FFC107',
+                            },
+                            '& .MuiOutlinedInput-notchedOutline': {
+                              borderColor: 'rgba(255, 255, 255, 0.2)',
+                            },
+                            '&:hover .MuiOutlinedInput-notchedOutline': {
+                              borderColor: 'rgba(255, 255, 255, 0.3)',
+                            },
+                          }}
+                        >
+                          {poemStatusOptions.map((option) => (
+                            <MenuItem
+                              key={option.value}
+                              value={option.value}
+                              sx={{ color: option.color }}
+                            >
+                              {option.label}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </TableCell>
+                  </TableRow>
+                ))}
+
+                {poemSubmissions.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
+                      <Typography color="text.secondary">
+                        No poem submissions yet.
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </Collapse>
+
       {/* Favorites Table */}
       <Typography variant="h6" sx={{ mb: 2 }}>
         Favorites by Song
@@ -829,6 +1071,15 @@ export const AdminPage: React.FC = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Copy confirmation snackbar */}
+      <Snackbar
+        open={copySnackbarOpen}
+        autoHideDuration={2000}
+        onClose={() => setCopySnackbarOpen(false)}
+        message="Poem copied to clipboard"
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
     </Container>
   );
 };

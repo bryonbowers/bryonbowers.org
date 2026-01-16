@@ -2065,30 +2065,80 @@ And make it mine`,
     songId: '67',
     songTitle: '406 (Remix)',
     poemTitle: "Mind's Time Cage",
-    poemExcerpt: 'Trapped in the corridors of thought...',
-    poemContent: `Mind's Time Cage
+    poemExcerpt: 'Four O Six on a Saturday, Sun is Shining and I wanna play...',
+    poemContent: `[Chorus]
+Four O Six
+On a Saturday…
+Sun is Shining
+And I wanna play…
+I waited for you
+You never came…
+Now the sun doesn't shine
+Quite the same…
 
-Trapped in the corridors of thought
-Where minutes stretch to hours
-And hours collapse to seconds
-The mind keeps its own time
+Infinite Blue
+On a Dull Brick Wall
+Green dress on
+Mustache and all
+She's sitcom cute
+Short Cut Hair
+Tight T-shirt on
+In her underwear
 
-406 reasons to stay
-406 reasons to go
-The remix plays on repeat
-In the cage of my skull
+[Chorus]
+Four O Six
+On a Saturday…
+Sun is Shining
+And I wanna play…
+I waited for you
+You never came…
+Now the sun doesn't shine
+Quite the same…
 
-Time bends around memories
-Past and future blur
-The present moment slips away
-Before I can grasp it
+One more time…
+That's what you said…
+See you there…
+Next Saturday…
+But you did not come…
+You went away…
+Music plays in the background now…
+My body can feel you on every sound
+Just me laying on that warm cold ground…
 
-Locked in contemplation
-The key is somewhere within
-But finding it requires
-Stepping outside of time itself`,
-    mood: 'reflective',
-    theme: 'Time, consciousness, introspection'
+[Chorus]
+Four O Six
+On a Saturday…
+Sun is Shining
+And I wanna play…
+I waited for you
+You never came…
+Now the sun doesn't shine
+Quite the same…
+
+A future never realized
+me looking for your eyes
+I was too busy chasing
+Looking for my prize…
+Didn't stop to think
+You Left me on that stage
+Now my mind has you Stuck
+In its own time cage…
+knocking on my door
+with that silent old rage
+You're looking for more…
+But I've sold the store…
+
+[Chorus]
+Four O Six
+On a Saturday…
+Sun is Shining
+And I wanna play…
+I waited for you
+You never came…
+Now the sun doesn't shine
+Quite the same…`,
+    mood: 'melancholic',
+    theme: 'Lost love, waiting, nostalgia, regret'
   },
   {
     id: '68',
@@ -2687,5 +2737,871 @@ cause no one's watching at the F.A.A.
 [Chorus]`,
     mood: 'intense',
     theme: 'Political satire, democracy, resistance'
+  },
+  {
+    id: '65',
+    songId: '65',
+    songTitle: 'TV Kid',
+    poemTitle: 'Sneaking Late Night TV',
+    poemExcerpt: 'Watching Lawrence Welk Sunday Night repeat, Steam crawling out my Tomato soup...',
+    poemContent: `Watching' Lawrence Welk Sunday Night repeat
+Steam crawling' out my Tomato soup
+Sitting' on the edge of my seat
+Handsome men
+In three piece suits dancing' with
+Pretty women wearing' frilly Summer dresses
+
+[Chorus]
+Thrown in the Ocean
+A young child screams
+Strange creature of water
+Only swims in her dreams
+Lay down your head
+Rest your weary bones
+I'll carry you with me
+Wherever I go
+
+New England clam chowder sitting' on her TV tray
+saltine crackers and old hats stacked high
+Long out of fashion
+But precious still
+For Sunday Mass or a trip to the beach
+Little Barb and Teddy always packed and ready
+fighting' all the way home
+
+[Chorus]
+
+You made me read TV Kid
+In my room 'til I did
+Trapeze on the bed post edge
+Watching the Carol Burnett show
+Reflected off the mirror
+Through the crack of my bedroom door
+slapstick funny
+And faces a skew
+Never knew
+What that crazy lady would do
+
+[Chorus]
+
+One hour foot rub
+Tales from the Crypt exchange
+while you read Stephen King
+As the crypt keeper creeps
+One bad pun
+There goes another
+Dreamed I was falling
+You're probably reading right now
+In some other dimension
+
+[Chorus]
+
+[Fade Out]`,
+    mood: 'reflective',
+    theme: 'Nostalgia, childhood memories, family, television'
+  },
+  {
+    id: '79',
+    songId: '79',
+    songTitle: 'Cricket Symphony',
+    poemTitle: "Flickering' Light",
+    poemExcerpt: 'Wild animals Swimming on a Cool Saturday Night, Cricket Symphony...',
+    poemContent: `Flickering' Light
+By the pool bathroom doors
+Everyone else asleep
+My eyes locked on yours
+You were climbing in my head
+your forest wild and pulsing
+Your hand an eager forest guide
+Our chemistry immediate
+Pretend to the bathroom
+Over the fence
+Into the pool
+I was a bull
+without a brain
+You an insane tiger
+high on cocaine
+
+[Chorus]
+Wild animals Swimming'…
+on a Cool Saturday Night..
+Cricket Symphony…
+Riding stars on pale moonlight..
+Bull with no brain…
+Tiger cocaine…
+Slowly floating'
+Til' Sunday Morning
+Sometimes love comes…
+Warm no warning…
+
+Gave you a ride home next morning
+In front of everyone
+You were a church princess
+Alone with me
+A love Sorceress
+Wild unyielding
+Biting and scratching
+Primal and climbing
+
+[Chorus]
+
+Cucumber lotion in the park
+Club house movie
+that we never watched
+Grama sent little brothers
+As crazy love buffers
+Got to your house
+My little brother had to pee
+Found out your mom
+was as racist as could be
+You said you weren't
+But I said family dinners
+might be a little awkward
+
+[Chorus]
+
+We collided one more time
+Against my better judgement
+We talked more that night
+Than any other
+I dropped you off
+our last kiss goodbye
+I said take care
+as you began to cry
+As you walked in
+your racist mom
+waved goodbye
+wish I'd flipped her off
+as I drove away…
+
+[Chorus]`,
+    mood: 'passionate',
+    theme: 'Young love, summer romance, forbidden attraction, bittersweet memories'
+  },
+  {
+    id: '80',
+    songId: '80',
+    songTitle: 'Falling Lemon Grass Hard',
+    poemTitle: 'Lost Boys',
+    poemExcerpt: '5 Lost Boys Fell Lemon Grass hard, with a Bloody arm...',
+    poemContent: `Soap in my mouth
+For every bad old' word
+Underwear on my head
+For every wet bed
+Full Ice Bath
+at a hundred and five…
+You were an old school momma…
+but you kept us alive…
+An iron fist…
+with a heart of gold…
+
+[Chorus]
+5 Lost Boys
+Fell Lemon Grass hard…
+with a Bloody arm…
+Gun Smoke in the morning
+Captain Hook In her eyes
+Bat Boys Chasing
+Poison Ivy Girls
+
+You a house wife
+Husband a farmer
+Empty nesters
+used to good kids…
+You didn't expect us
+Five wild rockets….
+unbounded wanderers of the night
+severe lackers of convention
+
+[Chorus]
+
+Mornings Rolling' out slow
+Gilligan's Island
+Gun Smoke and Dallas reruns
+Bike Too Big
+Climbing Cinderblocks
+Lemon Grass Crash
+Healed me with
+Iodine Gumbo
+and a hot wheels car!
+
+[Chorus]
+
+Adam West batman coming on the tv
+Every Wednesday at 3:30
+Ran so fast
+Electric Fence
+Blacked out
+Came to…
+Poison Ivy Kissing' Robin…
+Got him under her evil spell
+Watch out Batman
+He's gonna give you hell!
+
+[Chorus]
+
+We pushed you to your limit
+Packed up our clothes
+Off to the next house
+Tried your best
+Made us less wild
+Saw the sadness
+In your eyes when they picked us up that day
+Hugged you so hard…
+didn't know what to say…
+
+[Chorus]`,
+    mood: 'reflective',
+    theme: 'Foster care, childhood, resilience, bittersweet memories, found family'
+  },
+  {
+    id: '81',
+    songId: '81',
+    songTitle: 'Mustard and French Fries',
+    poemTitle: 'Mustard and French Fries',
+    poemExcerpt: 'You were my Mustard and French Fries, Always on my mind...',
+    poemContent: `I was sitting' at the lunch table
+You sat down by my side
+Summer almost here
+It was the end of 95
+I called you "Mustard and French Fries"
+You called me on the phone
+We circled round each other
+But we never took it home
+We were always with another
+
+[Chorus]
+You were my "Mustard and French Fries"
+Always on my mind
+Every class we had together
+a cherished honey vine
+Circled Each Other Forever
+Never the right Time
+We'll always have that..
+One Last Dance…
+Of 95…
+
+It was the Last Dance
+Of Junior High
+Wearing my best dress shirt
+Your Blue Dress On
+Punk Dancing' Hard
+To "Never known a girl
+like You before"
+DJ playing Shaggy's "Boombastic"...
+
+[Chorus]
+
+Slow music on
+Hair slicked back
+Palms Sweating' hard
+Last Slow Dance
+Of the night
+I extended my hand to you
+My Hands
+Around your waist
+Yours wrapped around my neck
+We slowly danced
+Bodies side to side
+Awkward bump of our knees
+We laughed it off
+
+[Chorus]
+
+Graduation came
+We were top of the game
+Red Robes on
+In the hot Texas Sun
+I sat next to you
+We said our spiel
+to our class mates
+Change coming hard
+One last Hug
+One last smile
+You said "adieu
+I'll miss you"
+I said "I'll miss you too"
+A great sadness in my heart
+as we went our separate ways
+
+[Chorus]`,
+    mood: 'romantic',
+    theme: 'First love, nostalgia, school days, missed connections, bittersweet goodbye'
+  },
+  {
+    id: '82',
+    songId: '82',
+    songTitle: 'Gauntlets Laid Down',
+    poemTitle: 'Slapped By 2',
+    poemExcerpt: 'Gauntlets Laid Down, Slapped By Two, I Suffered Stupid and Shame for you...',
+    poemContent: `Upside down
+On the Monkey Bars
+Your Number 2's Legs
+Struttin' up to me
+Hands on her Hips
+She slapped me Hard
+With a "Yes, No, Maybe"
+In the School Play Yard
+got it back to you
+Waiting for the bus
+Walked away tall
+With my Head Held High
+
+[Chorus]
+Gauntlets Laid Down
+Slapped By Two
+I Suffered Stupid
+And Shame for you
+"Yes, No, Maybe"
+I said Yes
+Never got to see you
+In Your Birthday Dress
+
+You came in a pair
+All Blue eyes
+Peeking through
+Your Blonde Curly Hair
+Your partner in crime
+Always around
+Making eyes at me
+With her short shorts on
+and legs to the moon
+Will I go to your party?
+Hell yes!
+I'll bring a present
+You bring your
+Birthday Dress
+
+[Chorus]
+
+Gram-ah said
+I couldn't Go
+Asked her Why?
+She said "Cause I said so"
+I said "That's a stupid reason"
+She slapped me Hard
+Defiance in my eyes
+Then came Shame
+It was the First and Last Time
+She ever had to slap me
+But in her defense
+I had it coming
+Hormones Raging
+Head was floating
+In Blue Eyes
+Curly Blonde Hair
+And Legs to the moon
+
+[Chorus]
+
+Next Week Came
+Raining out
+Everybody cooped up
+In the Gym
+You sat next to him
+She let me know
+I was dead to you
+Then she slipped
+Me her number
+2 weeks steady
+With your Number 2
+
+[Chorus]`,
+    mood: 'reflective',
+    theme: 'Childhood crush, schoolyard drama, growing up, teenage hormones'
+  },
+  {
+    id: '83',
+    songId: '83',
+    songTitle: 'Hobo Santa',
+    poemTitle: 'Hobo Santa',
+    poemExcerpt: 'Hobo Santa, How\'d you get here? Your eyes Happy, Angry, Sad, No Fear...',
+    poemContent: `Legs propped up…
+Eyes closed…
+Night wind on my face…
+Taking turns at the wheel
+High on Gasoline fumes
+Cigarette Hotel Rooms
+Laughing Our balls Off
+We were Tripping on High
+Reached the West coast
+Threw up in the ocean
+Heads in motion
+
+[Chorus]
+Hobo Santa
+How'd you get here?
+Your eyes Happy, Angry, Sad, No Fear
+Popcorn in our hands at 2am
+Us watching Him?
+Watching Them?
+
+Hobo Santa standing before us
+With his wagon of books
+Pointing at the people inside
+They were Terrified
+Mouthing "You, yeah you"
+As he pointed at them
+He turned to us
+Smiled and said "I just like to fuck with them"
+His eyes were somehow happy, angry, and sad
+All at the same time
+How did he get here?
+How did we get here?
+2am
+Watching him
+Watching them
+
+[Chorus]
+
+Speeding through Kansas
+90 miles an hour
+Stopped with a warning
+Fast food joints
+Churches
+Cash Now Pawn Shops
+Neverending cycle
+
+[Chorus]
+
+Mount Rushmore
+Former Glory
+Ice Road Rockies
+Woke up to the Arizona Desert Sun
+Coke and Candy
+Got Back Home
+Work in the morning
+Rushed and Pushed
+Through this Life
+Slow the fuck down
+Smell the roses
+Stop buying shit
+Hug em and Kiss em
+As much as you can
+
+[Chorus]`,
+    mood: 'reflective',
+    theme: 'Road trip, youth, freedom, strange encounters, life lessons'
+  },
+  {
+    id: '84',
+    songId: '84',
+    songTitle: "Liberty's Fragile Bulwark",
+    poemTitle: "There's a Woman in the Drain",
+    poemExcerpt: "Can the Bulwark hold? Yes, I am told, By the honor and convention of old...",
+    poemContent: `There's a woman in the drain
+Yes she's gone quite insane
+Her tryfulls are not inane
+She struggles with the Pain.
+Long ago lost her soul
+To the Clown King's Reign
+Prays before every exchange
+for her soul to remain…
+
+[Chorus]
+Can the Bulwark hold?
+Yes, I am told
+By the honor and convention of old
+Liberty's soul
+Is getting sold
+Liberty for Sale
+to the Shark and to the whale
+It's not Arbi-Trajj
+It's a Tear-Riff Mir-Raj
+
+3rd Term opening' up a can of worms
+Feeding them to his Minions
+in tiny Sold-my-soul portions
+
+[Chorus]
+
+He's dismantling' love
+He's shooting' all the doves
+Targeting Immigrants, Tourists
+and anyone who dares to disagree
+He's a dog of an angry pedigree
+Ripping' up the constitution
+Spreading' his Hate pollution
+
+[Chorus]
+
+Water filling up
+Slowly to the top
+Open the Drain
+Welcome the Pain
+now you must swim
+only to his whim
+Swim Lady Swim….
+Only to Him….`,
+    mood: 'intense',
+    theme: 'Political satire, democracy, resistance, tyranny'
+  },
+  {
+    id: '85',
+    songId: '85',
+    songTitle: 'Wild Eyes of Oz',
+    poemTitle: 'Wild Eyes of Oz',
+    poemExcerpt: 'New Place, New Clothes, New Hair Cut, same old wild blue eyes staring back at me...',
+    poemContent: `Looking' in the mirror at my crazy blonde hair..
+lice crawling' 'around everywhere
+Blue Eyes Wild Looking back at me...
+nose bombarded by the smell of pee…
+Front door slams open
+It's case worker Carla..
+The cops pick us up…
+we kick and scream…
+calming us down…
+with some chocolate ice cream…
+we're driving away…
+tears in our eyes..
+looking back at that dark night sky…
+wondering why we had to say goodbye…
+
+[Chorus]
+New Place
+New Clothes
+New Hair Cut
+same old wild blue eyes…
+Staring' back at me…
+
+Opened my eyes..
+Where am I now?
+What is this place…
+Clean carpet…
+and spotless floors…
+Granite counter tops…
+figurines behind glass…
+Strangers say "Good Morning"
+I don't know you
+Where's my mom?
+Why am I here?
+
+[Chorus]
+
+New place
+In the night…
+Clothes in a garbage bag
+Hot Wheels car
+In my jean pocket…
+Wake up next morning
+Hand-me-down star wars pajamas
+A quiet old man…
+He's drinking coffee..
+A sweet old woman..
+with big glasses on…
+is cooking corned beef hash…
+I think I'm done…
+moving 'round this world
+I think I'm done…
+carrying 'round this bag
+This place feels like home..
+
+[Chorus]
+New Place
+New Clothes
+New Hair Cut
+same old wild blue eyes…
+Staring' back at me…
+Only difference now…
+Is the smell of corned beef hash on toast
+And those two old souls
+Loving' back at me
+Lost looking for…
+their coconut tree….`,
+    mood: 'reflective',
+    theme: 'Foster care, childhood, finding home, resilience, family'
+  },
+  {
+    id: '86',
+    songId: '86',
+    songTitle: 'Jersey Sun Tan Line Warriors',
+    poemTitle: 'Went Canoeing for the Day',
+    poemExcerpt: 'Sand on my Ham and May-O, Swig of Seagrams, Smell of Banana Boat...',
+    poemContent: `Bill and Mary Ellen
+Floating' in a Little Canoe
+Down a Lazy Jersey Stream
+Drinking Coors and Seagrams Too
+Got me sitting' in the middle
+Pretending not to see
+Girls On the shore
+Tops Toppled off
+Fighting with their
+Sun Tan lines
+
+[Chorus]
+Sand on my Ham and May-O
+Swig of Seagrams
+Smell of Banana Boat
+Feel of the Ocean Air
+This Texas Boy's Freezing
+Dandy Girls
+On the shore
+Tops Toppled off
+Fighting with their
+Sun Tan lines
+
+I was Swimming in the Jersey Ocean
+Saw some Girls Floating' by…
+Started Paddling' on my boogie board
+I was a slowly moving asteroid…
+Trying to get into their orbit…
+I was awkward and a
+little scared...
+I said "Howdy, how do you do?"
+with my best southern drawl.
+They said "We're just dandy"
+"Where are you from?"
+I said "I'm a Texas Boy freezing my ass off"
+
+[Chorus]
+
+She asked if everyone rode horses
+I said Yes, we surely do.
+She asked if tumbleweed
+Was everywhere
+I said as far as the eye can see
+She asked if I had a cowboy hat
+I said I left it in Texas
+She asked if everything was Bigger There
+I said "Not when it's this cold"
+
+[Chorus]
+
+At this point I realized
+I was colder than I'd ever been
+My teeth were attempting to eat my tongue
+They had grown a mind of their own
+I said "Ladies, it was nice to meet you"
+"But I think I need to goes,
+cause I can't feel my toes…"
+My boogie board was swift and fast
+I was hoping my warmth would last
+Finally on the shore
+That day I swam no more…
+
+[Chorus]`,
+    mood: 'romantic',
+    theme: 'Summer vacation, New Jersey, Texas boy, beach, humor, flirtation'
+  },
+  {
+    id: '91',
+    songId: '91',
+    songTitle: 'dirty dog',
+    poemTitle: 'dirty dog',
+    poemExcerpt: "I'm a dirty dog, always one bell away from you...",
+    poemContent: `Running' hard
+Round and Round
+Dirt on my shoe…
+Sweat pouring down
+drenched in your smile…
+a Click as I pass by
+Feathers on the wall
+You got me feeling' tall…
+
+[chorus]
+I'm a dirty dog
+always one bell
+away from you
+I wanted your mind
+and your body too
+1 mississippi, 2 and 3
+Let's hit the floor
+with you and me?
+
+Dwindling down
+Now just me and him
+"Johny Be Good" plays
+Smooth out the speakers
+Echoing off the walls…
+Smiling Now...
+Don't wanna to win
+Just wanna please her.
+im a dog….
+on a jump rope leash
+waiting for a treat
+Out of breath…
+Collapsed to the floor
+Entered worlds between
+
+[chorus]
+I'm a dirty dog
+always one bell
+away from you
+I wanted your mind
+and your body too
+1 mississippi, 2 and 3
+Let's hit the floor
+with you and me?
+
+Line of exhaustion…
+waiting for drips
+1 mississippi
+2 and 3
+Sneak another one…
+Then one more…
+More behind me…
+Tired as can be…
+heads hit the floor
+with the same dull thud
+Into the ether…
+head lost in mud….
+
+[chorus]
+I'm a dirty dog
+always one bell
+away from you
+I wanted your mind
+and your body too
+1 mississippi, 2 and 3
+Let's hit the floor
+with you and me?
+
+
+Fleeing scholars
+Final Bell…
+Excitement, Relief…
+Running Hounds of Hell
+Trickle in
+they burn their knowledge
+stow mine away
+Treasures from you to me…
+Walk out the building…
+She falls away…
+
+[chorus]
+I'm a dirty dog
+always one bell
+away from you
+I wanted your mind
+and your body too
+1 mississippi, 2 and 3
+Let's hit the floor
+with you and me?
+
+Missing you in the summer heat
+TV boy am I
+Outer limits
+Space traps too
+Aliens melting
+metal through…
+Star wars
+Star Trek
+stories he adores…
+But none compare to yours
+I've read them
+many many times…
+added notes and a question for you
+when the summer heat is through…
+
+[chorus]
+I'm a dirty dog
+always one bell
+away from you
+I wanted your mind
+and your body too
+1 mississippi, 2 and 3
+Let's hit the floor
+with you and me?`,
+    mood: 'passionate',
+    theme: 'School crush, devotion, longing, summer separation'
+  },
+  {
+    id: '92',
+    songId: '92',
+    songTitle: 'monsters heart',
+    poemTitle: 'Monster Inside',
+    poemExcerpt: 'A wanderer was I, til you pulled me back to land...',
+    poemContent: `you are my everything
+you are my midnight spring
+I took you by the hand
+you pulled me back to land
+First saw your eyes
+it was only you
+there was no disguise
+nothing in-between
+me and you
+a comfort I did feel
+I needed you
+
+[chorus]
+A wanderer was I
+Til you pulled me
+Back to land…
+A monster's heart laid before you
+My love in the palm of your hand…
+Tried to push you away
+But you held your ground and stayed…
+Now the monster roams inside me
+and on his leash he stays…
+
+Sit down
+my lovely…
+Sit down
+With no fear…
+I'll make you some coffee
+I'll brew you some beer
+The monster
+He be dwelling
+Deep inside of you…
+
+
+[chorus]
+A wanderer was I
+Til you pulled me
+Back to land…
+A monster's heart laid before you
+My love in the palm of your hand…
+Tried to push you away
+But you held your ground and stayed…
+Now the monster roams inside me
+and on his leash he stays…
+
+
+The monster will pull you out
+Deep into the sea
+Sit down at my table
+I'll keep you safe with me…
+Take your walking boots off now
+Throw them to the sea…
+Take off your suit of armor
+And lay down here with me…
+
+
+[chorus]
+A wanderer was I
+Til you pulled me
+Back to land…
+A monster's heart laid before you
+My love in the palm of your hand…
+Tried to push you away
+But you held your ground and stayed…
+Now the monster roams inside me
+and on his leash he stays…
+
+I tried to run
+I tried so hard…
+But you would not relent
+I saw the road ahead of us
+the monster did discent…
+he could not flee
+you took his boots…
+so he circled round
+His leash pulled tight…
+and stomped his feet
+Then he laid on down that night…
+my heart rested with you…
+
+[chorus]
+A wanderer was I
+Til you pulled me
+Back to land…
+A monster's heart laid before you
+My love in the palm of your hand…
+Tried to push you away
+But you held your ground and stayed…
+Now the monster roams inside me
+and on his leash he stays…`,
+    mood: 'romantic',
+    theme: 'Love, vulnerability, taming the wild heart, devotion'
   }
 ];

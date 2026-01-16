@@ -10,7 +10,7 @@ import {
   Snackbar,
   Alert,
 } from '@mui/material';
-import { Email, Instagram, Twitter, YouTube, Send, CheckCircle } from '@mui/icons-material';
+import { Email, Instagram, Twitter, YouTube, Send, CheckCircle, Create } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import { collection, addDoc, query, where, getDocs, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase/config';
@@ -26,6 +26,12 @@ export const ContactPage: React.FC = () => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error' | 'info'>('success');
+
+  // Poem submission state
+  const [poemTitle, setPoemTitle] = useState('');
+  const [poemContent, setPoemContent] = useState('');
+  const [poemSubmitting, setPoemSubmitting] = useState(false);
+  const [poemSubmitted, setPoemSubmitted] = useState(false);
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,6 +83,47 @@ export const ContactPage: React.FC = () => {
       setShowSnackbar(true);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handlePoemSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!poemContent.trim()) {
+      setSnackbarMessage('Please enter your poem');
+      setSnackbarSeverity('error');
+      setShowSnackbar(true);
+      return;
+    }
+
+    setPoemSubmitting(true);
+
+    try {
+      // Save to Firestore
+      const submissionsRef = collection(db, 'poemSubmissions');
+      await addDoc(submissionsRef, {
+        title: poemTitle.trim() || 'Untitled',
+        content: poemContent.trim(),
+        submittedAt: serverTimestamp(),
+        userId: isAuthenticated ? user?.uid : null,
+        userEmail: isAuthenticated ? user?.email : null,
+        userName: isAuthenticated ? user?.displayName : 'Anonymous',
+        status: 'pending', // pending, reviewed, approved, rejected
+      });
+
+      setPoemSubmitted(true);
+      setSnackbarMessage('Thank you for sharing your poem! Bryon will review it soon.');
+      setSnackbarSeverity('success');
+      setShowSnackbar(true);
+      setPoemTitle('');
+      setPoemContent('');
+    } catch (error) {
+      console.error('Error submitting poem:', error);
+      setSnackbarMessage('Something went wrong. Please try again.');
+      setSnackbarSeverity('error');
+      setShowSnackbar(true);
+    } finally {
+      setPoemSubmitting(false);
     }
   };
 
@@ -246,6 +293,128 @@ export const ContactPage: React.FC = () => {
           >
             {loading ? 'Subscribing...' : subscribed ? 'Subscribed' : 'Subscribe'}
           </Button>
+        </Box>
+      </MotionBox>
+
+      {/* Poem Submission Section */}
+      <MotionBox
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.25 }}
+        sx={{
+          p: 6,
+          border: '1px solid rgba(255,255,255,0.1)',
+          bgcolor: 'rgba(255,255,255,0.02)',
+          mb: 6,
+        }}
+      >
+        <Box sx={{ textAlign: 'center', mb: 4 }}>
+          <Create sx={{ fontSize: 40, mb: 2, color: 'text.secondary' }} />
+          <Typography variant="h5" gutterBottom>
+            SHARE YOUR POEM
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Have a poem you'd like to share? Submit it here and Bryon might feature it!
+          </Typography>
+        </Box>
+
+        <Box
+          component="form"
+          onSubmit={handlePoemSubmit}
+          sx={{
+            maxWidth: 600,
+            mx: 'auto',
+          }}
+        >
+          <TextField
+            fullWidth
+            label="Poem Title (optional)"
+            value={poemTitle}
+            onChange={(e) => setPoemTitle(e.target.value)}
+            disabled={poemSubmitting}
+            sx={{
+              mb: 2,
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 0,
+                '& fieldset': {
+                  borderColor: 'rgba(255, 255, 255, 0.1)',
+                },
+                '&:hover fieldset': {
+                  borderColor: 'rgba(255, 255, 255, 0.2)',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'white',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: 'text.secondary',
+              },
+            }}
+          />
+          <TextField
+            fullWidth
+            label="Your Poem"
+            multiline
+            rows={8}
+            value={poemContent}
+            onChange={(e) => setPoemContent(e.target.value)}
+            required
+            disabled={poemSubmitting}
+            placeholder="Enter your poem here..."
+            sx={{
+              mb: 3,
+              '& .MuiOutlinedInput-root': {
+                borderRadius: 0,
+                '& fieldset': {
+                  borderColor: 'rgba(255, 255, 255, 0.1)',
+                },
+                '&:hover fieldset': {
+                  borderColor: 'rgba(255, 255, 255, 0.2)',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: 'white',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: 'text.secondary',
+              },
+            }}
+          />
+          {!isAuthenticated && (
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2, textAlign: 'center' }}>
+              Sign in to have your name attached to your submission
+            </Typography>
+          )}
+          {isAuthenticated && (
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2, textAlign: 'center' }}>
+              Submitting as: <strong style={{ color: 'white' }}>{user?.displayName || user?.email}</strong>
+            </Typography>
+          )}
+          <Box sx={{ textAlign: 'center' }}>
+            <Button
+              type="submit"
+              variant="outlined"
+              disabled={poemSubmitting || poemSubmitted}
+              endIcon={poemSubmitted ? <CheckCircle /> : <Send />}
+              sx={{
+                borderRadius: 0,
+                borderColor: 'white',
+                color: 'white',
+                px: 4,
+                py: 1.5,
+                '&:hover': {
+                  borderColor: 'white',
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                },
+                '&.Mui-disabled': {
+                  borderColor: 'rgba(255,255,255,0.3)',
+                  color: 'rgba(255,255,255,0.5)',
+                },
+              }}
+            >
+              {poemSubmitting ? 'Submitting...' : poemSubmitted ? 'Poem Submitted' : 'Submit Poem'}
+            </Button>
+          </Box>
         </Box>
       </MotionBox>
 
