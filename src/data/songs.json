@@ -914,5 +914,16 @@
         "duration": 167,
         "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
         "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
+    },
+    {
+        "id": "75",
+        "title": "Falling into Love Tornados",
+        "artistName": "Bryon Bowers",
+        "albumTitle": "Single",
+        "audioUrl": "/music/Falling_into_Love_Tornados.wav",
+        "coverImageUrl": "/albumcovers/falling_into_love_tornados_spotify.jpg",
+        "duration": 234,
+        "spotifyUrl": "https://open.spotify.com/artist/1hKZRgd8uxrTAPFcxoad7u",
+        "youtubeMusicUrl": "https://music.youtube.com/channel/UCv4yflWc567jvsh238l4frw"
     }
 ]

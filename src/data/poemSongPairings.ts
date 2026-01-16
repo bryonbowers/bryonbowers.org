@@ -2464,5 +2464,54 @@ and Big ol' dimples
 Sittin' next to me`,
     mood: 'romantic',
     theme: 'First love, childhood memories, innocence'
+  },
+  {
+    id: '75',
+    songId: '75',
+    songTitle: 'Falling into Love Tornados',
+    poemTitle: 'Pigeon Toe',
+    poemExcerpt: 'You had glasses and a pigeon toe, joined the show for her, but fell in love with you...',
+    poemContent: `You had glasses and a pigeon toe
+Joined the show for her
+But fell in love with you
+
+Wrote letters to you that summer
+Expressing my undying love
+You never responded
+
+Summer ended, school was back
+You walked in wearing all black
+You were a freshman, I was a sophmore
+your mom said no dating til 16
+think your mom liked me
+She just didn't like us
+I didn't fuss
+so I fell into love tornados
+Left you sitting on the stage
+
+Back stage glances
+On stage kisses
+Requiem for a Dream
+We made a good team
+I was a wanderer
+A jester of random thoughts
+travelling and chasing the world
+By the time you turned 16
+we were in the same world
+but living different lives
+
+I still think about those glasses
+that cute pigeon toe
+My undying love inked on a letter in my best hand writing
+licking that dry stamp
+dropping it in the mailbox
+Imagining you reading it and responding in kind
+then I remember leaving you
+On that stage for the last time
+Our last Show we did
+Our last onstage kiss
+And our last back stage glance`,
+    mood: 'romantic',
+    theme: 'Young love, nostalgia, regret'
   }
 ];
