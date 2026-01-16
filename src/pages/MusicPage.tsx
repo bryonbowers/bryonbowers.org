@@ -1512,9 +1512,13 @@ export const MusicPage: React.FC = () => {
               zIndex: 50,
               pointerEvents: 'auto',
               cursor: 'pointer',
+              animation: 'slowRotate 8s linear infinite',
+              '@keyframes slowRotate': {
+                '0%': { transform: 'rotate(0deg)' },
+                '100%': { transform: 'rotate(360deg)' },
+              },
               '&:hover': {
                 filter: 'brightness(1.2)',
-                transform: 'scale(1.05)',
               },
             }}
           >
@@ -1539,19 +1543,34 @@ export const MusicPage: React.FC = () => {
                   filter: 'brightness(1.1) saturate(1.2)',
                 }}
               />
-              {/* Bubble highlight */}
+              {/* Bubble highlight - enhanced spherical sheen */}
               <Box
                 sx={{
                   position: 'absolute',
                   inset: 0,
                   borderRadius: '50%',
                   background: `
-                    radial-gradient(ellipse 50% 30% at 30% 20%, rgba(255,255,255,0.4) 0%, transparent 70%),
-                    radial-gradient(ellipse 30% 20% at 25% 25%, rgba(255,255,255,0.5) 0%, transparent 50%)
+                    radial-gradient(ellipse 60% 40% at 25% 15%, rgba(255,255,255,0.7) 0%, transparent 50%),
+                    radial-gradient(ellipse 40% 25% at 20% 20%, rgba(255,255,255,0.9) 0%, transparent 40%),
+                    radial-gradient(ellipse 20% 10% at 15% 15%, rgba(255,255,255,1) 0%, transparent 60%),
+                    radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0,0,0,0.3) 100%)
                   `,
+                  pointerEvents: 'none',
                 }}
               />
-              {/* Album name label */}
+              {/* Bottom reflection */}
+              <Box
+                sx={{
+                  position: 'absolute',
+                  inset: 0,
+                  borderRadius: '50%',
+                  background: `
+                    radial-gradient(ellipse 50% 20% at 70% 85%, rgba(255,255,255,0.15) 0%, transparent 70%)
+                  `,
+                  pointerEvents: 'none',
+                }}
+              />
+              {/* Album name label - counter-rotates to stay readable */}
               <Box
                 sx={{
                   position: 'absolute',
@@ -1560,12 +1579,17 @@ export const MusicPage: React.FC = () => {
                   transform: 'translateX(-50%)',
                   textAlign: 'center',
                   pointerEvents: 'none',
+                  animation: 'counterRotate 8s linear infinite',
+                  '@keyframes counterRotate': {
+                    '0%': { transform: 'translateX(-50%) rotate(0deg)' },
+                    '100%': { transform: 'translateX(-50%) rotate(-360deg)' },
+                  },
                 }}
               >
                 <Typography
                   sx={{
                     color: 'white',
-                    fontSize: isMobile ? '0.6rem' : '0.8rem',
+                    fontSize: isMobile ? '0.6rem' : '0.85rem',
                     fontFamily: 'Cinzel',
                     fontWeight: 700,
                     letterSpacing: '0.1em',
