@@ -61,7 +61,7 @@ export const MusicPage: React.FC = () => {
   const [searchExpanded, setSearchExpanded] = useState(false);
   const [showShareToast, setShowShareToast] = useState(false);
   const [isWhirlpoolActive, setIsWhirlpoolActive] = useState(false);
-  const [shootingSphere, setShootingSphere] = useState<{ id: string; y: number; song: typeof songsData[0] } | null>(null);
+  const [shootingSphere, setShootingSphere] = useState<{ id: string; y: number; song: typeof songsData[0]; startTime: number } | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const prevArrangeByAlbum = useRef(false);
   const whirlpoolPrevArrangeByAlbum = useRef(false);
@@ -97,12 +97,13 @@ export const MusicPage: React.FC = () => {
         id: `shooting-${Date.now()}`,
         y: randomY,
         song: randomSong,
+        startTime: Date.now(),
       });
 
       // Remove the sphere after animation completes
       setTimeout(() => {
         setShootingSphere(null);
-      }, 3000);
+      }, 6000);
     };
 
     // Initial delay before first shooting sphere (15-30 seconds)
@@ -507,6 +508,44 @@ export const MusicPage: React.FC = () => {
           }
         }
 
+        // Shooting sphere collision - push spheres out of the way
+        if (shootingSphere && !isThisPlaying) {
+          const animationDuration = 5000; // Same as CSS animation duration (slower)
+          const elapsed = Date.now() - shootingSphere.startTime;
+          const progress = Math.min(elapsed / animationDuration, 1);
+
+          // Calculate shooting sphere position (easeInOut curve)
+          const easeProgress = progress < 0.5
+            ? 2 * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+          const shootingSize = isMobile ? SPHERE_SIZE_MOBILE * 3 : SPHERE_SIZE * 3;
+          const shootingX = -250 + easeProgress * (dimensions.width + 300);
+          const shootingY = shootingSphere.y;
+
+          // Check collision with shooting sphere
+          const shootingCenterX = shootingX + shootingSize / 2;
+          const shootingCenterY = shootingY + shootingSize / 2;
+          const sphereCenterX = x + size / 2;
+          const sphereCenterY = y + size / 2;
+
+          const dx = sphereCenterX - shootingCenterX;
+          const dy = sphereCenterY - shootingCenterY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const collisionDist = (shootingSize + size) / 2 + 30; // Extra buffer for dramatic effect
+
+          if (dist < collisionDist && dist > 0) {
+            // Strong push away from shooting sphere
+            const pushStrength = ((collisionDist - dist) / collisionDist) * 18;
+            vx += (dx / dist) * pushStrength;
+            vy += (dy / dist) * pushStrength;
+
+            // Add some chaos/spin
+            vx += (Math.random() - 0.5) * 5;
+            vy += (Math.random() - 0.5) * 5;
+          }
+        }
+
         x += vx;
         y += vy;
 
@@ -623,7 +662,7 @@ export const MusicPage: React.FC = () => {
     });
 
     animationRef.current = requestAnimationFrame(animate);
-  }, [dimensions, draggedId, currentSong, isPlaying, arrangeByAlbum, arrangeByFavorites, isFavorite, getAlbumClusterPositions, searchQuery]);
+  }, [dimensions, draggedId, currentSong, isPlaying, arrangeByAlbum, arrangeByFavorites, isFavorite, getAlbumClusterPositions, searchQuery, shootingSphere, isMobile]);
 
   useEffect(() => {
     if (spheres.length > 0 && dimensions.width > 0) {
@@ -1449,9 +1488,9 @@ export const MusicPage: React.FC = () => {
             animate={{ x: dimensions.width + 50, scale: 1, opacity: [0, 1, 1, 1, 0] }}
             exit={{ opacity: 0 }}
             transition={{
-              duration: 2.5,
+              duration: 5,
               ease: 'easeInOut',
-              opacity: { duration: 2.5, times: [0, 0.1, 0.5, 0.9, 1] },
+              opacity: { duration: 5, times: [0, 0.05, 0.5, 0.95, 1] },
             }}
             sx={{
               position: 'absolute',
