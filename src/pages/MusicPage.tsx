@@ -609,30 +609,7 @@ export const MusicPage: React.FC = () => {
             }
           }
 
-          // Elastic strings - strong spring force between same album spheres
-          if (elasticStrings && sameAlbum && dist > 0) {
-            const nx = dx / dist;
-            const ny = dy / dist;
-            const restLength = 80; // Ideal distance between connected spheres
-            const displacement = dist - restLength;
-            const springStrength = 0.8; // Strong spring constant
-
-            // Spring force: F = k * displacement
-            const force = displacement * springStrength;
-
-            s1.vx += nx * force * 0.5;
-            s1.vy += ny * force * 0.5;
-            s2.vx -= nx * force * 0.5;
-            s2.vy -= ny * force * 0.5;
-
-            // Add damping to prevent oscillation
-            const dampingFactor = 0.85;
-            s1.vx *= dampingFactor;
-            s1.vy *= dampingFactor;
-            s2.vx *= dampingFactor;
-            s2.vy *= dampingFactor;
-          }
-
+          
           // Favorites clustering logic
           if (arrangeByFavorites && dist > 0) {
             const s1IsFav = isFavorite(s1.song.id);
@@ -683,6 +660,50 @@ export const MusicPage: React.FC = () => {
             }
           }
         }
+      }
+
+      // Elastic strings - pull spheres toward their album's center point
+      if (elasticStrings) {
+        // Group spheres by album
+        const albumGroups: Record<string, typeof newSpheres> = {};
+        newSpheres.forEach(s => {
+          const album = normalizeAlbum(s.song.albumTitle);
+          if (!albumGroups[album]) albumGroups[album] = [];
+          albumGroups[album].push(s);
+        });
+
+        // Apply spring force toward each album's center
+        Object.values(albumGroups).forEach(albumSpheres => {
+          if (albumSpheres.length < 2) return;
+
+          // Calculate center point
+          const centerX = albumSpheres.reduce((sum, s) => sum + s.x + s.size / 2, 0) / albumSpheres.length;
+          const centerY = albumSpheres.reduce((sum, s) => sum + s.y + s.size / 2, 0) / albumSpheres.length;
+
+          // Pull each sphere toward center
+          albumSpheres.forEach(s => {
+            const dx = centerX - (s.x + s.size / 2);
+            const dy = centerY - (s.y + s.size / 2);
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist > 10) {
+              const restLength = 60; // Ideal distance from center
+              const displacement = dist - restLength;
+              const springStrength = 0.6;
+
+              const force = displacement * springStrength;
+              const nx = dx / dist;
+              const ny = dy / dist;
+
+              s.vx += nx * force * 0.3;
+              s.vy += ny * force * 0.3;
+
+              // Damping
+              s.vx *= 0.92;
+              s.vy *= 0.92;
+            }
+          });
+        });
       }
 
       return newSpheres;
@@ -1506,7 +1527,7 @@ export const MusicPage: React.FC = () => {
         </IconButton>
       </Box>
 
-      {/* Elastic strings visualization */}
+      {/* Elastic strings visualization - hub and spoke from album center */}
       {elasticStrings && (
         <svg
           style={{
@@ -1519,42 +1540,82 @@ export const MusicPage: React.FC = () => {
             zIndex: 1,
           }}
         >
-          {spheres.flatMap((s1, i) =>
-            spheres.slice(i + 1).map((s2) => {
-              const sameAlbum = normalizeAlbum(s1.song.albumTitle) === normalizeAlbum(s2.song.albumTitle);
-              if (!sameAlbum) return null;
+          {(() => {
+            // Group spheres by album and calculate center points
+            const albumGroups: Record<string, typeof spheres> = {};
+            spheres.forEach(s => {
+              const album = normalizeAlbum(s.song.albumTitle);
+              if (!albumGroups[album]) albumGroups[album] = [];
+              albumGroups[album].push(s);
+            });
 
-              const x1 = s1.x + s1.size / 2;
-              const y1 = s1.y + s1.size / 2;
-              const x2 = s2.x + s2.size / 2;
-              const y2 = s2.y + s2.size / 2;
-              const dist = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+            return Object.entries(albumGroups).flatMap(([albumName, albumSpheres]) => {
+              // Skip albums with only one song
+              if (albumSpheres.length < 2) return [];
 
-              // Only draw if within reasonable distance
-              if (dist > 400) return null;
+              // Calculate center point (centroid of all spheres in album)
+              const centerX = albumSpheres.reduce((sum, s) => sum + s.x + s.size / 2, 0) / albumSpheres.length;
+              const centerY = albumSpheres.reduce((sum, s) => sum + s.y + s.size / 2, 0) / albumSpheres.length;
 
-              // String tension affects appearance
-              const tension = Math.min(dist / 150, 1);
-              const opacity = 0.3 + (1 - tension) * 0.4;
-              const strokeWidth = 1 + (1 - tension) * 2;
+              // Draw lines from center to each sphere
+              return albumSpheres.map(s => {
+                const sx = s.x + s.size / 2;
+                const sy = s.y + s.size / 2;
+                const dist = Math.sqrt((sx - centerX) ** 2 + (sy - centerY) ** 2);
+
+                // String tension affects appearance
+                const tension = Math.min(dist / 120, 1);
+                const opacity = 0.4 + (1 - tension) * 0.4;
+                const strokeWidth = 1.5 + (1 - tension) * 1.5;
+
+                return (
+                  <line
+                    key={`${albumName}-${s.id}`}
+                    x1={centerX}
+                    y1={centerY}
+                    x2={sx}
+                    y2={sy}
+                    stroke={`rgba(255, 255, 255, ${opacity})`}
+                    strokeWidth={strokeWidth}
+                    strokeLinecap="round"
+                    style={{
+                      filter: 'drop-shadow(0 0 4px rgba(255,255,255,0.3))',
+                    }}
+                  />
+                );
+              });
+            });
+          })()}
+
+          {/* Draw center hub dots for each album */}
+          {(() => {
+            const albumGroups: Record<string, typeof spheres> = {};
+            spheres.forEach(s => {
+              const album = normalizeAlbum(s.song.albumTitle);
+              if (!albumGroups[album]) albumGroups[album] = [];
+              albumGroups[album].push(s);
+            });
+
+            return Object.entries(albumGroups).map(([albumName, albumSpheres]) => {
+              if (albumSpheres.length < 2) return null;
+
+              const centerX = albumSpheres.reduce((sum, s) => sum + s.x + s.size / 2, 0) / albumSpheres.length;
+              const centerY = albumSpheres.reduce((sum, s) => sum + s.y + s.size / 2, 0) / albumSpheres.length;
 
               return (
-                <line
-                  key={`${s1.id}-${s2.id}`}
-                  x1={x1}
-                  y1={y1}
-                  x2={x2}
-                  y2={y2}
-                  stroke={`rgba(255, 255, 255, ${opacity})`}
-                  strokeWidth={strokeWidth}
-                  strokeLinecap="round"
+                <circle
+                  key={`hub-${albumName}`}
+                  cx={centerX}
+                  cy={centerY}
+                  r={6}
+                  fill="rgba(255, 255, 255, 0.8)"
                   style={{
-                    filter: 'drop-shadow(0 0 3px rgba(255,255,255,0.3))',
+                    filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.6))',
                   }}
                 />
               );
-            })
-          )}
+            });
+          })()}
         </svg>
       )}
 
