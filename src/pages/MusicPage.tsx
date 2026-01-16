@@ -1570,36 +1570,29 @@ export const MusicPage: React.FC = () => {
                   pointerEvents: 'none',
                 }}
               />
-              {/* Album name label - counter-rotates to stay readable */}
+              {/* Play button - counter-rotates to stay upright */}
               <Box
                 sx={{
                   position: 'absolute',
-                  bottom: '15%',
+                  top: '50%',
                   left: '50%',
-                  transform: 'translateX(-50%)',
-                  textAlign: 'center',
+                  transform: 'translate(-50%, -50%)',
                   pointerEvents: 'none',
                   animation: 'counterRotate 8s linear infinite',
                   '@keyframes counterRotate': {
-                    '0%': { transform: 'translateX(-50%) rotate(0deg)' },
-                    '100%': { transform: 'translateX(-50%) rotate(-360deg)' },
+                    '0%': { transform: 'translate(-50%, -50%) rotate(0deg)' },
+                    '100%': { transform: 'translate(-50%, -50%) rotate(-360deg)' },
                   },
                 }}
               >
-                <Typography
+                <PlayArrow
                   sx={{
+                    fontSize: isMobile ? 50 : 70,
                     color: 'white',
-                    fontSize: isMobile ? '0.6rem' : '0.85rem',
-                    fontFamily: 'Cinzel',
-                    fontWeight: 700,
-                    letterSpacing: '0.1em',
-                    textShadow: '0 2px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.8)',
-                    whiteSpace: 'nowrap',
-                    textTransform: 'uppercase',
+                    filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.8))',
+                    opacity: 0.9,
                   }}
-                >
-                  {shootingSphere.song.albumTitle}
-                </Typography>
+                />
               </Box>
             </Box>
           </MotionBox>
