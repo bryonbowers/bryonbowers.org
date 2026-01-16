@@ -662,7 +662,7 @@ export const MusicPage: React.FC = () => {
     setArrangeByFavorites(false);
     setIsWhirlpoolActive(true);
 
-    // Apply whirlpool rotational velocity to all spheres
+    // Initial powerful burst - suck everything towards center then spin out
     setSpheres(prev => prev.map(sphere => {
       const dx = (sphere.x + sphere.size / 2) - centerX;
       const dy = (sphere.y + sphere.size / 2) - centerY;
@@ -672,11 +672,11 @@ export const MusicPage: React.FC = () => {
       const perpX = -dy / dist;
       const perpY = dx / dist;
 
-      // Velocity increases with distance from center (like a real whirlpool)
-      const whirlStrength = 8 + (dist / 100) * 4;
+      // Strong initial whirlpool - velocity increases with distance
+      const whirlStrength = 15 + (dist / 80) * 8;
 
-      // Also add some inward pull
-      const inwardStrength = 2;
+      // Strong inward pull to create vortex effect
+      const inwardStrength = 6;
 
       return {
         ...sphere,
@@ -685,9 +685,9 @@ export const MusicPage: React.FC = () => {
       };
     }));
 
-    // Apply multiple waves of whirlpool force
+    // Apply multiple waves of whirlpool force with varying intensity
     let waveCount = 0;
-    const maxWaves = 8;
+    const maxWaves = 20; // More waves for longer effect
     const waveInterval = setInterval(() => {
       waveCount++;
 
@@ -699,19 +699,42 @@ export const MusicPage: React.FC = () => {
         const perpX = -dy / dist;
         const perpY = dx / dist;
 
-        // Decrease strength over time
-        const decayFactor = 1 - (waveCount / maxWaves) * 0.7;
-        const whirlStrength = (5 + (dist / 150) * 3) * decayFactor;
+        // Pulsing intensity - builds up then fades
+        const pulsePhase = Math.sin((waveCount / maxWaves) * Math.PI);
+        const baseStrength = 4 + pulsePhase * 6;
+
+        // Occasional direction changes for chaos
+        const directionFlip = waveCount === 8 || waveCount === 14 ? -1 : 1;
+
+        // Distance-based strength - outer spheres spin faster
+        const whirlStrength = (baseStrength + (dist / 120) * 4) * directionFlip;
+
+        // Varying inward/outward pull - breathes in and out
+        const breathPhase = Math.sin((waveCount / maxWaves) * Math.PI * 3);
+        const radialStrength = breathPhase * 3;
 
         return {
           ...sphere,
-          vx: sphere.vx + perpX * whirlStrength,
-          vy: sphere.vy + perpY * whirlStrength,
+          vx: sphere.vx + perpX * whirlStrength + (dx / dist) * radialStrength,
+          vy: sphere.vy + perpY * whirlStrength + (dy / dist) * radialStrength,
         };
       }));
 
       if (waveCount >= maxWaves) {
         clearInterval(waveInterval);
+
+        // Final explosive burst outward
+        setSpheres(prev => prev.map(sphere => {
+          const dx = (sphere.x + sphere.size / 2) - centerX;
+          const dy = (sphere.y + sphere.size / 2) - centerY;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+
+          return {
+            ...sphere,
+            vx: sphere.vx + (dx / dist) * 8,
+            vy: sphere.vy + (dy / dist) * 8,
+          };
+        }));
 
         // After whirlpool ends, restore arrangeByAlbum if it was on before
         setTimeout(() => {
@@ -719,9 +742,9 @@ export const MusicPage: React.FC = () => {
           if (whirlpoolPrevArrangeByAlbum.current) {
             setArrangeByAlbum(true);
           }
-        }, 1500);
+        }, 2000);
       }
-    }, 200);
+    }, 150); // Faster waves for more dynamic feel
   }, [isWhirlpoolActive, dimensions, arrangeByAlbum]);
 
   // Drag handlers
