@@ -1564,7 +1564,12 @@ export const MusicPage: React.FC = () => {
           <MotionBox
             key={shootingSphere.id}
             initial={{ x: -250, y: shootingSphere.y, scale: 0.5, opacity: 0 }}
-            animate={{ x: dimensions.width + 50, scale: 1, opacity: [0, 1, 1, 1, 0] }}
+            animate={{
+              x: dimensions.width + 50,
+              y: [shootingSphere.y, shootingSphere.y - 20, shootingSphere.y, shootingSphere.y + 15, shootingSphere.y, shootingSphere.y - 18, shootingSphere.y, shootingSphere.y + 12, shootingSphere.y, shootingSphere.y - 15, shootingSphere.y],
+              scale: 1,
+              opacity: [0, 1, 1, 1, 0]
+            }}
             exit={{ opacity: 0 }}
             transition={{
               duration: 28,
@@ -1655,30 +1660,6 @@ export const MusicPage: React.FC = () => {
                   pointerEvents: 'none',
                 }}
               />
-              {/* Play button - counter-rotates to stay upright */}
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  pointerEvents: 'none',
-                  animation: 'counterRotate 8s linear infinite',
-                  '@keyframes counterRotate': {
-                    '0%': { transform: 'translate(-50%, -50%) rotate(0deg)' },
-                    '100%': { transform: 'translate(-50%, -50%) rotate(-360deg)' },
-                  },
-                }}
-              >
-                <PlayArrow
-                  sx={{
-                    fontSize: isMobile ? 50 : 70,
-                    color: 'white',
-                    filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.8))',
-                    opacity: 0.9,
-                  }}
-                />
-              </Box>
             </Box>
             </Box>
           </MotionBox>
