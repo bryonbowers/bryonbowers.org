@@ -2570,5 +2570,83 @@ Beer in his hand before he goes
 [Chorus]`,
     mood: 'reflective',
     theme: 'Time, mortality, everyday life'
+  },
+  {
+    id: '77',
+    songId: '77',
+    songTitle: 'Gumball Supermen',
+    poemTitle: 'Gumball Machine',
+    poemExcerpt: 'Gumballs and Blood on the Barn Room Floor...',
+    poemContent: `Gumballs and Blood…
+On the Barn Room Floor…
+Red Canned tomatoes…
+Lining every wall…
+Saw you climbing
+Then I Heard you Fall…
+My Heart was pumping
+Your Eyes wide open…
+Ran So Hard…
+Bloody Feet never touched the floor…
+
+[Chorus]
+Blood on the Floor
+Attacked by a hinge
+On the barn room door
+Jumping over fences
+Leaping over ditches
+That gumball's gonna
+give you stitches
+
+Shiny Gumball machine
+Sitting' at the top of the barn room stairs
+Pennies in our pockets
+Sneaking like ninjas
+Get those gum balls
+Put em in our mouth
+Chew 'em for a minute
+Then spit 'em out…
+Then onto the next one
+Rinse repeat…
+
+[Chorus]
+
+You were superman
+Climbing on the door
+That door hinge
+Your kryptonite
+When you fell
+You didn't fall right...
+Blood was flowing
+From your knee
+Adrenaline pumping
+Through me
+My inner brain
+Taking the reins
+I started running…
+Jumping Barbed Wire Fences…
+In single bounds..
+Bird in my mouth
+I was a Royal..
+Hunting hound
+
+[Chorus]
+
+They sewed you up
+Gumballs and all
+We were Supermen
+Playing with kryptonite Toys…
+Two wild and wandering Boys…
+Throwing shotgun shells
+Into Fire barrels
+Playing with Giant Snapping Turtles
+and Copperhead Snakes
+Dancing Barefoot
+In the rain
+Damn, did we feel alive!
+It's a wonder we survived!
+
+[Chorus]`,
+    mood: 'intense',
+    theme: 'Childhood adventure, brotherhood, danger'
   }
 ];
